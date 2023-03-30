@@ -17,13 +17,14 @@ const suite = create(
       // The field name to be validated.
       const fieldName = 'purchaseDate';
 
+      // This is an example where the constraint validation API is not used
       test(fieldName, 'Purchase date is required.', () => {
         enforce(formData.get(fieldName)).isNotBlank();
-        return;
       });
 
       omitWhen(!formData.get(fieldName), () => {
         /**
+         * This is an example where the constraint validation API is used.
          * Get the field element to get access to the validity state object.
          * @see https://developer.mozilla.org/en-US/docs/Web/API/ValidityState
          * @type {HTMLInputElement}
