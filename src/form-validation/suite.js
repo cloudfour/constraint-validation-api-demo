@@ -4,7 +4,7 @@ const suite = create(
   'demoValidationSuite',
   /**
    * The suite callback function; called every time the validation suite runs.
-   * @param {FormData} formData
+   * @param {FormData} formData The form data to validate
    */
   (formData) => {
     /**
