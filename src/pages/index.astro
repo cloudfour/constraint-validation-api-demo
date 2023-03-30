@@ -1,81 +1,12 @@
 ---
+import FormExample from '../components/FormExample.svelte';
 import Layout from '../layouts/Layout.astro';
 // import Card from '../components/Card.astro';
-import { getISOFormattedDate } from '../utils/get-iso-formatted-date';
-
-// Today's date
-const today = getISOFormattedDate(new Date());
-
-// 1 year ago today.
-const oneYearAgoToday = new Date();
-oneYearAgoToday.setUTCFullYear(oneYearAgoToday.getUTCFullYear() - 1);
-const oneYearAgo = getISOFormattedDate(oneYearAgoToday);
 ---
-
-<script>
-  import validationSuite from '../form-validation/suite';
-
-  /**
-   * @param {SubmitEvent} event
-   */
-  const onFormSubmit = (event) => {
-    event.preventDefault();
-    const formData = new FormData(event.target);
-    console.log(formData);
-    // debugger;
-
-    // Run form validation using the Vest validation suite
-    const validationResult = validationSuite(formData);
-    console.log('validationResult:', validationResult);
-    console.log('err:', validationResult.getErrors());
-
-    if (validationResult.hasErrors()) {
-    }
-  };
-
-  document
-    .getElementById('purchase-form')
-    .addEventListener('submit', onFormSubmit);
-</script>
 
 <Layout title="Welcome to Astro.">
   <main>
-    <form id="purchase-form" action="" novalidate>
-      <input
-        type="date"
-        name="purchaseDate"
-        id="purchase-date"
-        required
-        min={oneYearAgo}
-        max={today}
-      />
-
-      <fieldset>
-        <legend>Choose your interests</legend>
-        <div>
-          <input type="checkbox" id="coding" name="interest" value="coding" />
-          <label for="coding">Coding</label>
-        </div>
-        <div>
-          <input type="checkbox" id="music" name="interest" value="music" />
-          <label for="music">Music</label>
-        </div>
-        <div>
-          <input type="checkbox" id="art" name="interest" value="art" />
-          <label for="art">Art</label>
-        </div>
-        <div>
-          <input type="checkbox" id="sports" name="interest" value="sports" />
-          <label for="sports">Sports</label>
-        </div>
-      </fieldset>
-
-      {if validationResult.hasErrors()}
-      <p>The form has errors</p>
-      {/if}
-
-      <button type="submit">Submit</button>
-    </form>
+    <FormExample client:idle />
     <!-- <h1>Welcome to <span class="text-gradient">Astro</span></h1>
     <p class="instructions">
       To get started, open the directory <code>src/pages</code> in your project.<br
