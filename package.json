@@ -10,6 +10,16 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^2.1.8"
+    "@astrojs/svelte": "^2.1.0",
+    "astro": "^2.1.8",
+    "svelte": "^3.57.0",
+    "vest": "^4.6.9"
+  },
+  "devDependencies": {
+    "@cloudfour/eslint-plugin": "^21.1.0",
+    "eslint": "^8.37.0",
+    "eslint-plugin-astro": "^0.26.1",
+    "prettier": "^2.8.7",
+    "prettier-plugin-astro": "^0.8.0"
   }
 }
