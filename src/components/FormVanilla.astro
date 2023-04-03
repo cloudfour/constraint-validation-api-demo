@@ -34,20 +34,20 @@ import Interests from './form-fields/Interests.astro';
 
   /**
    * Validate input fields using the Constraint Validation API
-   * @returns {boolean} Was an error found?
+   * @returns {boolean} Was an invalid field found?
    */
   const useConstraintValidationApi = (): boolean => {
-    /** @type {boolean} */
-    let errorFound: boolean;
+    // Keep track of if a validation error was found.
+    let hasInvalidField: boolean;
     inputEls.forEach((inputEl) => {
       // Check if the input is valid via the Constraint Validation API.
       if (!inputEl.validity.valid) {
-        // If `errorFound` has not been set, that means this input element is
+        // If `hasInvalidField` has not been set, that means this input element is
         // the first input that is not valid. Use that knowledge to:
-        // 1. Set the `errorFound` value
+        // 1. Set the `hasInvalidField` value
         // 2. Set focus on the input
-        if (!errorFound) {
-          errorFound = true; // 1
+        if (!hasInvalidField) {
+          hasInvalidField = true; // 1
           inputEl.focus(); // 2
         }
         // The validation error message displays in the next sibling element.
@@ -58,7 +58,7 @@ import Interests from './form-fields/Interests.astro';
         inputEl.nextSibling.textContent = '';
       }
     });
-    return errorFound;
+    return hasInvalidField;
   };
 
   /**
