@@ -1,17 +1,18 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import FormExample from '../components/FormExample.svelte';
-import FormVanilla from '../components/FormVanilla.astro';
+
+import FormWithSvelteAndVest from '../components/FormWithSvelteAndVest.svelte';
+import FormWithVanillaJS from '../components/FormWithVanillaJS.astro';
 ---
 
 <Layout title="Demo land!">
   <main>
     <h2>Base experience (no JavaScript)</h2>
 
-    <h2>Vanilla HTML + JavaScript</h2>
-    <FormVanilla />
+    <h2>Progressively enhance with vanilla JavaScript</h2>
+    <FormWithVanillaJS />
     <h2>Svelte + Vest</h2>
-    <FormExample client:idle />
+    <FormWithSvelteAndVest client:idle />
   </main>
 </Layout>
 

@@ -52,9 +52,8 @@ const suite = create(
     /**
      * A basic validation example using a Vest `enforce` rule.
      */
-    test('interest', 'Please choose at least one interest.', () => {
-      console.log(formData.getAll('interest'));
-      enforce(formData.getAll('interest')).isNotEmpty();
+    test('interests', 'Please choose at least one interest.', () => {
+      enforce(formData.getAll('interests')).isNotEmpty();
     });
   }
 );
