@@ -8,25 +8,27 @@ import Interests from './form-fields/Interests.astro';
   <fieldset>
     <legend>Customer details</legend>
     <CustomerEmail />
-    <span id="customer-email-error" class="error"></span>
+    <span class="error"></span>
   </fieldset>
 
   <fieldset>
     <legend>Purchase details</legend>
     <PurchaseDate />
-    <span id="purchase-date-error" class="error"></span>
+    <span class="error"></span>
   </fieldset>
 
   <fieldset>
-    <legend>Choose your interests</legend>
+    <legend>Interests</legend>
     <Interests />
+    <span class="error js-interests-validation-error"></span>
   </fieldset>
 
   <button type="submit">Submit</button>
 </form>
 
 <script>
-  const form = document.querySelector('#demo-form-2');
+  /** @type {HTMLFormElement} */
+  const form: HTMLFormElement = document.querySelector('#demo-form-2');
   // Get input elements that can be validated using the Constraint Validation API.
   const inputEls: NodeListOf<HTMLInputElement> = document.querySelectorAll(
     '.js-constraint-validation'
@@ -62,12 +64,43 @@ import Interests from './form-fields/Interests.astro';
   };
 
   /**
+   * Validate the "interests" checkbox group.
+   * @return {boolean} Is the "interests" checkbox group valid?
+   */
+  const validateInterestsCheckboxGroup = (): boolean => {
+    // Keep track of if the "interests" checkbox group is valid.
+    let isInterestsValid: boolean;
+
+    // Get the element where the validation error message will be displayed.
+    const errorMessageEl = document.querySelector(
+      '.js-interests-validation-error'
+    );
+
+    // Get the form data to get all of the 'interests' checked values. Check
+    // if any "interests" were checked.
+    if (new FormData(form).getAll('interests').length === 0) {
+      isInterestsValid = false;
+      // Set validation error message
+      errorMessageEl.textContent = 'Please choose at least one interest.';
+    } else {
+      isInterestsValid = true;
+      // Unset validation error
+      errorMessageEl.textContent = '';
+    }
+
+    return isInterestsValid;
+  };
+
+  /**
    * Handler for form `submit` event
    * @param {SubmitEvent} event
    */
   const onFormSubmit = (event: SubmitEvent) => {
     const hasConstraintValidationError = useConstraintValidationApi();
-    if (hasConstraintValidationError) {
+    const isInterestsValid = validateInterestsCheckboxGroup();
+
+    // Stop form submit if there are any input validation errors
+    if (hasConstraintValidationError || !isInterestsValid) {
       event.preventDefault();
     }
   };

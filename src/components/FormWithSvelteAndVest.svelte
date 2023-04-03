@@ -42,7 +42,7 @@
   </fieldset>
 
   <fieldset>
-    <legend>Choose your interests</legend>
+    <legend>Interests</legend>
     <Interests />
     <FormFieldErrors {validationResult} fieldName="interests" />
   </fieldset>
