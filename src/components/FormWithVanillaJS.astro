@@ -4,6 +4,34 @@ import PurchaseDate from './form-fields/PurchaseDate.astro';
 import Interests from './form-fields/Interests.astro';
 ---
 
+<form id="demo-form-2" novalidate action="" method="post">
+  <fieldset>
+    <legend>Customer details</legend>
+    <CustomerEmail />
+    <p class="error"></p>
+  </fieldset>
+
+  <fieldset>
+    <legend>Purchase details</legend>
+    <PurchaseDate />
+    <p class="error"></p>
+  </fieldset>
+
+  <fieldset>
+    <legend>Interests</legend>
+    <Interests />
+    <p class="error js-interests-validation-error"></p>
+  </fieldset>
+
+  <button type="submit">Submit</button>
+</form>
+
+<style>
+  .error {
+    color: red;
+  }
+</style>
+
 <script>
   /** @type {HTMLFormElement} */
   const form: HTMLFormElement = document.querySelector('#demo-form-2');
@@ -17,29 +45,22 @@ import Interests from './form-fields/Interests.astro';
    * @returns {boolean} Was an invalid field found?
    */
   const useConstraintValidationApi = (): boolean => {
-    // Loop through all input elements and update the validation error message.
+    // Loop through all input elements and use the Constraint Validation API to
+    // check if the input is valid to update validation error message.
+    // If valid: clear error message.
+    // If not valid: use validation message from Constraint Validation API.
     inputEls.forEach((inputEl) => {
-      // Use the Constraint Validation API to check if the input is valid.
-      // If valid: clear error message.
-      // If not valid: use validation message from Constraint Validation API.
-      inputEl.nextElementSibling.textContent = input.validity.valid
+      inputEl.nextElementSibling.textContent = inputEl.validity.valid
         ? ''
         : inputEl.validationMessage;
     });
 
-    // Keep track of the validation state.
-    let areAllFieldsValid = true;
-    // Find the first invalid input element using the Constraints Validation API.
-    const invalidInput = [...inputEls].find(
-      (inputEl) => !inputEl.validity.valid
-    );
-    // If there is an invalid input, focus on it and update the validation state.
-    if (invalidInput) {
-      invalidInput.focus();
-      areAllFieldsValid = false;
-    }
-    // Return the validation state.
-    return areAllFieldsValid;
+    // Find the first invalid input element using the Constraints Validation API
+    // and set focus on it.
+    [...inputEls].find((inputEl) => !inputEl.validity.valid)?.focus();
+
+    // Return if all input elements are valid.
+    return [...inputEls].every((inputEl) => inputEl.validity.valid);
   };
 
   /**
@@ -84,31 +105,3 @@ import Interests from './form-fields/Interests.astro';
 
   form.addEventListener('submit', onFormSubmit);
 </script>
-
-<form id="demo-form-2" novalidate action="" method="post">
-  <fieldset>
-    <legend>Customer details</legend>
-    <CustomerEmail />
-    <p class="error"></p>
-  </fieldset>
-
-  <fieldset>
-    <legend>Purchase details</legend>
-    <PurchaseDate />
-    <p class="error"></p>
-  </fieldset>
-
-  <fieldset>
-    <legend>Interests</legend>
-    <Interests />
-    <p class="error js-interests-validation-error"></p>
-  </fieldset>
-
-  <button type="submit">Submit</button>
-</form>
-
-<style>
-  .error {
-    color: red;
-  }
-</style>
