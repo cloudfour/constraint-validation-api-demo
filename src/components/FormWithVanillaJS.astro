@@ -45,22 +45,29 @@ import Interests from './form-fields/Interests.astro';
    * @returns {boolean} Was an invalid field found?
    */
   const useConstraintValidationApi = (): boolean => {
+    let firstInvalidInputEl: HTMLInputElement | null = null;
+    let areConstraintValidationFieldsValid = true;
     // Loop through all input elements and use the Constraint Validation API to
-    // check if the input is valid to update validation error message.
-    // If valid: clear error message.
-    // If not valid: use validation message from Constraint Validation API.
+    // check if the input is valid.
     inputEls.forEach((inputEl) => {
-      inputEl.nextElementSibling.textContent = inputEl.validity.valid
+      const isInputValid = inputEl.checkValidity();
+      // If input is not valid and we haven't found an invalid input element yet,
+      // set the invalid input element to the current input element.
+      // Also, update the validation state.
+      if (!isInputValid && !firstInvalidInputEl) {
+        firstInvalidInputEl = inputEl;
+        areConstraintValidationFieldsValid = false;
+      }
+      // If valid: clear error message.
+      // If not valid: use validation message from Constraint Validation API.
+      inputEl.nextElementSibling.textContent = isInputValid
         ? ''
         : inputEl.validationMessage;
     });
-
-    // Find the first invalid input element using the Constraints Validation API
-    // and set focus on it.
-    [...inputEls].find((inputEl) => !inputEl.validity.valid)?.focus();
-
+    // If there is an invalid input element, focus on it.
+    firstInvalidInputEl?.focus();
     // Return if all input elements are valid.
-    return [...inputEls].every((inputEl) => inputEl.validity.valid);
+    return areConstraintValidationFieldsValid;
   };
 
   /**
