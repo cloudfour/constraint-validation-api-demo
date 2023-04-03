@@ -8,41 +8,52 @@ const suite = create(
    */
   (formData) => {
     /**
-     * A block statement to encapsulate all `purchaseDate` field validation.
-     * Why? The `purchaseDate` string is used multiple times and I didn't want
-     * to mistype it. So I made it a variable scoped to this block only.
+     * A block statement to encapsulate the form field validation per input.
+     * Why? It felt cleaner to keep the logic encapsulated from other fields.
      * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/block#using_a_block_statement_to_encapsulate_data
      */
     {
-      // The field name to be validated.
-      const fieldName = 'purchaseDate';
-
-      // This is an example where the constraint validation API is not used
-      test(fieldName, 'Purchase date is required.', () => {
-        enforce(formData.get(fieldName)).isNotBlank();
-      });
-
-      omitWhen(!formData.get(fieldName), () => {
-        /**
-         * This is an example where the constraint validation API is used.
-         * Get the field element to get access to the validity state object.
-         * @see https://developer.mozilla.org/en-US/docs/Web/API/ValidityState
-         * @type {HTMLInputElement}
-         */
-        const purchaseDateEl = document.querySelector(`[name='${fieldName}']`);
-        const { rangeOverflow, rangeUnderflow } = purchaseDateEl.validity;
-
-        test(
-          fieldName,
-          'Please provide a valid date within the past year.',
-          () => {
-            enforce(rangeOverflow || rangeUnderflow).isFalsy();
-          }
-        );
-      });
+      /**
+       * The Constraint Validation API provides all the information needed to
+       * handle custom form field validation.
+       *
+       * The validation message string and checkValidity() function can slot
+       * right in to the Vest validation test. This means the built-in localized
+       * validation error message will be displayed.
+       *
+       * @see https://developer.mozilla.org/en-US/docs/Web/API/ValidityState
+       * @see https://developer.mozilla.org/en-US/docs/Web/API/HTMLObjectElement/validationMessage
+       * @see https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/checkValidity
+       *
+       * @type {HTMLInputElement}
+       */
+      const inputEl = document.querySelector('[name="customerEmail"]');
+      test('customerEmail', inputEl.validationMessage, inputEl.checkValidity);
     }
 
+    {
+      /** @type {HTMLInputElement} */
+      const inputEl = document.querySelector('[name="purchaseDate"]');
+      test('purchaseDate', inputEl.validationMessage, inputEl.checkValidity);
+    }
+
+    // omitWhen(!formData.get(fieldName), () => {
+    //   test(
+    //     fieldName,
+    //     'Please provide a valid date within the past year.',
+    //     () => {
+    //       enforce(
+    //         validity.rangeOverflow || validity.rangeUnderflow
+    //       ).isFalsy();
+    //     }
+    //   );
+    // });
+
+    /**
+     * A basic validation example using a Vest `enforce` rule.
+     */
     test('interest', 'Please choose at least one interest.', () => {
+      console.log(formData.getAll('interest'));
       enforce(formData.getAll('interest')).isNotEmpty();
     });
   }

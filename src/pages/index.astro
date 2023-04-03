@@ -1,10 +1,16 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import FormExample from '../components/FormExample.svelte';
+import FormVanilla from '../components/FormVanilla.astro';
 ---
 
 <Layout title="Demo land!">
   <main>
+    <h2>Base experience (no JavaScript)</h2>
+
+    <h2>Vanilla HTML + JavaScript</h2>
+    <FormVanilla />
+    <h2>Svelte + Vest</h2>
     <FormExample client:idle />
   </main>
 </Layout>
@@ -14,5 +20,21 @@ import FormExample from '../components/FormExample.svelte';
     margin: auto;
     padding: 1.5rem;
     max-width: 60ch;
+  }
+
+  /**
+   * Delay  the `:invalid` and `:valid` UI states 
+   * - The `placeholder` attribute (can be blank) is required for this to work.
+   * - Doesn't seem to work on date input elements.
+   * - Doesn't show invalid state on submit.
+   * @see https://www.bram.us/2021/01/28/form-validation-you-want-notfocusinvalid-not-invalid/
+   */
+
+  :global(input:not(:focus):not(:placeholder-shown):invalid) {
+    border-color: red;
+  }
+
+  :global(input:not(:focus):not(:placeholder-shown):valid) {
+    border-color: green;
   }
 </style>

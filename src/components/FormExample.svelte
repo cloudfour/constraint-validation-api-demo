@@ -1,11 +1,9 @@
 <script>
-  import { getISOFormattedDate } from '../utils/get-iso-formatted-date';
   import validationSuite from '../form-validation/suite';
+  import CustomerEmail from './form-fields/CustomerEmail.svelte';
+  import Interests from './form-fields/Interests.svelte';
+  import PurchaseDate from './form-fields/PurchaseDate.svelte';
   import FormFieldErrors from './FormFieldErrors.svelte';
-
-  // 1 year ago today.
-  const oneYearAgoToday = new Date();
-  oneYearAgoToday.setUTCFullYear(oneYearAgoToday.getUTCFullYear() - 1);
 
   /**
    * Set initial form validation state.
@@ -31,35 +29,21 @@
   action=""
   method="post"
 >
-  <label for="purchase-date">Purchase date:</label>
-  <input
-    type="date"
-    name="purchaseDate"
-    id="purchase-date"
-    required
-    min={getISOFormattedDate(oneYearAgoToday)}
-    max={getISOFormattedDate(new Date())}
-  />
-  <FormFieldErrors {validationResult} fieldName="purchaseDate" />
+  <fieldset>
+    <legend>Customer details</legend>
+    <CustomerEmail />
+    <FormFieldErrors {validationResult} fieldName="customerEmail" />
+  </fieldset>
+
+  <fieldset>
+    <legend>Purchase details</legend>
+    <PurchaseDate />
+    <FormFieldErrors {validationResult} fieldName="purchaseDate" />
+  </fieldset>
 
   <fieldset>
     <legend>Choose your interests</legend>
-    <div>
-      <input type="checkbox" id="coding" name="interest" value="coding" />
-      <label for="coding">Coding</label>
-    </div>
-    <div>
-      <input type="checkbox" id="music" name="interest" value="music" />
-      <label for="music">Music</label>
-    </div>
-    <div>
-      <input type="checkbox" id="art" name="interest" value="art" />
-      <label for="art">Art</label>
-    </div>
-    <div>
-      <input type="checkbox" id="sports" name="interest" value="sports" />
-      <label for="sports">Sports</label>
-    </div>
+    <Interests />
     <FormFieldErrors {validationResult} fieldName="interest" />
   </fieldset>
 

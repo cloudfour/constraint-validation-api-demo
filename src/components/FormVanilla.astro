@@ -1,0 +1,81 @@
+---
+import CustomerEmail from './form-fields/CustomerEmail.astro';
+import PurchaseDate from './form-fields/PurchaseDate.astro';
+import Interests from './form-fields/Interests.astro';
+---
+
+<form id="demo-form-2" novalidate action="" method="post">
+  <fieldset>
+    <legend>Customer details</legend>
+    <CustomerEmail />
+    <span id="customer-email-error" class="error"></span>
+  </fieldset>
+
+  <fieldset>
+    <legend>Purchase details</legend>
+    <PurchaseDate />
+    <span id="purchase-date-error" class="error"></span>
+  </fieldset>
+
+  <fieldset>
+    <legend>Choose your interests</legend>
+    <Interests />
+  </fieldset>
+
+  <button type="submit">Submit</button>
+</form>
+
+<script>
+  const form = document.querySelector('#demo-form-2');
+  const inputEls: NodeListOf<HTMLInputElement> = document.querySelectorAll(
+    '.js-constraint-validation'
+  );
+
+  /**
+   * Handler for form `submit` event
+   * @param {SubmitEvent} event
+   */
+  const onFormSubmit = (event: SubmitEvent) => {
+    /** @type {boolean} */
+    let errorFound: boolean;
+    inputEls.forEach((inputEl) => {
+      // Handle input element that fails validation.
+      if (!inputEl.validity.valid) {
+        // If `errorFound` has not been set, that means this input element is
+        // the first input that is not valid. Use that knowledge to:
+        // 1. Set the `errorFound` value
+        // 2. Set focus on the input
+        // 3. Prevent form submission
+        if (!errorFound) {
+          errorFound = true; // 1
+          inputEl.focus(); // 2
+          event.preventDefault(); // 3
+        }
+
+        // Get the sibling element.
+        // This is where the validation message will be displayed.
+        const validationMessageEl = inputEl.nextSibling;
+        // Use the validation message from the Constraint Validation API
+        validationMessageEl.textContent = inputEl.validationMessage;
+      }
+    });
+
+    // for (const inputId of inputIds) {
+    //   /**
+    //    * Get the input element
+    //    * @type {HTMLInputElement}
+    //    */
+    //   const inputEl: HTMLInputElement = document.querySelector(`#${inputId}`);
+    //   if (!inputEl.validity.valid) {
+    //     errorFound = true;
+    //     document.querySelector(`#${inputId}-error`).textContent =
+    //       inputEl.validationMessage;
+    //   }
+    // }
+    if (errorFound) {
+      event.preventDefault();
+    }
+  };
+
+  form.addEventListener('submit', onFormSubmit);
+</script>
