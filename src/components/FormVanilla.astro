@@ -34,9 +34,9 @@ import Interests from './form-fields/Interests.astro';
 
   /**
    * Validate input fields using the Constraint Validation API
-   * @param {SubmitEvent} event
+   * @returns {boolean} Was an error found?
    */
-  const useConstraintValidationApi = (event: SubmitEvent) => {
+  const useConstraintValidationApi = (): boolean => {
     /** @type {boolean} */
     let errorFound: boolean;
     inputEls.forEach((inputEl) => {
@@ -46,11 +46,9 @@ import Interests from './form-fields/Interests.astro';
         // the first input that is not valid. Use that knowledge to:
         // 1. Set the `errorFound` value
         // 2. Set focus on the input
-        // 3. Prevent form submission
         if (!errorFound) {
           errorFound = true; // 1
           inputEl.focus(); // 2
-          event.preventDefault(); // 3
         }
         // The validation error message displays in the next sibling element.
         // Use the validation message from the Constraint Validation API
@@ -60,6 +58,7 @@ import Interests from './form-fields/Interests.astro';
         inputEl.nextSibling.textContent = '';
       }
     });
+    return errorFound;
   };
 
   /**
@@ -67,7 +66,10 @@ import Interests from './form-fields/Interests.astro';
    * @param {SubmitEvent} event
    */
   const onFormSubmit = (event: SubmitEvent) => {
-    useConstraintValidationApi(event);
+    const hasConstraintValidationError = useConstraintValidationApi();
+    if (hasConstraintValidationError) {
+      event.preventDefault();
+    }
   };
 
   form.addEventListener('submit', onFormSubmit);
