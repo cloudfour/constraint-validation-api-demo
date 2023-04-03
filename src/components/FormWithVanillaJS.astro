@@ -4,28 +4,6 @@ import PurchaseDate from './form-fields/PurchaseDate.astro';
 import Interests from './form-fields/Interests.astro';
 ---
 
-<form id="demo-form-2" novalidate action="" method="post">
-  <fieldset>
-    <legend>Customer details</legend>
-    <CustomerEmail />
-    <span class="error"></span>
-  </fieldset>
-
-  <fieldset>
-    <legend>Purchase details</legend>
-    <PurchaseDate />
-    <span class="error"></span>
-  </fieldset>
-
-  <fieldset>
-    <legend>Interests</legend>
-    <Interests />
-    <span class="error js-interests-validation-error"></span>
-  </fieldset>
-
-  <button type="submit">Submit</button>
-</form>
-
 <script>
   /** @type {HTMLFormElement} */
   const form: HTMLFormElement = document.querySelector('#demo-form-2');
@@ -39,28 +17,29 @@ import Interests from './form-fields/Interests.astro';
    * @returns {boolean} Was an invalid field found?
    */
   const useConstraintValidationApi = (): boolean => {
-    // Keep track of if a validation error was found.
-    let hasInvalidField: boolean;
+    // Loop through all input elements and update the validation error message.
     inputEls.forEach((inputEl) => {
-      // Check if the input is valid via the Constraint Validation API.
-      if (!inputEl.validity.valid) {
-        // If `hasInvalidField` has not been set, that means this input element is
-        // the first input that is not valid. Use that knowledge to:
-        // 1. Set the `hasInvalidField` value
-        // 2. Set focus on the input
-        if (!hasInvalidField) {
-          hasInvalidField = true; // 1
-          inputEl.focus(); // 2
-        }
-        // The validation error message displays in the next sibling element.
-        // Use the validation message from the Constraint Validation API
-        inputEl.nextSibling.textContent = inputEl.validationMessage;
-      } else {
-        // Make sure to clear the validation error message if the input is valid.
-        inputEl.nextSibling.textContent = '';
-      }
+      // Use the Constraint Validation API to check if the input is valid.
+      // If valid: clear error message.
+      // If not valid: use validation message from Constraint Validation API.
+      inputEl.nextElementSibling.textContent = input.validity.valid
+        ? ''
+        : inputEl.validationMessage;
     });
-    return hasInvalidField;
+
+    // Keep track of the validation state.
+    let areAllFieldsValid = true;
+    // Find the first invalid input element using the Constraints Validation API.
+    const invalidInput = [...inputEls].find(
+      (inputEl) => !inputEl.validity.valid
+    );
+    // If there is an invalid input, focus on it and update the validation state.
+    if (invalidInput) {
+      invalidInput.focus();
+      areAllFieldsValid = false;
+    }
+    // Return the validation state.
+    return areAllFieldsValid;
   };
 
   /**
@@ -70,12 +49,10 @@ import Interests from './form-fields/Interests.astro';
   const validateInterestsCheckboxGroup = (): boolean => {
     // Keep track of if the "interests" checkbox group is valid.
     let isInterestsValid: boolean;
-
     // Get the element where the validation error message will be displayed.
     const errorMessageEl = document.querySelector(
       '.js-interests-validation-error'
     );
-
     // Get the form data to get all of the 'interests' checked values. Check
     // if any "interests" were checked.
     if (new FormData(form).getAll('interests').length === 0) {
@@ -87,7 +64,7 @@ import Interests from './form-fields/Interests.astro';
       // Unset validation error
       errorMessageEl.textContent = '';
     }
-
+    // Return the validation state.
     return isInterestsValid;
   };
 
@@ -96,14 +73,42 @@ import Interests from './form-fields/Interests.astro';
    * @param {SubmitEvent} event
    */
   const onFormSubmit = (event: SubmitEvent) => {
-    const hasConstraintValidationError = useConstraintValidationApi();
+    const areConstraintValidationFieldsValid = useConstraintValidationApi();
     const isInterestsValid = validateInterestsCheckboxGroup();
 
     // Stop form submit if there are any input validation errors
-    if (hasConstraintValidationError || !isInterestsValid) {
+    if (!areConstraintValidationFieldsValid || !isInterestsValid) {
       event.preventDefault();
     }
   };
 
   form.addEventListener('submit', onFormSubmit);
 </script>
+
+<form id="demo-form-2" novalidate action="" method="post">
+  <fieldset>
+    <legend>Customer details</legend>
+    <CustomerEmail />
+    <p class="error"></p>
+  </fieldset>
+
+  <fieldset>
+    <legend>Purchase details</legend>
+    <PurchaseDate />
+    <p class="error"></p>
+  </fieldset>
+
+  <fieldset>
+    <legend>Interests</legend>
+    <Interests />
+    <p class="error js-interests-validation-error"></p>
+  </fieldset>
+
+  <button type="submit">Submit</button>
+</form>
+
+<style>
+  .error {
+    color: red;
+  }
+</style>
