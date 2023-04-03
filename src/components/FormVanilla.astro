@@ -52,11 +52,12 @@ import Interests from './form-fields/Interests.astro';
           event.preventDefault(); // 3
         }
 
-        // Get the sibling element.
-        // This is where the validation message will be displayed.
-        const validationMessageEl = inputEl.nextSibling;
+        // The validation error message displays in the next sibling element.
         // Use the validation message from the Constraint Validation API
-        validationMessageEl.textContent = inputEl.validationMessage;
+        inputEl.nextSibling.textContent = inputEl.validationMessage;
+      } else {
+        // Make sure to clear the validation error message if the input is valid.
+        inputEl.nextSibling.textContent = '';
       }
     });
 
