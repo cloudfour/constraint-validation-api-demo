@@ -8,31 +8,37 @@ import Interests from './form-fields/Interests.astro';
   <fieldset>
     <legend>Customer details</legend>
     <CustomerEmail />
-    <p class="error"></p>
+    <p hidden class="error"></p>
   </fieldset>
 
   <fieldset>
     <legend>Purchase details</legend>
     <PurchaseDate />
-    <p class="error"></p>
+    <p hidden class="error"></p>
   </fieldset>
 
   <fieldset>
     <legend>Interests</legend>
     <Interests />
-    <p class="error js-interests-validation-error"></p>
+    <p hidden class="error js-interests-validation-error"></p>
   </fieldset>
 
   <button type="submit">Submit</button>
 </form>
 
-<style>
+<style lang="scss">
   .error {
     color: red;
+    &::before {
+      content: '( ! ) ';
+    }
   }
 </style>
 
 <script>
+  document.body.classList.add('js-enabled');
+  document.body.classList.remove('no-js');
+
   /** @type {HTMLFormElement} */
   const form: HTMLFormElement = document.querySelector('#demo-form-2');
   // Get input elements that can be validated using the Constraint Validation API.
@@ -58,11 +64,23 @@ import Interests from './form-fields/Interests.astro';
         firstInvalidInputEl = inputEl;
         areConstraintValidationFieldsValid = false;
       }
-      // If valid: clear error message.
-      // If not valid: use validation message from Constraint Validation API.
-      inputEl.nextElementSibling.textContent = isInputValid
-        ? ''
-        : inputEl.validationMessage;
+
+      if (isInputValid) {
+        inputEl.classList.add('is-valid');
+        inputEl.classList.remove('is-invalid');
+
+        const errorEl = inputEl.nextElementSibling as HTMLElement;
+        // If valid: clear error message.
+        errorEl.textContent = '';
+        errorEl.hidden = true;
+      } else {
+        inputEl.classList.remove('is-valid');
+        inputEl.classList.add('is-invalid');
+        const errorEl = inputEl.nextElementSibling as HTMLElement;
+        // If not valid: use validation message from Constraint Validation API.
+        errorEl.textContent = inputEl.validationMessage;
+        errorEl.hidden = false;
+      }
     });
     // If there is an invalid input element, focus on it.
     firstInvalidInputEl?.focus();
