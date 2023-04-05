@@ -92,7 +92,6 @@ import CustomerNameFirst from './form-fields/CustomerNameFirst.astro';
     let areAllConstraintValidationFieldsValid = true;
     // Keep track of the first invalid input element.
     let firstInvalidInputEl: HTMLInputElement | null = null;
-
     // Loop all inputs that can be validated with the Constraint Validation API.
     document
       .querySelectorAll('.js-validate')
@@ -103,42 +102,35 @@ import CustomerNameFirst from './form-fields/CustomerNameFirst.astro';
           firstInvalidInputEl = inputEl;
           areAllConstraintValidationFieldsValid = false;
         }
-
+        // Update the UI
         updateValidationUiStateForInput(inputEl);
       });
-
     // If there is an invalid input element, focus on it.
     firstInvalidInputEl?.focus();
-
     // Return if all input elements are valid.
     return areAllConstraintValidationFieldsValid;
   };
 
   /**
-   * Validate the "interests" checkbox group.
-   * This is a custom JS field validation that is not supported by the Constraint
-   * Validation API.
+   * Validates the "interests" checkbox group.
+   * Custom validation is required because checkbox group validation is not
+   * supported by the Constraint Validation API.
    * @return {boolean} Is the "interests" checkbox group valid?
    */
   const validateInterestsCheckboxGroup = (): boolean => {
-    // Keep track of if the "interests" checkbox group is valid.
-    let isInterestsValid: boolean;
     // Get the element where the validation error message will be displayed.
-    const errorMessageEl = document.querySelector(
+    const errorEl = document.querySelector(
       '.js-interests-validation-error'
     ) as HTMLElement;
-    // Get the form data to get all of the 'interests' checked values. Check
-    // if any "interests" were checked.
-    if (new FormData(form).getAll('interests').length === 0) {
-      isInterestsValid = false;
-      // Set validation error message
-      errorMessageEl.textContent = 'Please choose at least one interest.';
-      errorMessageEl.hidden = false;
+    // Check if any "interests" were checked.
+    const isInterestsValid = new FormData(form).getAll('interests').length > 0;
+    // Update the UI.
+    if (isInterestsValid) {
+      errorEl.textContent = 'Please choose at least one interest.';
+      errorEl.hidden = false;
     } else {
-      isInterestsValid = true;
-      // Unset validation error
-      errorMessageEl.textContent = '';
-      errorMessageEl.hidden = true;
+      errorEl.textContent = '';
+      errorEl.hidden = true;
     }
     // Return the validation state.
     return isInterestsValid;
