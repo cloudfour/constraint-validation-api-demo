@@ -98,17 +98,19 @@ import Interests from './form-fields/Interests.astro';
     // Get the element where the validation error message will be displayed.
     const errorMessageEl = document.querySelector(
       '.js-interests-validation-error'
-    );
+    ) as HTMLElement;
     // Get the form data to get all of the 'interests' checked values. Check
     // if any "interests" were checked.
     if (new FormData(form).getAll('interests').length === 0) {
       isInterestsValid = false;
       // Set validation error message
       errorMessageEl.textContent = 'Please choose at least one interest.';
+      errorMessageEl.hidden = false;
     } else {
       isInterestsValid = true;
       // Unset validation error
       errorMessageEl.textContent = '';
+      errorMessageEl.hidden = true;
     }
     // Return the validation state.
     return isInterestsValid;
