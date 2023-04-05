@@ -90,6 +90,10 @@ Special thanks to Tyler Sticka for challenging me to think about form validation
 
 ## Notes
 
+### Why not `content` "x"?
+
+It will be read aloud by screen reader. We don't want that.
+
 ### Why not [`HTMLInputElement.reportValidity()`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/reportValidity)?
 
 Because `HTMLInputElement.reportValidity()` will also report (show the error message) to the user with the default browser validation UI styles. In our case, we don't want that. We only want to _check_ validity.
@@ -122,3 +126,7 @@ Seems like it can't be done.
 - [Validation-related attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Constraint_validation#validation-related_attributes)
 - [Complex constraints using the Constraint Validation API](https://developer.mozilla.org/en-US/docs/Web/HTML/Constraint_validation#complex_constraints_using_the_constraint_validation_api)
 - [HTMLObjectElement.validationMessage](https://developer.mozilla.org/en-US/docs/Web/API/HTMLObjectElement/validationMessage)
+
+## SVG
+
+- https://www.svgrepo.com/svg/12848/x-symbol
