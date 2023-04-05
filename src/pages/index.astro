@@ -7,9 +7,12 @@ import FormWithVanillaJS from '../components/FormWithVanillaJS.astro';
 
 <Layout title="Demo land!">
   <main>
-    <h2>Base experience (no JavaScript)</h2>
-
-    <h2>Progressively enhance with vanilla JavaScript</h2>
+    <h2>Progressively enhanced form</h2>
+    <p>
+      This form uses browser built-in validation when JS is not available. The
+      form is enhanced with Vanilla JS + the Constraints Validation API when JS
+      is available.
+    </p>
     <FormWithVanillaJS />
     <h2>Svelte + Vest</h2>
     <FormWithSvelteAndVest client:idle />
@@ -25,25 +28,43 @@ import FormWithVanillaJS from '../components/FormWithVanillaJS.astro';
 </style>
 
 <style is:global>
-  /**
-   * Delay  the `:invalid` and `:valid` UI states 
-   * - The `placeholder` attribute (can be blank) is required for this to work.
-   * - Doesn't seem to work on date input elements.
-   * - Doesn't show invalid state on submit.
-   * @see https://www.bram.us/2021/01/28/form-validation-you-want-notfocusinvalid-not-invalid/
-   */
-
-  .no-js input:not(:focus):not(:placeholder-shown):invalid,
-  .js-enabled input.is-invalid {
-    border-color: red;
-    background-image: url("data:image/svg+xml,%3Csvg height='15' width='15' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 460.775 460.775' xml:space='preserve'%3E%3Cpath d='M285.08 230.397 456.218 59.27c6.076-6.077 6.076-15.911 0-21.986L423.511 4.565a15.55 15.55 0 0 0-21.985 0l-171.138 171.14L59.25 4.565a15.551 15.551 0 0 0-21.985 0L4.558 37.284c-6.077 6.075-6.077 15.909 0 21.986l171.138 171.128L4.575 401.505c-6.074 6.077-6.074 15.911 0 21.986l32.709 32.719a15.555 15.555 0 0 0 21.986 0l171.117-171.12 171.118 171.12a15.551 15.551 0 0 0 21.985 0l32.709-32.719c6.074-6.075 6.074-15.909 0-21.986L285.08 230.397z'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: left 0.5em center;
-    padding-left: 2em;
+  :root {
+    --color-valid: green;
+    --color-invalid: red;
   }
 
-  .no-js input:not(:focus):not(:placeholder-shown):valid,
-  .js-enabled input.is-valid {
-    border-color: green;
+  [hidden] {
+    display: none;
+  }
+
+  input:user-invalid {
+    border-color: var(--color-invalid);
+  }
+  input:user-valid {
+    border-color: var(--color-valid);
+  }
+
+  /** 
+   * Fallback to `no-js`/`js-enabled` state classes 
+   */
+  @supports not selector(:user-invalid) {
+    /**
+     * 1. Delay  the `:invalid` and `:valid` UI states when no JS is available
+     *    - The `placeholder` attribute (can be blank) is required for this to work.
+     *    - Doesn't seem to work on date input elements.
+     *    - Doesn't show invalid state on submit.
+     *    @see https://www.bram.us/2021/01/28/form-validation-you-want-notfocusinvalid-not-invalid/
+     * 2. Use state classes to show the invalid/valid UI states when JS is available
+     */
+
+    .no-js input:not(:focus):not(:placeholder-shown):invalid, /* 1 */
+    .js-enabled input.is-invalid {
+      border-color: var(--color-invalid);
+    }
+
+    .no-js input:not(:focus):not(:placeholder-shown):valid, /* 1 */
+    .js-enabled input.is-valid {
+      border-color: var(--color-valid);
+    }
   }
 </style>
