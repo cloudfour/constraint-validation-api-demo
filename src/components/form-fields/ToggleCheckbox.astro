@@ -36,8 +36,16 @@ const { checked = false, name, value, label, id } = Astro.props;
     position: absolute;
     z-index: -1;
 
+    &.is-valid ~ .Toggle-indicator {
+      --color-border: var(--color-valid);
+    }
+
+    &.is-invalid ~ .Toggle-indicator {
+      --color-border: var(--color-invalid);
+    }
+
     &:focus ~ .Toggle-indicator {
-      box-shadow: var(--box-shadow-focus);
+      box-shadow: 0 0 0 var(--box-shadow-spread-radius) var(--color-border);
     }
 
     &:checked ~ .Toggle-indicator {

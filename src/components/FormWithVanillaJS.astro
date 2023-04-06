@@ -33,7 +33,7 @@ import ToggleCheckbox from './form-fields/ToggleCheckbox.astro';
 
   <fieldset>
     <legend>Interests</legend>
-    <div class="field-wrapper">
+    <div class="field-wrapper checkbox-field-wrapper">
       <ToggleCheckbox
         id="coding"
         name="interests"
@@ -58,6 +58,14 @@ import ToggleCheckbox from './form-fields/ToggleCheckbox.astro';
 <style lang="scss">
   button {
     margin-block-start: 1.5em;
+  }
+
+  .checkbox-field-wrapper {
+    background-image: var(--bg-input-indicator);
+    background-repeat: no-repeat;
+    background-position: right 0.3em center;
+    background-size: 1.8em;
+    padding-inline-end: 2.2em;
   }
 </style>
 
@@ -124,11 +132,21 @@ import ToggleCheckbox from './form-fields/ToggleCheckbox.astro';
     ) as HTMLElement;
     // Check if any "interests" were checked.
     const isInterestsValid = new FormData(form).getAll('interests').length > 0;
+    const checkboxGroupEls = document.querySelectorAll('[name="interests"]');
+
     // Update the UI.
     if (isInterestsValid) {
+      checkboxGroupEls.forEach((inputEl: HTMLInputElement) => {
+        inputEl.classList.add('is-valid');
+        inputEl.classList.remove('is-invalid');
+      });
       errorEl.textContent = '';
       errorEl.hidden = true;
     } else {
+      checkboxGroupEls.forEach((inputEl: HTMLInputElement) => {
+        inputEl.classList.remove('is-valid');
+        inputEl.classList.add('is-invalid');
+      });
       errorEl.textContent = 'Please choose at least one interest.';
       errorEl.hidden = false;
     }
