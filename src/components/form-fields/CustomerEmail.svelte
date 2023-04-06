@@ -1,4 +1,4 @@
-<label for="customer-email">Enter your email:</label>
+<label for="customer-email">Email:</label>
 <input
   id="customer-email"
   name="customerEmail"

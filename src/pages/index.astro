@@ -10,7 +10,7 @@ import FormWithVanillaJS from '../components/FormWithVanillaJS.astro';
     <h2>Progressively enhanced form</h2>
     <p>
       This form uses browser built-in validation when JS is not available. The
-      form is enhanced with Vanilla JS + the Constraints Validation API when JS
+      form is enhanced with Vanilla JS + the Constraint Validation API when JS
       is available.
     </p>
     <FormWithVanillaJS />
@@ -27,44 +27,116 @@ import FormWithVanillaJS from '../components/FormWithVanillaJS.astro';
   }
 </style>
 
-<style is:global>
+<style is:global lang="scss">
   :root {
     --color-valid: green;
     --color-invalid: red;
+    --color-border: rgba(0, 0, 0, 0.4);
+    --color-border-hover: rgba(0, 0, 0, 0.6);
   }
 
   [hidden] {
     display: none;
   }
 
-  input:user-invalid {
-    border-color: var(--color-invalid);
+  fieldset {
+    border-radius: 0.35rem;
+    padding-block: 1.25em 1.25em;
+    background-color: rgba(256, 256, 256, 0.8);
+    box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.2);
+    border: none;
   }
+
+  fieldset + fieldset {
+    margin-top: 1em;
+  }
+
+  legend {
+    font-weight: bold;
+    text-transform: capitalize;
+    position: relative;
+    padding-inline: 0;
+    top: 1.5em;
+    margin-bottom: 2em;
+  }
+
+  .field-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+  }
+
+  .field-wrapper + .field-wrapper {
+    margin-top: 1.5em;
+  }
+
+  .error {
+    color: var(--color-invalid);
+    font-size: 0.85em;
+    margin: 0;
+  }
+
+  input {
+    padding: 0.5rem;
+    border: 2px solid var(--color-border);
+    border-radius: 0.25rem;
+
+    + .error {
+      display: none;
+    }
+  }
+
+  input.is-valid,
+  input.is-invalid,
+  input:user-invalid,
+  input:user-valid {
+    background-repeat: no-repeat;
+    background-position: right 0.3em center;
+    background-size: 1.8em;
+    padding-inline-end: 2.2em;
+  }
+
+  input.is-valid,
   input:user-valid {
     border-color: var(--color-valid);
+    background-image: url("data:image/svg+xml,%3Csvg width='800' height='800' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M22 11.086v.92a10 10 0 1 1-5.93-9.14M22 4 12 14.01l-3-3' stroke='green' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  }
+
+  /**
+   * 1. Handles an empty form submit since the `:user-invalid` state doesn't work
+   *    on submit.
+   */
+  input.is-invalid, /* 1 */
+  input:user-invalid {
+    border-color: var(--color-invalid);
+    background-image: url("data:image/svg+xml,%3Csvg width='800' height='800' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12 8v4m0 4h.01M22 12c0 5.523-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2s10 4.477 10 10Z' stroke='red' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+
+    + .error {
+      display: block;
+    }
   }
 
   /** 
    * Fallback to `no-js`/`js-enabled` state classes 
    */
-  @supports not selector(:user-invalid) {
-    /**
-     * 1. Delay  the `:invalid` and `:valid` UI states when no JS is available
-     *    - The `placeholder` attribute (can be blank) is required for this to work.
-     *    - Doesn't seem to work on date input elements.
-     *    - Doesn't show invalid state on submit.
-     *    @see https://www.bram.us/2021/01/28/form-validation-you-want-notfocusinvalid-not-invalid/
-     * 2. Use state classes to show the invalid/valid UI states when JS is available
-     */
+  // @supports not selector(:user-invalid) {
+  //   /**
+  //    * 1. Delay  the `:invalid` and `:valid` UI states when no JS is available
+  //    *    - The `placeholder` attribute (can be blank) is required for this to work.
+  //    *    - Doesn't seem to work on date input elements.
+  //    *    - Doesn't show invalid state on submit.
+  //    *    @see https://www.bram.us/2021/01/28/form-validation-you-want-notfocusinvalid-not-invalid/
+  //    * 2. Use state classes to show the invalid/valid UI states when JS is available
+  //    */
 
-    .no-js input:not(:focus):not(:placeholder-shown):invalid, /* 1 */
-    .js-enabled input.is-invalid {
-      border-color: var(--color-invalid);
-    }
+  //   .no-js input:not(:focus):not(:placeholder-shown):invalid, /* 1 */
+  //   .js-enabled input.is-invalid {
+  //     // border-color: var(--color-invalid);
+  //   }
 
-    .no-js input:not(:focus):not(:placeholder-shown):valid, /* 1 */
-    .js-enabled input.is-valid {
-      border-color: var(--color-valid);
-    }
-  }
+  //   .no-js input:not(:focus):not(:placeholder-shown):valid, /* 1 */
+  //   .js-enabled input.is-valid {
+  //     // border-color: var(--color-valid);
+  //   }
+  // }
 </style>

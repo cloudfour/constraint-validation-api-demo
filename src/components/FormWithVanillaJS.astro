@@ -1,54 +1,59 @@
 ---
 import CustomerEmail from './form-fields/CustomerEmail.astro';
 import PurchaseDate from './form-fields/PurchaseDate.astro';
-import Interests from './form-fields/Interests.astro';
 import CustomerNameFirst from './form-fields/CustomerNameFirst.astro';
+import CustomerNameLast from './form-fields/CustomerNameLast.astro';
+import ToggleCheckbox from './form-fields/ToggleCheckbox.astro';
 ---
 
 <form id="demo-form-2" action="" method="post">
   <fieldset>
     <legend>Customer details</legend>
-    <div>
+    <div class="field-wrapper">
       <CustomerNameFirst />
-      <p hidden class="error"></p>
+      <p class="error"></p>
     </div>
-    <div>
+    <div class="field-wrapper">
+      <CustomerNameLast />
+      <p class="error"></p>
+    </div>
+    <div class="field-wrapper">
       <CustomerEmail />
-      <p hidden class="error"></p>
+      <p class="error"></p>
     </div>
   </fieldset>
 
   <fieldset>
     <legend>Purchase details</legend>
-    <PurchaseDate />
-    <p hidden class="error"></p>
+    <div class="field-wrapper">
+      <PurchaseDate />
+      <p class="error"></p>
+    </div>
   </fieldset>
 
   <fieldset>
     <legend>Interests</legend>
-    <Interests />
-    <p hidden class="error js-interests-validation-error"></p>
+    <div class="field-wrapper">
+      <ToggleCheckbox
+        id="coding"
+        name="interests"
+        value="coding"
+        label="Coding"
+      />
+      <ToggleCheckbox id="music" name="interests" value="music" label="Music" />
+      <ToggleCheckbox id="art" name="interests" value="art" label="Art" />
+      <ToggleCheckbox
+        id="sports"
+        name="interests"
+        value="sports"
+        label="Sports"
+      />
+      <p hidden class="error js-interests-validation-error"></p>
+    </div>
   </fieldset>
 
   <button type="submit">Submit</button>
 </form>
-
-<style lang="scss">
-  .error {
-    color: red;
-    display: flex;
-
-    &::before {
-      content: '';
-      // background-image: url("data:image/svg+xml,%3Csvg width='12' height='12' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg' stroke='red' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' fill='none'%3E%3Cpath d='M12 10v3M12 16h0M12.862 4.465l8.252 14.028A1 1 0 0 1 20.252 20H3.748a1 1 0 0 1-.862-1.507l8.252-14.028a1 1 0 0 1 1.724 0Z'/%3E%3C/svg%3E%0A");
-      background-image: url("data:image/svg+xml,%3Csvg height='12' width='12' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 460.775 460.775' xml:space='preserve'%3E%3Cpath fill='red' d='M285.08 230.397 456.218 59.27c6.076-6.077 6.076-15.911 0-21.986L423.511 4.565a15.55 15.55 0 0 0-21.985 0l-171.138 171.14L59.25 4.565a15.551 15.551 0 0 0-21.985 0L4.558 37.284c-6.077 6.075-6.077 15.909 0 21.986l171.138 171.128L4.575 401.505c-6.074 6.077-6.074 15.911 0 21.986l32.709 32.719a15.555 15.555 0 0 0 21.986 0l171.117-171.12 171.118 171.12a15.551 15.551 0 0 0 21.985 0l32.709-32.719c6.074-6.075 6.074-15.909 0-21.986L285.08 230.397z'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: left top 0.1em;
-      padding-inline-start: 1.5em;
-      background-size: 1em;
-    }
-  }
-</style>
 
 <script>
   // Update body JS state class
@@ -73,13 +78,11 @@ import CustomerNameFirst from './form-fields/CustomerNameFirst.astro';
       inputEl.classList.add('is-valid');
       inputEl.classList.remove('is-invalid');
       errorEl.textContent = '';
-      errorEl.hidden = true;
     } else {
       inputEl.classList.remove('is-valid');
       inputEl.classList.add('is-invalid');
       // Use the validation message from the Constraint Validation API.
       errorEl.textContent = inputEl.validationMessage;
-      errorEl.hidden = false;
     }
   };
 
@@ -126,11 +129,11 @@ import CustomerNameFirst from './form-fields/CustomerNameFirst.astro';
     const isInterestsValid = new FormData(form).getAll('interests').length > 0;
     // Update the UI.
     if (isInterestsValid) {
-      errorEl.textContent = 'Please choose at least one interest.';
-      errorEl.hidden = false;
-    } else {
       errorEl.textContent = '';
       errorEl.hidden = true;
+    } else {
+      errorEl.textContent = 'Please choose at least one interest.';
+      errorEl.hidden = false;
     }
     // Return the validation state.
     return isInterestsValid;
@@ -140,15 +143,30 @@ import CustomerNameFirst from './form-fields/CustomerNameFirst.astro';
    * Handler for form `submit` event.
    * @param {SubmitEvent} event
    */
-  const onFormSubmit = (event: SubmitEvent) => {
+  const onSubmit = (event: SubmitEvent) => {
     const areAllConstraintValidationFieldsValid = useConstraintValidationApi();
     const isInterestsValid = validateInterestsCheckboxGroup();
-
     // If any of the validation checks fail, prevent the form from submitting.
     if (!areAllConstraintValidationFieldsValid || !isInterestsValid) {
       event.preventDefault();
     }
   };
 
-  form.addEventListener('submit', onFormSubmit);
+  // Listen for a form `submit` event.
+  form.addEventListener('submit', onSubmit);
+
+  document.querySelectorAll('input').forEach((inputEl) => {
+    inputEl.addEventListener('input', () =>
+      updateValidationUiStateForInput(inputEl as HTMLInputElement)
+    );
+    inputEl.addEventListener('blur', () =>
+      updateValidationUiStateForInput(inputEl as HTMLInputElement)
+    );
+  });
+
+  // The `user-invalid` CSS pseudo-class will stick around on a page refresh.
+  // This ensures that the invalid inputs also get the error message displayed.
+  document.querySelectorAll('input:user-invalid').forEach((inputEl) => {
+    updateValidationUiStateForInput(inputEl as HTMLInputElement);
+  });
 </script>

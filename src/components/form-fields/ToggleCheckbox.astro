@@ -1,0 +1,90 @@
+---
+interface Props {
+  checked?: boolean;
+  id: string;
+  name: string;
+  value: string;
+  label: string;
+}
+const { checked = false, name, value, label, id } = Astro.props;
+---
+
+<label class="Toggle" for={id}>
+  <input
+    id={id}
+    type="checkbox"
+    class="Toggle-state"
+    name={name}
+    value={value}
+    checked={checked}
+  />
+  <span aria-hidden="true" class="Toggle-indicator u-spaceRight06"></span>
+  <span class="Toggle-text">
+    {label ? label : value}
+  </span>
+</label>
+
+<style lang="scss">
+  .Toggle {
+    display: flex;
+    position: relative;
+    align-items: center;
+  }
+
+  .Toggle-state {
+    opacity: 0;
+    position: absolute;
+    z-index: -1;
+
+    &:focus ~ .Toggle-indicator {
+      box-shadow: 0 0 0 2px var(--color-border);
+    }
+
+    &:checked ~ .Toggle-indicator {
+      // background-color: rgba(0, 0, 0, 0.2);
+    }
+
+    &:checked ~ .Toggle-indicator:before {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    ~ .Toggle-indicator::before {
+      background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28' fill='%23777'%3E%3Cpath d='M26.109 8.844c0 .391-.156.781-.438 1.062L12.233 23.344c-.281.281-.672.438-1.062.438s-.781-.156-1.062-.438l-7.781-7.781c-.281-.281-.438-.672-.438-1.062s.156-.781.438-1.062l2.125-2.125c.281-.281.672-.438 1.062-.438s.781.156 1.062.438l4.594 4.609 10.25-10.266c.281-.281.672-.438 1.062-.438s.781.156 1.062.438l2.125 2.125c.281.281.438.672.438 1.062z'/%3E%3C/svg%3E");
+    }
+  }
+
+  .Toggle-indicator {
+    background-color: #fff;
+    border: 2px solid var(--color-border);
+    border-radius: 3px;
+    cursor: pointer;
+    display: inline-block;
+    flex-shrink: 0;
+    height: 1.25em;
+    margin-inline-end: 0.5em;
+    width: 1.25em;
+    position: relative;
+    transition-duration: 0.18s;
+    transition-property: background-color, box-shadow;
+    transition-timing-function: ease;
+
+    &::before {
+      background-position: 50%;
+      background-repeat: no-repeat;
+      background-size: contain;
+      bottom: 0;
+      content: '';
+      left: 0;
+      opacity: 0;
+      position: absolute;
+      right: 0;
+      top: 0;
+      transform: scale(0);
+      transform-origin: center;
+      transition-duration: 0.1s;
+      transition-property: opacity, transform;
+      transition-timing-function: ease;
+    }
+  }
+</style>
