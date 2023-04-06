@@ -55,17 +55,13 @@ import ToggleCheckbox from './form-fields/ToggleCheckbox.astro';
   <button type="submit">Submit</button>
 </form>
 
+<style lang="scss">
+  button {
+    margin-block-start: 1.5em;
+  }
+</style>
+
 <script>
-  // Update body JS state class
-  // @todo Use data attribute
-  document.body.classList.add('js-enabled');
-  document.body.classList.remove('no-js');
-
-  /** @type {HTMLFormElement} */
-  const form: HTMLFormElement = document.querySelector('#demo-form-2');
-  // Disable built-in validation. The Constraint Validation API to be used instead.
-  form.setAttribute('novalidate', 'true');
-
   /**
    * Update the validation UI state for a given input element.
    * @param {HTMLInputElement} inputEl The input element to update the UI state for.
@@ -120,7 +116,8 @@ import ToggleCheckbox from './form-fields/ToggleCheckbox.astro';
    * supported by the Constraint Validation API.
    * @return {boolean} Is the "interests" checkbox group valid?
    */
-  const validateInterestsCheckboxGroup = (): boolean => {
+  const validateInterestsCheckboxGroup = (form: HTMLFormElement): boolean => {
+    console.log('validateInterestsCheckboxGroup');
     // Get the element where the validation error message will be displayed.
     const errorEl = document.querySelector(
       '.js-interests-validation-error'
@@ -145,28 +142,66 @@ import ToggleCheckbox from './form-fields/ToggleCheckbox.astro';
    */
   const onSubmit = (event: SubmitEvent) => {
     const areAllConstraintValidationFieldsValid = useConstraintValidationApi();
-    const isInterestsValid = validateInterestsCheckboxGroup();
+    const isInterestsValid = validateInterestsCheckboxGroup(
+      event.target as HTMLFormElement
+    );
     // If any of the validation checks fail, prevent the form from submitting.
     if (!areAllConstraintValidationFieldsValid || !isInterestsValid) {
       event.preventDefault();
     }
   };
 
-  // Listen for a form `submit` event.
-  form.addEventListener('submit', onSubmit);
+  /**
+   * Initialize validation setup
+   */
+  const init = () => {
+    // Update body JS state class
+    // @todo Use data attribute
+    document.body.classList.add('js-enabled');
+    document.body.classList.remove('no-js');
 
-  document.querySelectorAll('input').forEach((inputEl) => {
-    inputEl.addEventListener('input', () =>
-      updateValidationUiStateForInput(inputEl as HTMLInputElement)
-    );
-    inputEl.addEventListener('blur', () =>
-      updateValidationUiStateForInput(inputEl as HTMLInputElement)
-    );
-  });
+    /** @type {HTMLFormElement} */
+    const form: HTMLFormElement = document.querySelector('#demo-form-2');
+    // Disable built-in validation. The Constraint Validation API to be used instead.
+    form.setAttribute('novalidate', 'true');
+    // Listen for a form `submit` event.
+    form.addEventListener('submit', onSubmit);
 
-  // The `user-invalid` CSS pseudo-class will stick around on a page refresh.
-  // This ensures that the invalid inputs also get the error message displayed.
-  document.querySelectorAll('input:user-invalid').forEach((inputEl) => {
-    updateValidationUiStateForInput(inputEl as HTMLInputElement);
-  });
+    // Set up `blur` validation for the "interests" checkbox group.
+    document
+      .querySelectorAll('input[name="interests"]')
+      .forEach((checkboxEl) => {
+        checkboxEl.addEventListener('blur', () => {
+          // Use a setTimeout to wait for the focus to move to the next element.
+          setTimeout(() => {
+            // Only validate when the user moves focus away from the "interests"
+            // checkbox group.
+            if (document.activeElement.getAttribute('name') !== 'interests') {
+              validateInterestsCheckboxGroup(form);
+            }
+          }, 100);
+        });
+      });
+
+    // Set up `blur` and `input` validation for the inputs that can be validated
+    // with the Constraint Validation API.
+    document.querySelectorAll('.js-validate').forEach((inputEl) => {
+      inputEl.addEventListener('input', (event) =>
+        updateValidationUiStateForInput(event.target as HTMLInputElement)
+      );
+      inputEl.addEventListener('blur', (event) =>
+        updateValidationUiStateForInput(event.target as HTMLInputElement)
+      );
+    });
+
+    // The `user-invalid` CSS pseudo-class will stick around on a page refresh.
+    // This ensures that the invalid inputs also get the error message displayed.
+    document
+      .querySelectorAll('input:user-invalid')
+      .forEach((inputEl: HTMLInputElement) =>
+        updateValidationUiStateForInput(inputEl)
+      );
+  };
+
+  init();
 </script>

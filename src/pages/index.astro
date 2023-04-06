@@ -14,7 +14,11 @@ import FormWithVanillaJS from '../components/FormWithVanillaJS.astro';
       is available.
     </p>
     <FormWithVanillaJS />
-    <h2>Svelte + Vest</h2>
+    <h2><strike>Svelte + Vest</strike></h2>
+    <p>
+      <strong>Ignore this form.</strong> It was used to test a few things, but is
+      not currently working.
+    </p>
     <FormWithSvelteAndVest client:idle />
   </main>
 </Layout>
@@ -33,6 +37,10 @@ import FormWithVanillaJS from '../components/FormWithVanillaJS.astro';
     --color-invalid: red;
     --color-border: rgba(0, 0, 0, 0.4);
     --color-border-hover: rgba(0, 0, 0, 0.6);
+
+    --box-shadow-spread-radius: 2px;
+    --box-shadow-focus: 0 0 0 var(--box-shadow-spread-radius)
+      var(--color-border);
   }
 
   [hidden] {
@@ -58,6 +66,35 @@ import FormWithVanillaJS from '../components/FormWithVanillaJS.astro';
     padding-inline: 0;
     top: 1.5em;
     margin-bottom: 2em;
+  }
+
+  button {
+    display: block;
+    margin-inline: auto;
+    padding: 1rem 4rem;
+    border: 2px solid var(--color-border);
+    border-radius: 0.25rem;
+    background-color: #777;
+    color: white;
+    font-size: 1.1em;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition-property: background-color, box-shadow;
+    transition-duration: 0.2s;
+    transition-timing-function: ease-out;
+    outline: none;
+
+    &:focus,
+    &:hover {
+      background-color: #fff;
+      color: var(--color-border-hover);
+    }
+
+    &:focus {
+      --box-shadow-spread-radius: 4px;
+      box-shadow: 0 0 0 var(--box-shadow-spread-radius) var(--color-border);
+    }
   }
 
   .field-wrapper {

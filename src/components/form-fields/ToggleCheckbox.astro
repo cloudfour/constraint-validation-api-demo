@@ -37,7 +37,7 @@ const { checked = false, name, value, label, id } = Astro.props;
     z-index: -1;
 
     &:focus ~ .Toggle-indicator {
-      box-shadow: 0 0 0 2px var(--color-border);
+      box-shadow: var(--box-shadow-focus);
     }
 
     &:checked ~ .Toggle-indicator {
