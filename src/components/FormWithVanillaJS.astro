@@ -56,12 +56,21 @@ import ToggleCheckbox from './form-fields/ToggleCheckbox.astro';
 </form>
 
 <style lang="scss">
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+
+    @media ((prefers-color-scheme: dark)) {
+      background-color: #000;
+    }
+  }
   button {
     margin-block-start: 1.5em;
   }
 
   .checkbox-field-wrapper {
-    background-image: var(--bg-input-indicator);
+    background-image: var(--bg-valid);
     background-repeat: no-repeat;
     background-position: right 0.3em center;
     background-size: 1.8em;
@@ -150,6 +159,7 @@ import ToggleCheckbox from './form-fields/ToggleCheckbox.astro';
       errorEl.textContent = 'Please choose at least one interest.';
       errorEl.hidden = false;
     }
+
     // Return the validation state.
     return isInterestsValid;
   };

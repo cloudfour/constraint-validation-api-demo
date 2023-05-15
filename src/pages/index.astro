@@ -14,12 +14,12 @@ import FormWithVanillaJS from '../components/FormWithVanillaJS.astro';
       is available.
     </p>
     <FormWithVanillaJS />
-    <h2><strike>Svelte + Vest</strike></h2>
+    <!-- <h2><strike>Svelte + Vest</strike></h2>
     <p>
       <strong>Ignore this form.</strong> It was used to test a few things, but is
       not currently working.
     </p>
-    <FormWithSvelteAndVest client:idle />
+    <FormWithSvelteAndVest client:idle /> -->
   </main>
 </Layout>
 
@@ -38,12 +38,21 @@ import FormWithVanillaJS from '../components/FormWithVanillaJS.astro';
     --color-border: rgba(0, 0, 0, 0.4);
     --color-border-hover: rgba(0, 0, 0, 0.6);
 
+    @media (prefers-color-scheme: dark) {
+      --color-valid: lime;
+      --color-invalid: red;
+      --color-border: rgba(255, 255, 255, 0.6);
+      --color-border-hover: rgba(255, 255, 255, 0.8);
+    }
+
     --box-shadow-spread-radius: 2px;
     --box-shadow-focus: 0 0 0 var(--box-shadow-spread-radius)
       var(--color-border);
 
     --bg-valid: url("data:image/svg+xml,%3Csvg width='800' height='800' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M22 11.086v.92a10 10 0 1 1-5.93-9.14M22 4 12 14.01l-3-3' stroke='green' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
     --bg-invalid: url("data:image/svg+xml,%3Csvg width='800' height='800' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12 8v4m0 4h.01M22 12c0 5.523-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2s10 4.477 10 10Z' stroke='red' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+
+    color-scheme: light dark;
   }
 
   [hidden] {
@@ -53,9 +62,13 @@ import FormWithVanillaJS from '../components/FormWithVanillaJS.astro';
   fieldset {
     border-radius: 0.35rem;
     padding-block: 1.25em 1.25em;
-    background-color: rgba(256, 256, 256, 0.8);
+    background-color: rgba(255, 255, 255, 0.8);
     box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.2);
     border: none;
+
+    @media (prefers-color-scheme: dark) {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
   }
 
   fieldset + fieldset {
@@ -136,9 +149,9 @@ import FormWithVanillaJS from '../components/FormWithVanillaJS.astro';
     }
   }
 
-  input.is-valid,
   input.is-invalid,
   input:user-invalid,
+  input.is-valid,
   input:user-valid {
     background-image: var(--bg-input-indicator);
     background-repeat: no-repeat;
