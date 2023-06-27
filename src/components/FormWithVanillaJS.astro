@@ -70,17 +70,18 @@ import ToggleCheckbox from './form-fields/ToggleCheckbox.astro';
   }
 
   .checkbox-field-wrapper {
+    background-image: var(--bg-validation-state);
     background-repeat: no-repeat;
     background-position: right 0.3em center;
     background-size: 1.8em;
     padding-inline-end: 2.2em;
 
     &.is-valid {
-      background-image: var(--bg-valid);
+      --bg-validation-state: var(--bg-valid);
     }
 
     &.is-invalid {
-      background-image: var(--bg-invalid);
+      --bg-validation-state: var(--bg-invalid);
     }
   }
 </style>
@@ -218,14 +219,15 @@ import ToggleCheckbox from './form-fields/ToggleCheckbox.astro';
       .querySelectorAll('input[name="interests"]')
       .forEach((checkboxEl) => {
         checkboxEl.addEventListener('blur', () => {
-          // Use a setTimeout to wait for the focus to move to the next element.
+          // Use a setTimeout to wait for the focus to move to the next element
+          // before validating the checkbox group.
           setTimeout(() => {
-            // Only validate when the user moves focus away from the "interests"
+            // Only validate when the focus is no longer on the "interests"
             // checkbox group.
             if (document.activeElement.getAttribute('name') !== 'interests') {
               validateInterestsCheckboxGroup(form);
             }
-          }, 100);
+          }, 0);
         });
       });
 
