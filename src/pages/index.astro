@@ -226,28 +226,4 @@ import FormWithVanillaJS from '../components/FormWithVanillaJS.astro';
       }
     }
   }
-
-  /** 
-   * Fallback to `no-js`/`js-enabled` state classes 
-   */
-  // @supports not selector(:user-invalid) {
-  //   /**
-  //    * 1. Delay  the `:invalid` and `:valid` UI states when no JS is available
-  //    *    - The `placeholder` attribute (can be blank) is required for this to work.
-  //    *    - Doesn't seem to work on date input elements.
-  //    *    - Doesn't show invalid state on submit.
-  //    *    @see https://www.bram.us/2021/01/28/form-validation-you-want-notfocusinvalid-not-invalid/
-  //    * 2. Use state classes to show the invalid/valid UI states when JS is available
-  //    */
-
-  //   .no-js input:not(:focus):not(:placeholder-shown):invalid, /* 1 */
-  //   .js-enabled input.is-invalid {
-  //     // border-color: var(--color-invalid);
-  //   }
-
-  //   .no-js input:not(:focus):not(:placeholder-shown):valid, /* 1 */
-  //   .js-enabled input.is-valid {
-  //     // border-color: var(--color-valid);
-  //   }
-  // }
 </style>
