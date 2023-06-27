@@ -155,6 +155,24 @@ import FormWithVanillaJS from '../components/FormWithVanillaJS.astro';
       --box-shadow-spread-radius: var(--box-shadow-spread-radius-focus);
     }
 
+    @mixin background-validation-indicator {
+      background-image: var(--bg-input-indicator);
+      background-repeat: no-repeat;
+      background-position: right 0.3em center;
+      background-size: 1.8em;
+      padding-inline-end: 2.2em;
+    }
+
+    @mixin valid-input-state {
+      --color-border: var(--color-valid);
+      --bg-input-indicator: var(--bg-valid);
+    }
+
+    @mixin invalid-input-state {
+      --color-border: var(--color-invalid);
+      --bg-input-indicator: var(--bg-invalid);
+    }
+
     /**
      * Handle browsers that DO NOT support the `:user-invalid` CSS pseudo class
      */
@@ -164,19 +182,13 @@ import FormWithVanillaJS from '../components/FormWithVanillaJS.astro';
       .no-js & {
         &:valid,
         &:invalid {
-          background-image: var(--bg-input-indicator);
-          background-repeat: no-repeat;
-          background-position: right 0.3em center;
-          background-size: 1.8em;
-          padding-inline-end: 2.2em;
+          @include background-validation-indicator;
         }
         &:valid {
-          --color-border: var(--color-valid);
-          --bg-input-indicator: var(--bg-valid);
+          @include valid-input-state;
         }
         &:invalid {
-          --color-border: var(--color-invalid);
-          --bg-input-indicator: var(--bg-invalid);
+          @include invalid-input-state;
         }
       }
     }
@@ -187,42 +199,28 @@ import FormWithVanillaJS from '../components/FormWithVanillaJS.astro';
     @supports selector(:user-invalid) {
       &:user-valid,
       &:user-invalid {
-        background-image: var(--bg-input-indicator);
-        background-repeat: no-repeat;
-        background-position: right 0.3em center;
-        background-size: 1.8em;
-        padding-inline-end: 2.2em;
+        @include background-validation-indicator;
       }
       &:user-valid {
-        --color-border: var(--color-valid);
-        --bg-input-indicator: var(--bg-valid);
+        @include valid-input-state;
       }
       &:user-invalid {
-        --color-border: var(--color-invalid);
-        --bg-input-indicator: var(--bg-invalid);
+        @include invalid-input-state;
       }
-    }
-
-    &.is-valid,
-    &.is-invalid {
-      background-image: var(--bg-input-indicator);
-      background-repeat: no-repeat;
-      background-position: right 0.3em center;
-      background-size: 1.8em;
-      padding-inline-end: 2.2em;
     }
 
     /**
      * Provide an enhanced experience when JS is enabled. 
      */
+    &.is-valid,
+    &.is-invalid {
+      @include background-validation-indicator;
+    }
     &.is-valid {
-      --color-border: var(--color-valid);
-      --bg-input-indicator: var(--bg-valid);
+      @include valid-input-state;
     }
     &.is-invalid {
-      --color-border: var(--color-invalid);
-      --bg-input-indicator: var(--bg-invalid);
-
+      @include invalid-input-state;
       + .error {
         display: block;
       }
