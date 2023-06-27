@@ -137,6 +137,7 @@ import FormWithVanillaJS from '../components/FormWithVanillaJS.astro';
 
   input {
     --box-shadow-spread-radius: var(--box-shadow-spread-radius-default);
+    font-size: 1rem;
     padding: 0.5rem;
     border: 2px solid var(--color-border);
     border-radius: 0.25rem;
@@ -153,36 +154,78 @@ import FormWithVanillaJS from '../components/FormWithVanillaJS.astro';
     &:focus-visible {
       --box-shadow-spread-radius: var(--box-shadow-spread-radius-focus);
     }
-  }
 
-  input.is-invalid,
-  input:user-invalid,
-  input.is-valid,
-  input:user-valid {
-    background-image: var(--bg-input-indicator);
-    background-repeat: no-repeat;
-    background-position: right 0.3em center;
-    background-size: 1.8em;
-    padding-inline-end: 2.2em;
-  }
+    /**
+     * Handle browsers that DO NOT support the `:user-invalid` CSS pseudo class
+     */
+    @supports not selector(:user-invalid) {
+      // Only use `:valid`/`:invalid` when JS is disabled.
+      // The experience is progressively-enhanced when JS is enabled.
+      .no-js & {
+        &:valid,
+        &:invalid {
+          background-image: var(--bg-input-indicator);
+          background-repeat: no-repeat;
+          background-position: right 0.3em center;
+          background-size: 1.8em;
+          padding-inline-end: 2.2em;
+        }
+        &:valid {
+          --color-border: var(--color-valid);
+          --bg-input-indicator: var(--bg-valid);
+        }
+        &:invalid {
+          --color-border: var(--color-invalid);
+          --bg-input-indicator: var(--bg-invalid);
+        }
+      }
+    }
 
-  input.is-valid,
-  input:user-valid {
-    --color-border: var(--color-valid);
-    --bg-input-indicator: var(--bg-valid);
-  }
+    /**
+     * Handle browsers that DO support the `:user-invalid` CSS pseudo class
+     */
+    @supports selector(:user-invalid) {
+      &:user-valid,
+      &:user-invalid {
+        background-image: var(--bg-input-indicator);
+        background-repeat: no-repeat;
+        background-position: right 0.3em center;
+        background-size: 1.8em;
+        padding-inline-end: 2.2em;
+      }
+      &:user-valid {
+        --color-border: var(--color-valid);
+        --bg-input-indicator: var(--bg-valid);
+      }
+      &:user-invalid {
+        --color-border: var(--color-invalid);
+        --bg-input-indicator: var(--bg-invalid);
+      }
+    }
 
-  /**
-   * 1. Handles an empty form submit since the `:user-invalid` state doesn't work
-   *    on submit.
-   */
-  input.is-invalid, /* 1 */
-  input:user-invalid {
-    --color-border: var(--color-invalid);
-    --bg-input-indicator: var(--bg-invalid);
+    &.is-valid,
+    &.is-invalid {
+      background-image: var(--bg-input-indicator);
+      background-repeat: no-repeat;
+      background-position: right 0.3em center;
+      background-size: 1.8em;
+      padding-inline-end: 2.2em;
+    }
 
-    + .error {
-      display: block;
+    /**
+     * Provide an enhanced experience when JS is enabled. 
+     */
+    &.is-valid {
+      --color-border: var(--color-valid);
+      --bg-input-indicator: var(--bg-valid);
+    }
+    &.is-invalid {
+      --color-border: var(--color-invalid);
+      --bg-input-indicator: var(--bg-invalid);
+
+      + .error {
+        display: block;
+      }
     }
   }
 
