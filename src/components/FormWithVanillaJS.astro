@@ -149,7 +149,11 @@ import ToggleCheckbox from './form-fields/ToggleCheckbox.astro';
     ) as HTMLElement;
     // Are any of the "interests" checkboxes checked?
     const isInterestsValid = new FormData(form).getAll('interests').length > 0;
-    const checkboxGroupEls = document.querySelectorAll('[name="interests"]');
+    // Get all the "interests" checkboxes.
+    const interestsCheckboxInputEls = document.querySelectorAll(
+      'input[name="interests"]'
+    );
+    // Get the wrapper element for the "interests" checkbox group.
     const checkboxGroupWrapperEl = document.querySelector(
       '.checkbox-field-wrapper'
     );
@@ -157,24 +161,26 @@ import ToggleCheckbox from './form-fields/ToggleCheckbox.astro';
     // Update the UI.
     if (isInterestsValid) {
       // Need to place the `is-valid` class higher up in the DOM tree to
-      // show a single validation UI state (not per checkbox)
+      // show a validation state icon (one icon for the group of checkboxes).
       checkboxGroupWrapperEl.classList.add('is-valid');
       checkboxGroupWrapperEl.classList.remove('is-invalid');
-
-      checkboxGroupEls.forEach((inputEl: HTMLInputElement) => {
-        inputEl.classList.add('is-valid');
-        inputEl.classList.remove('is-invalid');
+      // Update the validation UI state for each checkbox.
+      interestsCheckboxInputEls.forEach((checkboxInputEl: HTMLInputElement) => {
+        checkboxInputEl.classList.add('is-valid');
+        checkboxInputEl.classList.remove('is-invalid');
       });
+      // When the checkbox group is valid, hide the error message.
       errorEl.textContent = '';
       errorEl.hidden = true;
     } else {
       checkboxGroupWrapperEl.classList.remove('is-valid');
       checkboxGroupWrapperEl.classList.add('is-invalid');
-
-      checkboxGroupEls.forEach((inputEl: HTMLInputElement) => {
-        inputEl.classList.remove('is-valid');
-        inputEl.classList.add('is-invalid');
+      // Update the validation UI state for each checkbox.
+      interestsCheckboxInputEls.forEach((checkboxInputEl: HTMLInputElement) => {
+        checkboxInputEl.classList.remove('is-valid');
+        checkboxInputEl.classList.add('is-invalid');
       });
+      // When the checkbox group is invalid, show the error message.
       errorEl.textContent = 'Please choose at least one interest.';
       errorEl.hidden = false;
     }
@@ -203,7 +209,8 @@ import ToggleCheckbox from './form-fields/ToggleCheckbox.astro';
    */
   const init = () => {
     // Update body JS state class
-    // @todo Use data attribute
+    // TODO Use data attribute
+    // TODO Is this still a thing?
     document.body.classList.add('js-enabled');
     document.body.classList.remove('no-js');
 
@@ -213,23 +220,6 @@ import ToggleCheckbox from './form-fields/ToggleCheckbox.astro';
     form.setAttribute('novalidate', 'true');
     // Listen for a form `submit` event.
     form.addEventListener('submit', onSubmit);
-
-    // Set up `blur` validation for the "interests" checkbox group.
-    document
-      .querySelectorAll('input[name="interests"]')
-      .forEach((checkboxEl) => {
-        checkboxEl.addEventListener('blur', () => {
-          // Use a setTimeout to wait for the focus to move to the next element
-          // before validating the checkbox group.
-          setTimeout(() => {
-            // Only validate when the focus is no longer on the "interests"
-            // checkbox group.
-            if (document.activeElement.getAttribute('name') !== 'interests') {
-              validateInterestsCheckboxGroup(form);
-            }
-          }, 0);
-        });
-      });
 
     // Set up `blur` and `input` validation for the inputs that can be validated
     // with the Constraint Validation API.
@@ -241,6 +231,23 @@ import ToggleCheckbox from './form-fields/ToggleCheckbox.astro';
         updateValidationUiStateForInput(event.target as HTMLInputElement)
       );
     });
+
+    // Set up `blur` validation for the "interests" checkbox group.
+    document
+      .querySelectorAll('input[name="interests"]')
+      .forEach((checkboxInputEl) => {
+        checkboxInputEl.addEventListener('blur', () => {
+          // Use a setTimeout to wait for the focus to move to the next element
+          // before validating the checkbox group.
+          setTimeout(() => {
+            // Only validate when the focus is no longer on the "interests"
+            // checkbox group.
+            if (document.activeElement.getAttribute('name') !== 'interests') {
+              validateInterestsCheckboxGroup(form);
+            }
+          }, 0);
+        });
+      });
 
     // The `user-invalid` CSS pseudo-class is not supported in all browsers.
     try {

@@ -45,7 +45,7 @@ const { checked = false, name, value, label, id } = Astro.props;
     }
 
     &:focus ~ .Toggle-indicator {
-      box-shadow: 0 0 0 var(--box-shadow-spread-radius) var(--color-border);
+      --box-shadow-spread-radius: var(--box-shadow-spread-radius-focus);
     }
 
     &:checked ~ .Toggle-indicator {
@@ -63,9 +63,11 @@ const { checked = false, name, value, label, id } = Astro.props;
   }
 
   .Toggle-indicator {
+    --box-shadow-spread-radius: var(--box-shadow-spread-radius-default);
     background-color: var(--color-background-input);
     border: 2px solid var(--color-border);
     border-radius: 3px;
+    box-shadow: 0 0 0 var(--box-shadow-spread-radius) var(--color-border);
     cursor: pointer;
     display: inline-block;
     flex-shrink: 0;
