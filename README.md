@@ -8,7 +8,8 @@
 - The `type` value first
 - Other validation attributes
 - Mention `:invalid` and other pseudo-states(?)
-- f
+  - Note about using `:user-invalid` and `:user-valid` instead of `:invalid` and `:valid`
+  - Thread: https://cloudfour.slack.com/archives/C03ECJ38E/p1680650240215439
 - Pros
 - Cons
 - Summary?
@@ -90,7 +91,7 @@ Special thanks to Tyler Sticka for challenging me to think about form validation
 
 ## Notes
 
-### Why not `content` "x"?
+### Why not `content:` "x"?
 
 It will be read aloud by screen reader. We don't want that.
 
@@ -130,3 +131,43 @@ Seems like it can't be done.
 ## SVG
 
 - https://www.svgrepo.com/svg/12848/x-symbol
+
+## JS/No JS/`:user-invalid`
+
+JS/No JS: 2 use cases
+Supports `:user-invalid`/No support: 2 use cases
+
+Total use cases: 4
+
+---
+
+### No JS + no `:user-invalid` support
+
+- Do not use `:user-invalid`
+- Use `:invalid`
+  - `:invalid` styles show on page load (before the user has a chance to fill out the form field)
+
+### JS + no `:user-invalid` support
+
+- Do not use `:user-invalid`
+- Want to disable `:invalid` styles
+  - Don't want to show error states on page load
+- Use `.is-invalid`
+  - Shows custom error messages
+  - Shows input error state on `blur`/`input`/`submit`
+
+### No JS + `:user-invalid` support
+
+- Do not use `:invalid`
+  - Don't want to show error states on page load
+- Use `:user-invalid`
+  - Only shows error state after user interacts with input
+
+### JS + `:user-invalid` support
+
+- Do not use `:invalid`
+  - Don't want to show error states on page load
+- Use `:user-invalid`
+  - Only shows error state after user interacts with input
+- Use `.is-invalid`
+  - Shows custom error messages
