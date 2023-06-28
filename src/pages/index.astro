@@ -179,7 +179,7 @@ import FormWithVanillaJS from '../components/FormWithVanillaJS.astro';
     @supports not selector(:user-invalid) {
       // Only use `:valid`/`:invalid` when JS is disabled.
       // The experience is progressively-enhanced when JS is enabled.
-      .no-js & {
+      [data-js-enabled='false'] & {
         &:valid,
         &:invalid {
           @include input-background-validation-indicator;

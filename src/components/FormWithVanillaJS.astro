@@ -208,11 +208,8 @@ import ToggleCheckbox from './form-fields/ToggleCheckbox.astro';
    * Initialize validation setup
    */
   const init = () => {
-    // Update body JS state class
-    // TODO Use data attribute
-    // TODO Is this still a thing?
-    document.body.classList.add('js-enabled');
-    document.body.classList.remove('no-js');
+    // Update the JS enabled state
+    document.body.dataset.jsEnabled = 'true';
 
     /** @type {HTMLFormElement} */
     const form: HTMLFormElement = document.querySelector('#demo-form-2');
