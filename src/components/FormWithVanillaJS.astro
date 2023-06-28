@@ -233,16 +233,13 @@ import ToggleCheckbox from './form-fields/ToggleCheckbox.astro';
     document
       .querySelectorAll('input[name="interests"]')
       .forEach((checkboxInputEl) => {
-        checkboxInputEl.addEventListener('blur', () => {
-          // Use a setTimeout to wait for the focus to move to the next element
-          // before validating the checkbox group.
-          setTimeout(() => {
-            // Only validate when the focus is no longer on the "interests"
-            // checkbox group.
-            if (document.activeElement.getAttribute('name') !== 'interests') {
-              validateInterestsCheckboxGroup(form);
-            }
-          }, 0);
+        checkboxInputEl.addEventListener('blur', (event: FocusEvent) => {
+          // Only validate the checkbox group if the user is no longer focused
+          // on any of the checkboxes.
+          const activeEl = event.relatedTarget as HTMLElement;
+          if (activeEl?.getAttribute('name') !== 'interests') {
+            validateInterestsCheckboxGroup(form);
+          }
         });
       });
 
