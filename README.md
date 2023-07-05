@@ -1,6 +1,7 @@
 # Demo: Progressively enhanced form validation
 
-- Intro
+- Uses browser built-in form validation when JS is not available
+- Uses JavaScript and the Constraint Validation API to enhance the experience when JS is available
 
 ## Base experience (no JavaScript)
 
@@ -95,11 +96,11 @@ Special thanks to Tyler Sticka for challenging me to think about form validation
 
 It will be read aloud by screen reader. We don't want that.
 
-### Why not [`HTMLInputElement.reportValidity()`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/reportValidity)?
+### Why not [`HTMLInputElement.reportValidity`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/reportValidity)?
 
-Because `HTMLInputElement.reportValidity()` will also report (show the error message) to the user with the default browser validation UI styles. In our case, we don't want that. We only want to _check_ validity.
+Because `HTMLInputElement.reportValidity` will also report (show the error message) to the user with the default browser validation UI styles. In our case, we don't want that. We only want to _check_ validity.
 
-- [`HTMLInputElement.checkValidity()`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/checkValidity).
+- [`HTMLInputElement.checkValidity`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/checkValidity).
 
 ### Localized validation error messages?
 
