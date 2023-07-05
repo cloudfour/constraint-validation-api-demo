@@ -92,19 +92,18 @@ import ToggleCheckbox from './form-fields/ToggleCheckbox.astro';
    * @param {HTMLInputElement} inputEl The input element to update the UI state for.
    */
   const updateValidationUiStateForInput = (inputEl: HTMLInputElement) => {
+    // Check if the input is valid using the Constraint Validation API.
+    // https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/checkValidity
+    const isInputValid = inputEl.checkValidity();
+    // Update the valid/invalid state classes.
+    inputEl.classList.toggle('is-valid', isInputValid);
+    inputEl.classList.toggle('is-invalid', !isInputValid);
     // Get the error message element for the current input element.
     const errorEl = inputEl.nextElementSibling as HTMLElement;
-    // Check if the input is valid using the Constraint Validation API.
-    if (inputEl.checkValidity()) {
-      inputEl.classList.add('is-valid');
-      inputEl.classList.remove('is-invalid');
-      errorEl.textContent = '';
-    } else {
-      inputEl.classList.remove('is-valid');
-      inputEl.classList.add('is-invalid');
-      // Use the validation message from the Constraint Validation API.
-      errorEl.textContent = inputEl.validationMessage;
-    }
+    // Use the browser built-in localized validation message.
+    // Will be an empty string if input constraints are satisfied.
+    // https://developer.mozilla.org/en-US/docs/Web/API/HTMLObjectElement/validationMessage
+    errorEl.textContent = inputEl.validationMessage;
   };
 
   /**
