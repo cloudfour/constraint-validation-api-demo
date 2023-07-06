@@ -98,11 +98,13 @@ import ToggleCheckbox from './form-fields/ToggleCheckbox.astro';
     // Update the valid/invalid state classes.
     inputEl.classList.toggle('is-valid', isInputValid);
     inputEl.classList.toggle('is-invalid', !isInputValid);
-    // Get the error message element for the current input element.
+    // By design, the default built-in error messages are not shown, the code
+    // needs to display custom error messages manually.
+    // 1. Get the error message element for the current input element.
+    // 2. Use the browser built-in localized validation message. Will be
+    //    an empty string if input constraints are satisfied.
+    //    https://developer.mozilla.org/en-US/docs/Web/API/HTMLObjectElement/validationMessage
     const errorEl = inputEl.nextElementSibling as HTMLElement;
-    // Use the browser built-in localized validation message.
-    // Will be an empty string if input constraints are satisfied.
-    // https://developer.mozilla.org/en-US/docs/Web/API/HTMLObjectElement/validationMessage
     errorEl.textContent = inputEl.validationMessage;
   };
 
