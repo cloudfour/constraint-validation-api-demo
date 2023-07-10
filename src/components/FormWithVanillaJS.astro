@@ -100,8 +100,8 @@ import ToggleCheckbox from './form-fields/ToggleCheckbox.astro';
     // Update the valid/invalid state classes.
     inputEl.classList.toggle('is-valid', isInputValid);
     inputEl.classList.toggle('is-invalid', !isInputValid);
-    // By design, the default built-in error messages are not shown, the code
-    // needs to display custom error messages manually.
+    // When JS is enabled, the default built-in error messages are not shown,
+    // the code needs to set the error messages manually.
     // 1. Get the error message element for the current input element.
     // 2. Use the browser built-in localized validation message. Will be
     //    an empty string if input constraints are satisfied.
@@ -211,12 +211,13 @@ import ToggleCheckbox from './form-fields/ToggleCheckbox.astro';
    * Initialize validation setup
    */
   const init = () => {
-    // Update the JS enabled state
+    // Update the JS enabled state.
     document.body.dataset.jsEnabled = 'true';
 
     /** @type {HTMLFormElement} */
     const form: HTMLFormElement = document.querySelector('#demo-form-2');
-    // Disable built-in validation. The Constraint Validation API to be used instead.
+    // Disable built-in form submit validation.
+    // The Constraint Validation API will be used instead.
     form.setAttribute('novalidate', 'true');
     // Listen for a form `submit` event.
     form.addEventListener('submit', onSubmit);
@@ -246,10 +247,12 @@ import ToggleCheckbox from './form-fields/ToggleCheckbox.astro';
         });
       });
 
-    // The `user-invalid` CSS pseudo-class is not supported in all browsers.
+    // This is wrapped in a try/catch so as not to throw an error in unsupported browsers.
     try {
-      // The `user-invalid` CSS pseudo-class will stick around on a page refresh.
-      // This ensures that the invalid inputs also get the error message displayed.
+      // The `:user-invalid` CSS pseudo-class state sticks around on a page
+      // refresh in Firefox (and maybe other browsers in the future). The code
+      // below ensures that the invalid inputs also get their error message
+      // displayed appropriately.
       document
         .querySelectorAll('input:user-invalid')
         .forEach((inputEl: HTMLInputElement) =>
