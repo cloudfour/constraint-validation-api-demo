@@ -237,6 +237,12 @@ import ToggleCheckbox from './form-fields/ToggleCheckbox.astro';
     document
       .querySelectorAll('input[name="interests"]')
       .forEach((checkboxInputEl) => {
+        // Updates the UI state for the checkbox group when checked/unchecked
+        checkboxInputEl.addEventListener('change', (event: Event) => {
+          validateInterestsCheckboxGroup(form);
+        });
+        // Handles the case where the user tabs into the checkbox group and then
+        // tabs out without checking any checkboxes.
         checkboxInputEl.addEventListener('blur', (event: FocusEvent) => {
           // Only validate the checkbox group if the user is no longer focused
           // on any of the checkboxes.
