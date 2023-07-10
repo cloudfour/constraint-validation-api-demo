@@ -6,7 +6,9 @@ const oneYearAgoToday = new Date();
 oneYearAgoToday.setUTCFullYear(oneYearAgoToday.getUTCFullYear() - 1);
 ---
 
-<label for="purchase-date">Purchase date:</label>
+<label for="purchase-date"
+  >Purchase date (required, must be within the last year)</label
+>
 <input
   id="purchase-date"
   name="purchaseDate"
