@@ -172,3 +172,15 @@ Total use cases: 4
   - Only shows error state after user interacts with input
 - Use `.is-invalid`
   - Shows custom error messages
+
+## Talk about complex constraints
+
+https://developer.mozilla.org/en-US/docs/Web/HTML/Constraint_validation#complex_constraints_using_the_constraint_validation_api
+
+## Live validation UX
+
+Give it some thought: https://www.smashingmagazine.com/2022/09/inline-validation-web-forms-ux/
+
+## Use `validity()` to write custom error messages!
+
+https://developer.mozilla.org/en-US/docs/Learn/Forms/Form_validation#the_constraint_validation_api
