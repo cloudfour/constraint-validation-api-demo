@@ -144,10 +144,6 @@ import FormWithVanillaJS from '../components/FormWithVanillaJS.astro';
     transition-duration: 0.2s;
     transition-timing-function: ease-out;
 
-    + .error {
-      display: none;
-    }
-
     &:focus-visible {
       --box-shadow-spread-radius: var(--box-shadow-spread-radius-focus);
     }
@@ -218,9 +214,6 @@ import FormWithVanillaJS from '../components/FormWithVanillaJS.astro';
     }
     &.is-invalid {
       @include input-invalid-state;
-      + .error {
-        display: block;
-      }
     }
   }
 </style>

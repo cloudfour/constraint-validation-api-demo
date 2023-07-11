@@ -12,15 +12,15 @@ import ToggleCheckbox from './form-fields/ToggleCheckbox.astro';
     <div class="field-wrapper">
       <CustomerNameFirst />
       <!-- TODO Use hidden attribute -->
-      <p class="error"></p>
+      <p hidden class="error"></p>
     </div>
     <div class="field-wrapper">
       <CustomerNameLast />
-      <p class="error"></p>
+      <p hidden class="error"></p>
     </div>
     <div class="field-wrapper">
       <CustomerEmail />
-      <p class="error"></p>
+      <p hidden class="error"></p>
     </div>
   </fieldset>
 
@@ -28,7 +28,7 @@ import ToggleCheckbox from './form-fields/ToggleCheckbox.astro';
     <legend>Purchase details</legend>
     <div class="field-wrapper">
       <PurchaseDate />
-      <p class="error"></p>
+      <p hidden class="error"></p>
     </div>
   </fieldset>
 
@@ -108,6 +108,8 @@ import ToggleCheckbox from './form-fields/ToggleCheckbox.astro';
     //    https://developer.mozilla.org/en-US/docs/Web/API/HTMLObjectElement/validationMessage
     const errorEl = inputEl.nextElementSibling as HTMLElement;
     errorEl.textContent = inputEl.validationMessage;
+    // Show/hide the error message depending on the input's validity.
+    errorEl.hidden = isInputValid;
   };
 
   /**
