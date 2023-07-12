@@ -1,24 +1,11 @@
-# Demo: Progressively enhanced form validation
+# Series: Progressively Enhancing the Form Validation Experience
 
-- Uses browser built-in form validation when JS is not available
-- Uses JavaScript and the Constraint Validation API to enhance the experience when JS is available
-
-## What?
-
-- Progressively enhance built-in browser validation (with vanilla JS)
-- Progressively enhance with UI framework (like Svelte) and validation abstraction (like Vest)
+- Part 1: Use browser built-in form validation (no JS)
+- Part 2: Use JavaScript and the Constraint Validation API to enhance the experience
+- Part 3: How to validate a checkbox group (not supported by built-in features)
+- Part 4: Use the `ValidityState` object to write custom error messages, use Vest for validation abstraction
 
 ---
-
-Browsers nowadays have built-in form validation (or "constraint validation") features that are super helpful for validating form controls.
-
-From the [MDN docs regarding constraint validation](https://developer.mozilla.org/en-US/docs/Web/HTML/Constraint_validation):
-
-> [HTML5](https://developer.mozilla.org/en-US/docs/Glossary/HTML5) introduced new mechanisms for forms: it added new semantic types for the [`<input>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input) element and _constraint validation_ to ease the work of checking the form content on the client side. Basic, usual constraints can be checked, without the need for JavaScript, by setting new attributes; more complex constraints can be tested using the Constraint Validation API.
-
-This article will explore some examples of building a progressively enhanced form control validation experience. We'll look at a base (non-JavaScript) experience as well as an enhanced version that uses JavaScript and the [Constraint Validation API](https://developer.mozilla.org/en-US/docs/Learn/Forms/Form_validation#validating_forms_using_javascript). We'll even take a peek at how we might use a UI framework ([Svelte](https://svelte.dev/)) in addition to a framework-agnostic form validation library ([Vest](https://vestjs.dev/)) to help abstract the UI logic that handles rendering the validation error messages.
-
-The MDN Web Docs have great [built-in form validation examples](https://developer.mozilla.org/en-US/docs/Learn/Forms/Form_validation#built-in_form_validation_examples), but we can take a look at a basic example below:
 
 ## Special thanks
 
@@ -57,9 +44,7 @@ Seems like it can't be done.
 
 ## Resources
 
-- [Validation-related attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Constraint_validation#validation-related_attributes)
 - [Complex constraints using the Constraint Validation API](https://developer.mozilla.org/en-US/docs/Web/HTML/Constraint_validation#complex_constraints_using_the_constraint_validation_api)
-- [HTMLObjectElement.validationMessage](https://developer.mozilla.org/en-US/docs/Web/API/HTMLObjectElement/validationMessage)
 
 ## SVG
 
