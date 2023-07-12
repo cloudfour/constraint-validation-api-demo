@@ -16,12 +16,207 @@ const { title } = Astro.props;
     <title>{title}</title>
   </head>
   <body data-js-enabled="false">
-    <slot />
+    <main>
+      <slot />
+    </main>
   </body>
 </html>
 <style is:global lang="scss">
   :root {
+    --box-shadow-spread-radius-default: 0px;
+    --box-shadow-spread-radius-focus: 4px;
+
+    --color-valid: green;
+    --color-invalid: red;
+    --color-border: rgba(0, 0, 0, 0.4);
+    --color-border-hover: rgba(0, 0, 0, 0.6);
+    --color-background-input: white;
+
+    --bg-valid: url("data:image/svg+xml,%3Csvg width='800' height='800' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M22 11.086v.92a10 10 0 1 1-5.93-9.14M22 4 12 14.01l-3-3' stroke='green' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    --bg-invalid: url("data:image/svg+xml,%3Csvg width='800' height='800' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12 8v4m0 4h.01M22 12c0 5.523-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2s10 4.477 10 10Z' stroke='red' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+
+    @media (prefers-color-scheme: dark) {
+      --color-valid: lime;
+      --color-invalid: #ff6c6c;
+      --color-border: rgba(255, 255, 255, 0.6);
+      --color-border-hover: rgba(255, 255, 255, 0.8);
+      --color-background-input: rgb(43, 42, 51);
+
+      --bg-valid: url("data:image/svg+xml,%3Csvg width='800' height='800' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M22 11.086v.92a10 10 0 1 1-5.93-9.14M22 4 12 14.01l-3-3' stroke='lime' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      --bg-invalid: url("data:image/svg+xml,%3Csvg width='800' height='800' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12 8v4m0 4h.01M22 12c0 5.523-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2s10 4.477 10 10Z' stroke='%23ff6c6c' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    }
+
+    color-scheme: light dark;
   }
+
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+
+    @media ((prefers-color-scheme: dark)) {
+      background-color: #000;
+    }
+  }
+
+  fieldset {
+    border-radius: 0.35rem;
+    padding-block: 1.25em 1.25em;
+    background-color: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.2);
+    border: none;
+
+    @media (prefers-color-scheme: dark) {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+  }
+
+  fieldset + fieldset {
+    margin-top: 1em;
+  }
+
+  legend {
+    font-weight: bold;
+    text-transform: capitalize;
+    position: relative;
+    padding-inline: 0;
+    top: 1.5em;
+    margin-bottom: 2em;
+  }
+
+  button {
+    --box-shadow-spread-radius: var(--box-shadow-spread-radius-default);
+    box-shadow: 0 0 0 var(--box-shadow-spread-radius) var(--color-border);
+    display: block;
+    margin-inline: auto;
+    padding: 1rem 4rem;
+    border: 2px solid var(--color-border);
+    border-radius: 0.25rem;
+    background-color: #777;
+    color: white;
+    font-size: 1.1em;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition-property: background-color, box-shadow;
+    transition-duration: 0.2s;
+    transition-timing-function: ease-out;
+    outline: none;
+
+    // TODO The dark mode hover styles need some finessing
+    &:focus-visible,
+    &:hover {
+      background-color: #fff;
+      color: var(--color-border-hover);
+    }
+
+    &:focus-visible,
+    &:active {
+      --box-shadow-spread-radius: var(--box-shadow-spread-radius-focus);
+    }
+  }
+
+  .field-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+  }
+
+  .field-wrapper + .field-wrapper {
+    margin-top: 1.5em;
+  }
+
+  .error {
+    color: var(--color-invalid);
+    font-size: 0.85em;
+    margin: 0;
+  }
+
+  input {
+    --box-shadow-spread-radius: var(--box-shadow-spread-radius-default);
+    font-size: 1rem;
+    padding: 0.5rem;
+    border: 2px solid var(--color-border);
+    border-radius: 0.25rem;
+    box-shadow: 0 0 0 var(--box-shadow-spread-radius) var(--color-border);
+    outline: none;
+    transition-property: border-color, box-shadow;
+    transition-duration: 0.2s;
+    transition-timing-function: ease-out;
+
+    &:focus-visible {
+      --box-shadow-spread-radius: var(--box-shadow-spread-radius-focus);
+    }
+
+    @mixin input-background-validation-indicator {
+      background-image: var(--bg-input-indicator);
+      background-repeat: no-repeat;
+      background-position: right 0.3em center;
+      background-size: 1.8em;
+      padding-inline-end: 2.2em;
+    }
+
+    @mixin input-valid-state {
+      --color-border: var(--color-valid);
+      --bg-input-indicator: var(--bg-valid);
+    }
+
+    @mixin input-invalid-state {
+      --color-border: var(--color-invalid);
+      --bg-input-indicator: var(--bg-invalid);
+    }
+
+    /**
+     * Handle browsers that DO NOT support the `:user-invalid` CSS pseudo class
+     */
+    @supports not selector(:user-invalid) {
+      // Only use `:valid`/`:invalid` when JS is disabled.
+      // The experience is progressively-enhanced when JS is enabled.
+      [data-js-enabled='false'] & {
+        &:valid,
+        &:invalid {
+          @include input-background-validation-indicator;
+        }
+        &:valid {
+          @include input-valid-state;
+        }
+        &:invalid {
+          @include input-invalid-state;
+        }
+      }
+    }
+
+    /**
+     * Handle browsers that DO support the `:user-invalid` CSS pseudo class
+     */
+    @supports selector(:user-invalid) {
+      &:user-valid,
+      &:user-invalid {
+        @include input-background-validation-indicator;
+      }
+      &:user-valid {
+        @include input-valid-state;
+      }
+      &:user-invalid {
+        @include input-invalid-state;
+      }
+    }
+
+    /**
+     * Provide an enhanced and consistent experience when JS is enabled. 
+     */
+    &.is-valid,
+    &.is-invalid {
+      @include input-background-validation-indicator;
+    }
+    &.is-valid {
+      @include input-valid-state;
+    }
+    &.is-invalid {
+      @include input-invalid-state;
+    }
+  }
+
   html {
     font-family: system-ui, sans-serif;
     @media (prefers-color-scheme: light) {
@@ -31,5 +226,36 @@ const { title } = Astro.props;
   code {
     font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
       DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
+  }
+
+  main {
+    margin: auto;
+    padding: 1.5rem;
+    max-width: 30rem;
+  }
+
+  .pseudo-label {
+    display: block;
+    margin-block-end: 0.7em;
+  }
+
+  button[type='submit'] {
+    margin-block-start: 1.5em;
+  }
+
+  .checkbox-field-wrapper {
+    background-image: var(--bg-validation-state);
+    background-repeat: no-repeat;
+    background-position: right 0.3em center;
+    background-size: 1.8em;
+    padding-inline-end: 2.2em;
+
+    &.is-valid {
+      --bg-validation-state: var(--bg-valid);
+    }
+
+    &.is-invalid {
+      --bg-validation-state: var(--bg-invalid);
+    }
   }
 </style>
