@@ -158,12 +158,11 @@ import ToggleCheckbox from './form-fields/ToggleCheckbox.astro';
     // Update the JS enabled state.
     document.body.dataset.jsEnabled = 'true';
 
-    /** @type {HTMLFormElement} */
+    // Get the form element.
     const formEl: HTMLFormElement = document.querySelector('#demo-form-2');
-    // Disable built-in form submit validation.
-    // The Constraint Validation API will be used instead.
-    formEl.setAttribute('novalidate', 'true');
-    // Listen for a form `submit` event.
+    // Turn off default form submit validation by adding `novalidate` attribute.
+    formEl.setAttribute('novalidate', '');
+    // Use form `submit` event to validate with Constraint Validation API instead.
     formEl.addEventListener('submit', onSubmit);
 
     // Set up `blur` and `input` validation for the inputs that can be validated
