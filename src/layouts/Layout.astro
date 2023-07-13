@@ -1,9 +1,10 @@
 ---
 export interface Props {
   title: string;
+  mainClass?: string;
 }
 
-const { title } = Astro.props;
+const { title, mainClass = '' } = Astro.props;
 ---
 
 <!DOCTYPE html>
@@ -16,7 +17,7 @@ const { title } = Astro.props;
     <title>{title}</title>
   </head>
   <body data-js-enabled="false">
-    <main>
+    <main class={mainClass}>
       <slot />
     </main>
   </body>
@@ -232,6 +233,10 @@ const { title } = Astro.props;
     margin: auto;
     padding: 1.5rem;
     max-width: 30rem;
+
+    &.layout-wide {
+      max-width: 40rem;
+    }
   }
 
   .pseudo-label {
