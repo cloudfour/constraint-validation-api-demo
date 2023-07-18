@@ -9,6 +9,12 @@ interface Props {
 const { checked = false, name, value, label, id } = Astro.props;
 ---
 
+<!-- 
+  TODO Wrapped label bad for accessibility? 
+  > Unfortunately, an implicit label is not handled correctly by all assistive 
+  > technologies, even if for and id attributes are used.
+  https://css-tricks.com/html-inputs-and-labels-a-love-story/
+-->
 <label class="Toggle" for={id}>
   <input
     id={id}

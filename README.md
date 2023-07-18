@@ -57,3 +57,10 @@ https://developer.mozilla.org/en-US/docs/Web/HTML/Constraint_validation#complex_
 ## Use `validity()` to write custom error messages!
 
 https://developer.mozilla.org/en-US/docs/Learn/Forms/Form_validation#the_constraint_validation_api
+
+## Radio group required attribute
+
+If you add a `required` attribute to any radio input in a radio group, then a
+radio group choice is required. This is not the case with a checkbox group.
+
+https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/radio#required
