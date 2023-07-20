@@ -88,7 +88,8 @@ import ToggleCheckbox from './form-fields/ToggleCheckbox.astro';
    * @return {boolean} Is the "interests" checkbox group valid?
    */
   const validateInterestsCheckboxGroup = (): boolean => {
-    // Get the element where the validation error message will be displayed.
+
+    // Get the element where the validation error message are displayed.
     const errorEl = document.querySelector(
       '.js-interests-validation-error'
     ) as HTMLElement;
@@ -96,14 +97,17 @@ import ToggleCheckbox from './form-fields/ToggleCheckbox.astro';
     const interestsCheckboxInputEls = document.querySelectorAll(
       'input[name="interests"]'
     );
+    // Get all the checked "interests" checkboxes.
+    const checkedInterestsCheckboxInputEls = document.querySelectorAll(
+      'input[name="interests"]:checked'
+    );
     // Get the wrapper element for the "interests" checkbox group.
     const checkboxGroupWrapperEl = document.querySelector(
       '.js-checkbox-field-wrapper'
     );
 
     // Are any of the "interests" checkboxes checked?
-    const isInterestsValid =
-      document.querySelectorAll('input[name="interests"]:checked').length > 0;
+    const isInterestsValid = checkedInterestsCheckboxInputEls.length > 0;
     // Need to place the `is-valid` class higher up in the DOM tree to
     // show a validation state icon (one icon for the group of checkboxes).
     checkboxGroupWrapperEl.classList.toggle('is-valid', isInterestsValid);
@@ -177,14 +181,15 @@ import ToggleCheckbox from './form-fields/ToggleCheckbox.astro';
       );
     });
 
-    // Set up `blur` validation for the "interests" checkbox group.
+    // Set up `blur` and `change` validation for the "interests" checkbox group.
     document
       .querySelectorAll('input[name="interests"]')
       .forEach((checkboxInputEl) => {
         // Updates the UI state for the checkbox group when checked/unchecked
-        checkboxInputEl.addEventListener('change', (event: Event) => {
-          validateInterestsCheckboxGroup();
-        });
+        checkboxInputEl.addEventListener(
+          'change',
+          validateInterestsCheckboxGroup
+        );
         // Handles the case where the user tabs into the checkbox group and then
         // tabs out without checking any checkboxes.
         checkboxInputEl.addEventListener('blur', (event: FocusEvent) => {
