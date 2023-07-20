@@ -9,38 +9,41 @@ interface Props {
 const { checked = false, name, value, label, id } = Astro.props;
 ---
 
-<!-- 
-  TODO Wrapped label bad for accessibility? 
-  > Unfortunately, an implicit label is not handled correctly by all assistive 
-  > technologies, even if for and id attributes are used.
-  https://css-tricks.com/html-inputs-and-labels-a-love-story/
--->
-<label class="Toggle" for={id}>
-  <input
-    id={id}
-    type="checkbox"
-    class="Toggle-state"
-    name={name}
-    value={value}
-    checked={checked}
-  />
-  <span aria-hidden="true" class="Toggle-indicator u-spaceRight06"></span>
-  <span class="Toggle-text">
+<div class="Toggle-wrapper">
+  <div class="Toggle">
+    <input
+      id={id}
+      type="checkbox"
+      class="Toggle-input"
+      name={name}
+      value={value}
+      checked={checked}
+    />
+    <span aria-hidden="true" class="Toggle-indicator u-spaceRight06"></span>
+  </div>
+  <label for={id} class="Toggle-label">
     {label ? label : value}
-  </span>
-</label>
+  </label>
+</div>
 
 <style lang="scss">
+  .Toggle-wrapper {
+    display: flex;
+  }
+
   .Toggle {
     display: flex;
     position: relative;
     align-items: center;
   }
 
-  .Toggle-state {
+  .Toggle-input {
     opacity: 0;
     position: absolute;
-    z-index: -1;
+    z-index: 1;
+    width: 1.25em;
+    height: 1.25em;
+    cursor: pointer;
 
     &.is-valid ~ .Toggle-indicator {
       --color-border: var(--color-valid);
@@ -52,6 +55,12 @@ const { checked = false, name, value, label, id } = Astro.props;
 
     &:focus ~ .Toggle-indicator {
       --box-shadow-spread-radius: var(--box-shadow-spread-radius-focus);
+    }
+
+    &:active ~ .Toggle-indicator {
+      --box-shadow-spread-radius: calc(
+        var(--box-shadow-spread-radius-focus) * 0.5
+      );
     }
 
     &:checked ~ .Toggle-indicator {
