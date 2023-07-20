@@ -117,7 +117,7 @@ import ToggleCheckbox from './form-fields/ToggleCheckbox.astro';
       checkboxInputEl.classList.toggle('is-valid', isInterestsValid);
       checkboxInputEl.classList.toggle('is-invalid', !isInterestsValid);
     });
-    // Update the error message.
+    // Update the validation error message.
     errorEl.textContent = isInterestsValid
       ? ''
       : 'At least one interest is required.';
