@@ -11,7 +11,6 @@
   id="purchase-date"
   name="purchaseDate"
   type="date"
-  placeholder=""
   required
   min={getISOFormattedDate(oneYearAgoToday)}
   max={getISOFormattedDate(new Date())}

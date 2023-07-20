@@ -1,10 +1,15 @@
-<!-- TODO Remove "required" from assistive technologies -->
-<label for="customer-first-name">First name (required)</label>
+<label for="customer-first-name">
+  First name <span aria-hidden="true">(required)</span>
+</label>
 <input
   id="customer-first-name"
   name="customerFirstName"
   class="js-validate"
   type="text"
-  placeholder=""
   required
+  aria-required="true"
+  aria-describedby="customer-first-name-error"
 />
+<p hidden id="customer-first-name-error" class="error">
+  <!-- Text content via JS -->
+</p>

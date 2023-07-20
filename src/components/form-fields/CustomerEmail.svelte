@@ -3,7 +3,6 @@
   id="customer-email"
   name="customerEmail"
   type="email"
-  placeholder=""
   required
   minlength="2"
 />

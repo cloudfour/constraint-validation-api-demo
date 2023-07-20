@@ -11,15 +11,12 @@ import ToggleCheckbox from './form-fields/ToggleCheckbox.astro';
     <legend>Customer details</legend>
     <div class="field-wrapper">
       <CustomerNameFirst />
-      <p hidden class="error"></p>
     </div>
     <div class="field-wrapper">
       <CustomerNameLast />
-      <p hidden class="error"></p>
     </div>
     <div class="field-wrapper">
       <CustomerEmail />
-      <p hidden class="error"></p>
     </div>
   </fieldset>
 
@@ -27,7 +24,6 @@ import ToggleCheckbox from './form-fields/ToggleCheckbox.astro';
     <legend>Purchase details</legend>
     <div class="field-wrapper">
       <PurchaseDate />
-      <p hidden class="error"></p>
     </div>
   </fieldset>
 
@@ -65,9 +61,14 @@ import ToggleCheckbox from './form-fields/ToggleCheckbox.astro';
     // Check if the input is valid using the Constraint Validation API.
     // https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/checkValidity
     const isInputValid = inputEl.checkValidity();
+
     // Update the valid/invalid state classes.
     inputEl.classList.toggle('is-valid', isInputValid);
     inputEl.classList.toggle('is-invalid', !isInputValid);
+
+    // Update the `aria-invalid` attribute status.
+    inputEl.setAttribute('aria-invalid', (!isInputValid).toString());
+
     // When JS is enabled, the default built-in error messages are not shown,
     // the code needs to set the error messages manually.
     // 1. Get the error message element for the current input element.

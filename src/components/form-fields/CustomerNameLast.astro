@@ -1,9 +1,15 @@
-<label for="customer-last-name">Last name (required)</label>
+<label for="customer-last-name">
+  Last name <span aria-hidden="true">(required)</span>
+</label>
 <input
   id="customer-last-name"
   name="customerLastName"
   class="js-validate"
   type="text"
-  placeholder=""
   required
+  aria-required="true"
+  aria-describedby="customer-last-name-error"
 />
+<p hidden id="customer-last-name-error" class="error">
+  <!-- Text content via JS -->
+</p>
