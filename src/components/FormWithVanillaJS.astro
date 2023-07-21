@@ -62,11 +62,12 @@ import ToggleCheckbox from './form-fields/ToggleCheckbox.astro';
     // https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/checkValidity
     const isInputValid = inputEl.checkValidity();
 
-    // Update the valid/invalid state classes.
+    // Toggle valid/invalid state CSS class hooks.
     inputEl.classList.toggle('is-valid', isInputValid);
     inputEl.classList.toggle('is-invalid', !isInputValid);
 
-    // Update the `aria-invalid` attribute status.
+    // Update the `aria-invalid` state when validation occurs
+    // https://www.w3.org/WAI/WCAG21/Techniques/aria/ARIA21
     inputEl.setAttribute('aria-invalid', (!isInputValid).toString());
 
     // When JS is enabled, the default built-in error messages are not shown,
@@ -170,15 +171,19 @@ import ToggleCheckbox from './form-fields/ToggleCheckbox.astro';
     // Use form `submit` event to validate with Constraint Validation API instead.
     formEl.addEventListener('submit', onSubmit);
 
-    // Set up `blur` and `input` validation for the inputs that can be validated
-    // with the Constraint Validation API.
     document.querySelectorAll('.js-validate').forEach((inputEl) => {
+      // Set up `blur` and `input` validation for the inputs that can be validated
+      // with the Constraint Validation API.
       inputEl.addEventListener('input', (event) =>
         updateValidationStateForInput(event.target as HTMLInputElement)
       );
       inputEl.addEventListener('blur', (event) =>
         updateValidationStateForInput(event.target as HTMLInputElement)
       );
+      // Adding `aria-invalid` provides users who use assistive technology
+      // with a way to know if the input is invalid.
+      // Should initially be set to `false` before interaction/validity check.
+      inputEl.setAttribute('aria-invalid', 'false');
     });
 
     // Set up `blur` and `change` validation for the "interests" checkbox group.
