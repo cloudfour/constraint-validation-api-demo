@@ -57,7 +57,7 @@ import ToggleCheckbox from './form-fields/ToggleCheckbox.astro';
    * Update the validation UI state for a given input element.
    * @param {HTMLInputElement} inputEl The input element to update the UI state for.
    */
-  const updateValidationUiStateForInput = (inputEl: HTMLInputElement) => {
+  const updateValidationStateForInput = (inputEl: HTMLInputElement) => {
     // Check if the input is valid using the Constraint Validation API.
     // https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/checkValidity
     const isInputValid = inputEl.checkValidity();
@@ -143,7 +143,7 @@ import ToggleCheckbox from './form-fields/ToggleCheckbox.astro';
     // with the Constraint Validation API.
     document
       .querySelectorAll('.js-validate')
-      .forEach(updateValidationUiStateForInput);
+      .forEach(updateValidationStateForInput);
     // The `isFormValid` boolean respresents all inputs that can be
     // validated via the Constraint Validation API.
     const isFormValid = formEl.checkValidity();
@@ -174,10 +174,10 @@ import ToggleCheckbox from './form-fields/ToggleCheckbox.astro';
     // with the Constraint Validation API.
     document.querySelectorAll('.js-validate').forEach((inputEl) => {
       inputEl.addEventListener('input', (event) =>
-        updateValidationUiStateForInput(event.target as HTMLInputElement)
+        updateValidationStateForInput(event.target as HTMLInputElement)
       );
       inputEl.addEventListener('blur', (event) =>
-        updateValidationUiStateForInput(event.target as HTMLInputElement)
+        updateValidationStateForInput(event.target as HTMLInputElement)
       );
     });
 
@@ -218,7 +218,7 @@ import ToggleCheckbox from './form-fields/ToggleCheckbox.astro';
       // displayed appropriately.
       document
         .querySelectorAll('input:user-invalid')
-        .forEach(updateValidationUiStateForInput);
+        .forEach(updateValidationStateForInput);
     } catch (error) {
       console.warn('The `:user-invalid` CSS pseudo-class is not supported.');
     }
