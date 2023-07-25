@@ -172,6 +172,20 @@ const { title, mainClass = '' } = Astro.props;
     }
 
     /**
+     * Handle browsers that DO support the `:user-invalid` CSS pseudo class
+     */
+    &:user-valid,
+    &:user-invalid {
+      @include input-background-validation-indicator;
+    }
+    &:user-valid {
+      @include input-valid-state;
+    }
+    &:user-invalid {
+      @include input-invalid-state;
+    }
+
+    /**
      * Handle browsers that DO NOT support the `:user-invalid` CSS pseudo class
      */
     @supports not selector(:user-invalid) {
@@ -188,22 +202,6 @@ const { title, mainClass = '' } = Astro.props;
         &:invalid {
           @include input-invalid-state;
         }
-      }
-    }
-
-    /**
-     * Handle browsers that DO support the `:user-invalid` CSS pseudo class
-     */
-    @supports selector(:user-invalid) {
-      &:user-valid,
-      &:user-invalid {
-        @include input-background-validation-indicator;
-      }
-      &:user-valid {
-        @include input-valid-state;
-      }
-      &:user-invalid {
-        @include input-invalid-state;
       }
     }
 
