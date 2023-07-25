@@ -67,20 +67,12 @@ https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/radio#required
 
 ## Accessibility
 
-### General form
-
-Use this!
-
-- https://www.smashingmagazine.com/2023/02/guide-accessible-form-validation
-
-Note, consider accessibility UX when using Live Validation, read this great article.
-
-Others
-
-- https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-errormessage
-
 ### Checkbox group
 
 - https://www.w3.org/WAI/ARIA/apg/patterns/checkbox/
 - https://blog.tenon.io/accessible-validation-of-checkbox-and-radiobutton-groups/
 - https://dequeuniversity.com/rules/axe/3.5/checkboxgroup
+
+## Use "Wrapping Up" section to close out
+
+Better (IMO) than "Conclusion" or "Summary".
