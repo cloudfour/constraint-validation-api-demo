@@ -40,10 +40,12 @@ Seems like it can't be done.
 > renders the input invalid, so that when you try to submit the form, submission
 > fails and the custom error message is displayed.
 
-- [Validating forms without a built-in API](https://developer.mozilla.org/en-US/docs/Learn/Forms/Form_validation#validating_forms_without_a_built-in_api)
+- [Validating forms without a built-in API](https://developer.mozilla.org/en-US/docs/Learn/Forms/Form_validation#validating_forms_without_a_built-in_api) (Use this for the checkbox group article)
 
 ## Resources
 
+- [Designing Better Error Messages UX](https://www.smashingmagazine.com/2022/08/error-messages-ux-design/)
+  - Include this in Part 2
 - [Complex constraints using the Constraint Validation API](https://developer.mozilla.org/en-US/docs/Web/HTML/Constraint_validation#complex_constraints_using_the_constraint_validation_api)
 
 ## SVG
@@ -76,3 +78,13 @@ https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/radio#required
 ## Use "Wrapping Up" section to close out
 
 Better (IMO) than "Conclusion" or "Summary".
+
+## Warning! Server-side validation is still required
+
+> Warning: Never trust data passed to your server from the client. Even if your form is validating correctly and preventing malformed input on the client-side, a malicious user can still alter the network request.
+
+From: https://developer.mozilla.org/en-US/docs/Learn/Forms/Form_validation#what_is_form_validation
+
+## TODO
+
+- Add aria-live to all error messages
