@@ -31,6 +31,7 @@ import ToggleCheckbox from './form-fields/ToggleCheckbox.astro';
     <legend>Interests</legend>
     <span class="pseudo-label">Choose at least one interest below.</span>
     <div class="field-wrapper checkbox-field-wrapper js-checkbox-field-wrapper">
+      <p hidden class="error js-interests-validation-error"></p>
       <ToggleCheckbox
         id="coding"
         name="interests"
@@ -45,7 +46,6 @@ import ToggleCheckbox from './form-fields/ToggleCheckbox.astro';
         value="sports"
         label="Sports"
       />
-      <p hidden class="error js-interests-validation-error"></p>
     </div>
   </fieldset>
 
@@ -76,7 +76,7 @@ import ToggleCheckbox from './form-fields/ToggleCheckbox.astro';
     // 2. Use the browser built-in localized validation message. Will be
     //    an empty string if input constraints are satisfied.
     //    https://developer.mozilla.org/en-US/docs/Web/API/HTMLObjectElement/validationMessage
-    const errorEl = inputEl.nextElementSibling as HTMLElement;
+    const errorEl = inputEl.previousElementSibling as HTMLElement;
     errorEl.textContent = inputEl.validationMessage;
     // Show/hide the error message depending on the input's validity.
     errorEl.hidden = isInputValid;

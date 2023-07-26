@@ -1,6 +1,9 @@
 <label for="customer-first-name">
   First name <span aria-hidden="true">(required)</span>
 </label>
+<p hidden id="customer-first-name-error" class="error">
+  <!-- Text content via JS -->
+</p>
 <input
   id="customer-first-name"
   name="customerFirstName"
@@ -9,6 +12,3 @@
   required
   aria-describedby="customer-first-name-error"
 />
-<p hidden id="customer-first-name-error" class="error">
-  <!-- Text content via JS -->
-</p>

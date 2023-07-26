@@ -1,6 +1,9 @@
 <label for="customer-email">
   Email <span aria-hidden="true">(required)</span>
 </label>
+<p hidden id="customer-email-error" class="error" aria-live="polite">
+  <!-- Text content via JS -->
+</p>
 <input
   id="customer-email"
   name="customerEmail"
@@ -10,6 +13,3 @@
   minlength="2"
   aria-describedby="customer-email-error"
 />
-<p hidden id="customer-email-error" class="error" aria-live="polite">
-  <!-- Text content via JS -->
-</p>
