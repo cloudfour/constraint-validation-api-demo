@@ -30,11 +30,17 @@ import ToggleCheckbox from './form-fields/ToggleCheckbox.astro';
     </div>
   </fieldset>
 
-  <fieldset>
-    <legend>Interests</legend>
-    <span class="pseudo-label">Choose at least one interest below.</span>
+  <!-- TODO Dynamically update aria-invalid -->
+  <fieldset aria-required="true" aria-invalid="true">
+    <legend>
+      Interests <span aria-hidden="true" class="hint">(required)</span>
+      <span class="visually-hidden js-interests-legend-error">
+        <!-- Text content via JS -->
+      </span>
+    </legend>
+    <!-- <span class="pseudo-label">Choose at least one interest below.</span> -->
     <div class="field-wrapper checkbox-field-wrapper js-checkbox-field-wrapper">
-      <p hidden class="error js-interests-validation-error">
+      <p hidden aria-hidden="true" class="error js-interests-visual-error">
         <!-- Text content via JS -->
       </p>
       <ToggleCheckbox
@@ -99,9 +105,17 @@ import ToggleCheckbox from './form-fields/ToggleCheckbox.astro';
 
     // An animated GIF showing a mouse click selecting/unselecting the "Coding" interest checkbox that triggers a log message, "Validate the 'interests' checkbox group" on change.
 
-    // Get the element where the validation error message are displayed.
-    const errorEl = document.querySelector(
-      '.js-interests-validation-error'
+    // The legend error element is used to provide an inclusive experience for
+    // users who use assistive technology. When a checkbox is in focus, the error
+    // message is read out loud since the error message is in the legend.
+    // The legend error element is hidden from sighted users.
+    // https://blog.tenon.io/accessible-validation-of-checkbox-and-radiobutton-groups/#dynamicallyinjectingtheerrortextintothelegendoursolution
+    const legendErrorEl = document.querySelector(
+      '.js-interests-legend-error'
+    ) as HTMLElement;
+    // The visual error message is for sighted users.
+    const visualErrorEl = document.querySelector(
+      '.js-interests-visual-error'
     ) as HTMLElement;
     // Get all the "interests" checkboxes.
     const interestsCheckboxInputEls = document.querySelectorAll(
@@ -112,27 +126,32 @@ import ToggleCheckbox from './form-fields/ToggleCheckbox.astro';
       '.js-checkbox-field-wrapper'
     );
 
-    // Are any of the "interests" checkboxes checked?
+    // Are any of the "interests" checkboxes checked? At least one is required.
     const formData = new FormData(formEl);
-    const isInterestsValid = formData.getAll('interests').length > 0;
+    const isValid = formData.getAll('interests').length > 0;
+
     // Need to place the `is-valid` class higher up in the DOM tree to
     // show a validation state icon (one icon for the group of checkboxes).
-    checkboxGroupWrapperEl.classList.toggle('is-valid', isInterestsValid);
-    checkboxGroupWrapperEl.classList.toggle('is-invalid', !isInterestsValid);
+    checkboxGroupWrapperEl.classList.toggle('is-valid', isValid);
+    checkboxGroupWrapperEl.classList.toggle('is-invalid', !isValid);
     // Update the validation UI state for each checkbox.
     interestsCheckboxInputEls.forEach((checkboxInputEl: HTMLInputElement) => {
-      checkboxInputEl.classList.toggle('is-valid', isInterestsValid);
-      checkboxInputEl.classList.toggle('is-invalid', !isInterestsValid);
+      checkboxInputEl.classList.toggle('is-valid', isValid);
+      checkboxInputEl.classList.toggle('is-invalid', !isValid);
     });
+
     // Update the validation error message.
-    errorEl.textContent = isInterestsValid
-      ? ''
-      : 'At least one interest is required.';
-    // Show/hide the error message depending on the checkbox group's validity.
-    errorEl.hidden = isInterestsValid;
+    const errorMsg = isValid ? '' : 'Select at least one interest.';
+
+    // The error message is the same for both the legend and the visual error.
+    legendErrorEl.textContent = errorMsg;
+    visualErrorEl.textContent = errorMsg;
+
+    // Show/hide the visual error message depending on the checkbox group's validity.
+    visualErrorEl.hidden = isValid;
 
     // Return the validation state.
-    return isInterestsValid;
+    return isValid;
   };
 
   /**
