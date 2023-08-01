@@ -9,7 +9,9 @@
 
 ## Special thanks
 
-Special thanks to Tyler Sticka for challenging me to think about form validation from a different perspective. At some point, the story I created around form validation was one that immediately jumped to using JavaScript without considering the Constraint Validation API. In retrospect, it seems silly not to use the Constraint Validation API when the form validation requires JavaScript; no need to re-invent the wheel! Thanks for always challenging me and giving me the opportunity to find and embrace the challenge for continued growth.
+### Part 3
+
+Thank you to the A11Y Slack community (especially Juliette Alexandria, Joe Schunk, and Adrian Roselli) for providing feedback on the accessibility of a checkbox group validation solution.
 
 ---
 
@@ -44,9 +46,13 @@ Seems like it can't be done.
 
 ## Resources
 
-- [Designing Better Error Messages UX](https://www.smashingmagazine.com/2022/08/error-messages-ux-design/)
-  - Include this in Part 2
 - [Complex constraints using the Constraint Validation API](https://developer.mozilla.org/en-US/docs/Web/HTML/Constraint_validation#complex_constraints_using_the_constraint_validation_api)
+
+### Part 3 resources
+
+- [Support for Marking Radio Buttons Required, Invalid](https://adrianroselli.com/2022/02/support-for-marking-radio-buttons-required-invalid.html)
+- https://twitter.com/aardrian/status/1225185061668098048
+- https://twitter.com/aardrian/status/1253053177395625984
 
 ## SVG
 
@@ -74,6 +80,7 @@ https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/radio#required
 - https://www.w3.org/WAI/ARIA/apg/patterns/checkbox/
 - https://blog.tenon.io/accessible-validation-of-checkbox-and-radiobutton-groups/
 - https://dequeuniversity.com/rules/axe/3.5/checkboxgroup
+- https://design-system.service.gov.uk/components/checkboxes/#error-messages
 
 ## Use "Wrapping Up" section to close out
 
@@ -85,6 +92,10 @@ Better (IMO) than "Conclusion" or "Summary".
 
 From: https://developer.mozilla.org/en-US/docs/Learn/Forms/Form_validation#what_is_form_validation
 
-## TODO
+## Examples of video ideas
 
-- Add aria-live to all error messages
+- https://twitter.com/jlengstorf/status/1684624174889984000
+
+## Respond to tweet with my article?
+
+- https://twitter.com/EvansKwofie5/status/1684876036343762945?s=20
