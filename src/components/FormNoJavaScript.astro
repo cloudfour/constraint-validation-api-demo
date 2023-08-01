@@ -11,15 +11,12 @@ import ToggleCheckbox from './form-fields/ToggleCheckbox.astro';
     <legend>Customer details</legend>
     <div class="field-wrapper">
       <CustomerNameFirst />
-      <p hidden class="error"></p>
     </div>
     <div class="field-wrapper">
       <CustomerNameLast />
-      <p hidden class="error"></p>
     </div>
     <div class="field-wrapper">
       <CustomerEmail />
-      <p hidden class="error"></p>
     </div>
   </fieldset>
 
@@ -27,14 +24,12 @@ import ToggleCheckbox from './form-fields/ToggleCheckbox.astro';
     <legend>Purchase details</legend>
     <div class="field-wrapper">
       <PurchaseDate />
-      <p hidden class="error"></p>
     </div>
   </fieldset>
 
   <fieldset>
-    <legend>Interests</legend>
-    <span class="pseudo-label">Choose at least one interest below.</span>
-    <div class="field-wrapper checkbox-field-wrapper js-checkbox-field-wrapper">
+    <legend>Choose at least one interest</legend>
+    <div class="field-wrapper checkbox-field-wrapper">
       <ToggleCheckbox
         id="coding"
         name="interests"
@@ -49,7 +44,6 @@ import ToggleCheckbox from './form-fields/ToggleCheckbox.astro';
         value="sports"
         label="Sports"
       />
-      <p hidden class="error js-interests-validation-error"></p>
     </div>
   </fieldset>
 
