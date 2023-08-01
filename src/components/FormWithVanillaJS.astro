@@ -30,8 +30,7 @@ import ToggleCheckbox from './form-fields/ToggleCheckbox.astro';
     </div>
   </fieldset>
 
-  <!-- TODO Dynamically update aria-invalid -->
-  <fieldset aria-required="true" aria-invalid="true">
+  <fieldset aria-required="true" class="js-checkbox-fieldset">
     <legend>
       Interests <span aria-hidden="true" class="hint">(required)</span>
       <span class="visually-hidden js-interests-legend-error">
@@ -39,7 +38,7 @@ import ToggleCheckbox from './form-fields/ToggleCheckbox.astro';
       </span>
     </legend>
     <!-- <span class="pseudo-label">Choose at least one interest below.</span> -->
-    <div class="field-wrapper checkbox-field-wrapper js-checkbox-field-wrapper">
+    <div class="field-wrapper checkbox-field-wrapper">
       <p hidden aria-hidden="true" class="error js-interests-visual-error">
         <!-- Text content via JS -->
       </p>
@@ -121,10 +120,8 @@ import ToggleCheckbox from './form-fields/ToggleCheckbox.astro';
     const interestsCheckboxInputEls = document.querySelectorAll(
       'input[name="interests"]'
     );
-    // Get the wrapper element for the "interests" checkbox group.
-    const checkboxGroupWrapperEl = document.querySelector(
-      '.js-checkbox-field-wrapper'
-    );
+    // Get the fieldset element for the "interests" checkbox group.
+    const checkboxFieldsetEl = document.querySelector('.js-checkbox-fieldset');
 
     // Are any of the "interests" checkboxes checked? At least one is required.
     const formData = new FormData(formEl);
@@ -132,8 +129,10 @@ import ToggleCheckbox from './form-fields/ToggleCheckbox.astro';
 
     // Need to place the `is-valid` class higher up in the DOM tree to
     // show a validation state icon (one icon for the group of checkboxes).
-    checkboxGroupWrapperEl.classList.toggle('is-valid', isValid);
-    checkboxGroupWrapperEl.classList.toggle('is-invalid', !isValid);
+    checkboxFieldsetEl.classList.toggle('is-valid', isValid);
+    checkboxFieldsetEl.classList.toggle('is-invalid', !isValid);
+    // Also update aria-invalid on the fieldset.
+    checkboxFieldsetEl.setAttribute('aria-invalid', (!isValid).toString());
     // Update the validation UI state for each checkbox.
     interestsCheckboxInputEls.forEach((checkboxInputEl: HTMLInputElement) => {
       checkboxInputEl.classList.toggle('is-valid', isValid);
