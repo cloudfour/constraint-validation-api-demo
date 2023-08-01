@@ -88,9 +88,10 @@ import ToggleCheckbox from './form-fields/ToggleCheckbox.astro';
    * Validates the "interests" checkbox group.
    * Custom validation is required because checkbox group validation is not
    * supported by the Constraint Validation API.
+   * @param {HTMLFormElement} formEl The form element.
    * @return {boolean} Is the "interests" checkbox group valid?
    */
-  const validateInterestsCheckboxGroup = (): boolean => {
+  const validateInterestsCheckboxGroup = (formEl: HTMLFormElement): boolean => {
     console.log('Validate the "interests" checkbox group');
 
     // An animated GIF showing a mouse click selecting/unselecting the "Coding" interest checkbox that triggers a log message, "Validate the 'interests' checkbox group" on change.
@@ -103,17 +104,14 @@ import ToggleCheckbox from './form-fields/ToggleCheckbox.astro';
     const interestsCheckboxInputEls = document.querySelectorAll(
       'input[name="interests"]'
     );
-    // Get all the checked "interests" checkboxes.
-    const checkedInterestsCheckboxInputEls = document.querySelectorAll(
-      'input[name="interests"]:checked'
-    );
     // Get the wrapper element for the "interests" checkbox group.
     const checkboxGroupWrapperEl = document.querySelector(
       '.js-checkbox-field-wrapper'
     );
 
     // Are any of the "interests" checkboxes checked?
-    const isInterestsValid = checkedInterestsCheckboxInputEls.length > 0;
+    const formData = new FormData(formEl);
+    const isInterestsValid = formData.getAll('interests').length > 0;
     // Need to place the `is-valid` class higher up in the DOM tree to
     // show a validation state icon (one icon for the group of checkboxes).
     checkboxGroupWrapperEl.classList.toggle('is-valid', isInterestsValid);
@@ -155,7 +153,7 @@ import ToggleCheckbox from './form-fields/ToggleCheckbox.astro';
     const isFormValid = formEl.checkValidity();
     // Fields that cannot be validated with the Constraint Validation API need
     // to be validated manually. This includes the "interests" checkbox group.
-    const isInterestsGroupValid = validateInterestsCheckboxGroup();
+    const isInterestsGroupValid = validateInterestsCheckboxGroup(formEl);
     // If any of the validation checks fail, prevent the form from submitting.
     if (!isFormValid || !isInterestsGroupValid) {
       event.preventDefault();
@@ -196,9 +194,8 @@ import ToggleCheckbox from './form-fields/ToggleCheckbox.astro';
       .querySelectorAll('input[name="interests"]')
       .forEach((checkboxInputEl) => {
         // Updates the UI state for the checkbox group when checked/unchecked
-        checkboxInputEl.addEventListener(
-          'change',
-          validateInterestsCheckboxGroup
+        checkboxInputEl.addEventListener('change', () =>
+          validateInterestsCheckboxGroup(formEl)
         );
         // Handles the case where the user tabs into the checkbox group and then
         // tabs out without checking any checkboxes.
@@ -208,7 +205,7 @@ import ToggleCheckbox from './form-fields/ToggleCheckbox.astro';
           // relatedTarget is the element that will receive focus next.
           const activeEl = event.relatedTarget as HTMLElement;
           if (activeEl?.getAttribute('name') !== 'interests') {
-            validateInterestsCheckboxGroup();
+            validateInterestsCheckboxGroup(formEl);
           }
         });
       });
@@ -217,7 +214,7 @@ import ToggleCheckbox from './form-fields/ToggleCheckbox.astro';
     if (
       document.querySelectorAll('input[name="interests"]:checked').length > 0
     ) {
-      validateInterestsCheckboxGroup();
+      validateInterestsCheckboxGroup(formEl);
     }
 
     // This is wrapped in a try/catch so as not to throw an error in unsupported browsers.
