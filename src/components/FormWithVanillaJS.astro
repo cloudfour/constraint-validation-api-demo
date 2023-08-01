@@ -21,7 +21,10 @@ import ToggleCheckbox from './form-fields/ToggleCheckbox.astro';
   </fieldset>
 
   <fieldset>
-    <legend>Purchase details</legend>
+    <legend>
+      Purchase details
+      <span aria-hidden="true" class="hint">(required)</span>
+    </legend>
     <div class="field-wrapper">
       <PurchaseDate />
     </div>
