@@ -51,10 +51,19 @@ import PurchaseDetailsFieldset from './fieldsets/PurchaseDetailsFieldset.astro';
    * @return {boolean} Is the "interests" checkbox group valid?
    */
   const validateInterestsCheckboxGroup = (formEl: HTMLFormElement): boolean => {
-    console.log('Validate the "interests" checkbox group');
-
     // An animated GIF showing a mouse click selecting/unselecting the "Coding" interest checkbox that triggers a log message, "Validate the 'interests' checkbox group" on change.
 
+    // Get the fieldset element for the "interests" checkbox group.
+    const checkboxFieldsetEl = document.querySelector('.js-checkbox-fieldset');
+    // Bail if no checkbox fieldset element is found.
+    if (!checkboxFieldsetEl) return;
+
+    console.log('Validate the "interests" checkbox group');
+
+    // Get all the "interests" checkboxes.
+    const interestsCheckboxInputEls = document.querySelectorAll(
+      'input[name="interests"]'
+    );
     // The legend error element is used to provide an inclusive experience for
     // users who use assistive technology. When a checkbox is in focus, the error
     // message is read out loud since the error message is in the legend.
@@ -67,12 +76,6 @@ import PurchaseDetailsFieldset from './fieldsets/PurchaseDetailsFieldset.astro';
     const visualErrorEl = document.querySelector(
       '.js-interests-visual-error'
     ) as HTMLElement;
-    // Get all the "interests" checkboxes.
-    const interestsCheckboxInputEls = document.querySelectorAll(
-      'input[name="interests"]'
-    );
-    // Get the fieldset element for the "interests" checkbox group.
-    const checkboxFieldsetEl = document.querySelector('.js-checkbox-fieldset');
 
     // Are any of the "interests" checkboxes checked? At least one is required.
     const formData = new FormData(formEl);
