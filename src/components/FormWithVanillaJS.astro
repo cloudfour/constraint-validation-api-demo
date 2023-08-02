@@ -3,7 +3,6 @@ import CustomerDetailsFieldset from './fieldsets/CustomerDetailsFieldset.astro';
 import PurchaseDetailsFieldset from './fieldsets/PurchaseDetailsFieldset.astro';
 ---
 
-<pre>{Astro.url.pathname}</pre>
 <form id="demo-form-2" action="" method="post">
   <CustomerDetailsFieldset />
   <PurchaseDetailsFieldset />
@@ -56,7 +55,8 @@ import PurchaseDetailsFieldset from './fieldsets/PurchaseDetailsFieldset.astro';
     // Get the fieldset element for the "interests" checkbox group.
     const checkboxFieldsetEl = document.querySelector('.js-checkbox-fieldset');
     // Bail if no checkbox fieldset element is found.
-    if (!checkboxFieldsetEl) return;
+    // Return true so this doesn't block form submission.
+    if (!checkboxFieldsetEl) return true;
 
     console.log('Validate the "interests" checkbox group');
 
