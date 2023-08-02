@@ -17,16 +17,6 @@ Thank you to the A11Y Slack community (especially Juliette Alexandria, Joe Schun
 
 ## Notes
 
-### Why not `content:` "x"?
-
-It will be read aloud by screen reader. We don't want that.
-
-### Why not [`HTMLInputElement.reportValidity`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/reportValidity)?
-
-Because `HTMLInputElement.reportValidity` will also report (show the error message) to the user with the default browser validation UI styles. In our case, we don't want that. We only want to _check_ validity.
-
-- [`HTMLInputElement.checkValidity`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/checkValidity).
-
 ## Checkbox group validation without JavaScript
 
 Seems like it can't be done.
@@ -36,19 +26,13 @@ Seems like it can't be done.
 
 ## MDN's examples
 
-- https://developer.mozilla.org/en-US/docs/Learn/Forms/Form_validation#built-in_form_validation_examples
-
 > If so, we call the `setCustomValidity()` method with a custom message. This
 > renders the input invalid, so that when you try to submit the form, submission
 > fails and the custom error message is displayed.
 
 - [Validating forms without a built-in API](https://developer.mozilla.org/en-US/docs/Learn/Forms/Form_validation#validating_forms_without_a_built-in_api) (Use this for the checkbox group article)
 
-## Resources
-
-- [Complex constraints using the Constraint Validation API](https://developer.mozilla.org/en-US/docs/Web/HTML/Constraint_validation#complex_constraints_using_the_constraint_validation_api)
-
-### Part 3 resources
+## Part 3 resources
 
 - [Support for Marking Radio Buttons Required, Invalid](https://adrianroselli.com/2022/02/support-for-marking-radio-buttons-required-invalid.html)
 - https://twitter.com/aardrian/status/1225185061668098048
@@ -57,10 +41,6 @@ Seems like it can't be done.
 ## SVG
 
 - https://www.svgrepo.com/svg/12848/x-symbol
-
-## Talk about complex constraints
-
-https://developer.mozilla.org/en-US/docs/Web/HTML/Constraint_validation#complex_constraints_using_the_constraint_validation_api
 
 ## Use `validity()` to write custom error messages!
 
