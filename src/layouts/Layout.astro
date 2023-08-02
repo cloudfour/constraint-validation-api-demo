@@ -27,13 +27,13 @@ const { title, mainClass = '' } = Astro.props;
     --box-shadow-spread-radius-default: 0px;
     --box-shadow-spread-radius-focus: 4px;
 
-    --color-valid: green;
+    --color-valid: #00a800;
     --color-invalid: red;
     --color-border: rgba(0, 0, 0, 0.4);
     --color-border-hover: rgba(0, 0, 0, 0.6);
     --color-background-input: white;
 
-    --bg-valid: url("data:image/svg+xml,%3Csvg width='800' height='800' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M22 11.086v.92a10 10 0 1 1-5.93-9.14M22 4 12 14.01l-3-3' stroke='green' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    --bg-valid: url("data:image/svg+xml,%3Csvg width='800' height='800' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M22 11.086v.92a10 10 0 1 1-5.93-9.14M22 4 12 14.01l-3-3' stroke='%2300a800' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
     --bg-invalid: url("data:image/svg+xml,%3Csvg width='800' height='800' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12 8v4m0 4h.01M22 12c0 5.523-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2s10 4.477 10 10Z' stroke='red' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
 
     @media (prefers-color-scheme: dark) {
