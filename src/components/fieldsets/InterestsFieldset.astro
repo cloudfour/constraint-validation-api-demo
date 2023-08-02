@@ -1,0 +1,32 @@
+---
+import ToggleCheckbox from '../form-fields/ToggleCheckbox.astro';
+---
+
+<fieldset aria-required="true" class="js-checkbox-fieldset">
+  <legend>
+    Interests <span aria-hidden="true" class="hint">(required)</span>
+    <span class="visually-hidden js-interests-legend-error">
+      <!-- Text content via JS -->
+    </span>
+  </legend>
+  <!-- <span class="pseudo-label">Choose at least one interest below.</span> -->
+  <div class="field-wrapper checkbox-field-wrapper">
+    <p hidden aria-hidden="true" class="error js-interests-visual-error">
+      <!-- Text content via JS -->
+    </p>
+    <ToggleCheckbox
+      id="coding"
+      name="interests"
+      value="coding"
+      label="Coding"
+    />
+    <ToggleCheckbox id="music" name="interests" value="music" label="Music" />
+    <ToggleCheckbox id="art" name="interests" value="art" label="Art" />
+    <ToggleCheckbox
+      id="sports"
+      name="interests"
+      value="sports"
+      label="Sports"
+    />
+  </div>
+</fieldset>

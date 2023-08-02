@@ -1,0 +1,18 @@
+---
+import CustomerEmail from '../form-fields/CustomerEmail.astro';
+import CustomerNameFirst from '../form-fields/CustomerNameFirst.astro';
+import CustomerNameLast from '../form-fields/CustomerNameLast.astro';
+---
+
+<fieldset>
+  <legend>Customer details</legend>
+  <div class="field-wrapper">
+    <CustomerNameFirst />
+  </div>
+  <div class="field-wrapper">
+    <CustomerNameLast />
+  </div>
+  <div class="field-wrapper">
+    <CustomerEmail />
+  </div>
+</fieldset>
