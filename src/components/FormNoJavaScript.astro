@@ -1,51 +1,12 @@
 ---
-import CustomerEmail from './form-fields/CustomerEmail.astro';
-import PurchaseDate from './form-fields/PurchaseDate.astro';
-import CustomerNameFirst from './form-fields/CustomerNameFirst.astro';
-import CustomerNameLast from './form-fields/CustomerNameLast.astro';
-import ToggleCheckbox from './form-fields/ToggleCheckbox.astro';
+import CustomerDetailsFieldset from './fieldsets/CustomerDetailsFieldset.astro';
+import PurchaseDetailsFieldset from './fieldsets/PurchaseDetailsFieldset.astro';
+import InterestsFieldset from './fieldsets/InterestsFieldset.astro';
 ---
 
-<form id="demo-form-2" action="" method="post">
-  <fieldset>
-    <legend>Customer details</legend>
-    <div class="field-wrapper">
-      <CustomerNameFirst />
-    </div>
-    <div class="field-wrapper">
-      <CustomerNameLast />
-    </div>
-    <div class="field-wrapper">
-      <CustomerEmail />
-    </div>
-  </fieldset>
-
-  <fieldset>
-    <legend>Purchase details</legend>
-    <div class="field-wrapper">
-      <PurchaseDate />
-    </div>
-  </fieldset>
-
-  <fieldset>
-    <legend>Choose at least one interest</legend>
-    <div class="field-wrapper checkbox-field-wrapper">
-      <ToggleCheckbox
-        id="coding"
-        name="interests"
-        value="coding"
-        label="Coding"
-      />
-      <ToggleCheckbox id="music" name="interests" value="music" label="Music" />
-      <ToggleCheckbox id="art" name="interests" value="art" label="Art" />
-      <ToggleCheckbox
-        id="sports"
-        name="interests"
-        value="sports"
-        label="Sports"
-      />
-    </div>
-  </fieldset>
-
+<form id="demo-form" action="" method="post">
+  <CustomerDetailsFieldset />
+  <PurchaseDetailsFieldset />
+  <InterestsFieldset />
   <button type="submit">Submit</button>
 </form>

@@ -1,14 +1,13 @@
 ---
 import CustomerDetailsFieldset from './fieldsets/CustomerDetailsFieldset.astro';
 import PurchaseDetailsFieldset from './fieldsets/PurchaseDetailsFieldset.astro';
+import InterestsFieldset from './fieldsets/InterestsFieldset.astro';
 ---
 
-<form id="demo-form-2" action="" method="post">
+<form id="demo-form" action="" method="post">
   <CustomerDetailsFieldset />
   <PurchaseDetailsFieldset />
-
-  <slot />
-
+  <InterestsFieldset />
   <button type="submit">Submit</button>
 </form>
 
@@ -143,7 +142,7 @@ import PurchaseDetailsFieldset from './fieldsets/PurchaseDetailsFieldset.astro';
     document.body.dataset.jsEnabled = 'true';
 
     // Get the form element.
-    const formEl: HTMLFormElement = document.querySelector('#demo-form-2');
+    const formEl: HTMLFormElement = document.querySelector('#demo-form');
     // Turn off default form submit validation by adding `novalidate` attribute.
     formEl.setAttribute('novalidate', '');
     // Use form `submit` event to validate with Constraint Validation API instead.
