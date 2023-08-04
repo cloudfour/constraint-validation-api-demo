@@ -8,6 +8,7 @@ import InterestsFieldset from './fieldsets/InterestsFieldset.astro';
   <CustomerDetailsFieldset />
   <PurchaseDetailsFieldset />
   <InterestsFieldset />
+
   <button type="submit">Submit</button>
 </form>
 
@@ -50,6 +51,11 @@ import InterestsFieldset from './fieldsets/InterestsFieldset.astro';
    */
   const validateInterestsCheckboxGroup = (formEl: HTMLFormElement): boolean => {
     // An animated GIF showing a mouse click selecting/unselecting the "Coding" interest checkbox that triggers a log message, "Validate the 'interests' checkbox group" on change.
+
+    // Bail if on "part-2" demo since the "interests" checkbox group
+    // validation logic hasn't been introduced yet.
+    // Return true so this doesn't block form submission.
+    if (window.location.pathname === '/part-2') return true;
 
     // Get the fieldset element for the "interests" checkbox group.
     const checkboxFieldsetEl = document.querySelector('.js-checkbox-fieldset');
