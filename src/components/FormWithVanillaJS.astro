@@ -36,7 +36,7 @@ import PurchaseDetailsFieldset from './fieldsets/PurchaseDetailsFieldset.astro';
     // 2. Use the browser built-in localized validation message. Will be
     //    an empty string if input constraints are satisfied.
     //    https://developer.mozilla.org/en-US/docs/Web/API/HTMLObjectElement/validationMessage
-    const errorEl = inputEl.previousElementSibling as HTMLElement;
+    const errorEl = inputEl.nextElementSibling as HTMLElement;
     errorEl.textContent = inputEl.validationMessage;
     // Show/hide the error message depending on the input's validity.
     errorEl.hidden = isInputValid;
