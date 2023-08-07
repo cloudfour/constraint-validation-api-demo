@@ -1,6 +1,6 @@
-export default {
+module.exports = {
   extends: ['plugin:@cloudfour/recommended', 'plugin:astro/recommended'],
-  // overrides: [
+  // Overrides: [
   //   {
   //     // Define the configuration for `.astro` file.
   //     files: ['*.astro'],
