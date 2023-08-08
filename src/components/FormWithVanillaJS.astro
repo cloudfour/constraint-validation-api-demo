@@ -44,14 +44,12 @@ import PurchaseDetailsFieldset from './fieldsets/PurchaseDetailsFieldset.astro';
 
   /**
    * Validates the "interests" checkbox group.
-   * Custom validation is required because checkbox group validation is not
-   * supported by the Constraint Validation API.
-   * @param {HTMLFormElement} formEl The form element.
+   * Custom validation is required because checkbox group validation
+   * is not supported by the browser's built-in validation features.
+   * @param {HTMLFormElement} formEl The form element
    * @return {boolean} Is the "interests" checkbox group valid?
    */
   const validateInterestsCheckboxGroup = (formEl: HTMLFormElement): boolean => {
-    // An animated GIF showing a mouse click selecting/unselecting the "Coding" interest checkbox that triggers a log message, "Validate the 'interests' checkbox group" on change.
-
     // Bail if on "part-2" demo since the "interests" checkbox group
     // validation logic hasn't been introduced yet.
     // Return true so this doesn't block form submission.
@@ -177,13 +175,11 @@ import PurchaseDetailsFieldset from './fieldsets/PurchaseDetailsFieldset.astro';
         checkboxInputEl.addEventListener('change', () =>
           validateInterestsCheckboxGroup(formEl)
         );
-        // Handles the case where the user tabs into the checkbox group and then
-        // tabs out without checking any checkboxes.
+        // Set up late validation for the checkbox group
         checkboxInputEl.addEventListener('blur', (event: FocusEvent) => {
-          // Only validate the checkbox group if the user is no longer focused
-          // on any of the checkboxes.
-          // relatedTarget is the element that will receive focus next.
+          // FocusEvent.relatedTarget is the element receiving focus.
           const activeEl = event.relatedTarget as HTMLElement;
+          // Validate only if the focus is not going to another checkbox.
           if (activeEl?.getAttribute('name') !== 'interests') {
             validateInterestsCheckboxGroup(formEl);
           }
