@@ -7,15 +7,24 @@
 
 ---
 
-## Special thanks
+## TODO Once all parts are published
 
-### Part 3
+### Part 2
 
-Thank you to the A11Y Slack community (especially Juliette Alexandria, Joe Schunk, and Adrian Roselli) for providing feedback on the accessibility of a checkbox group validation solution.
+Add links:
 
----
+- Part 4 of this series will explore this very topic.
+- In Part 3 of this article series, we’ll look at one way of solving this challenge, so don’t go too far!
+- As mentioned above, Part 3 of this series will dive into writing custom JavaScript validation for a checkbox group.
+- Part 4 will explore using the Constraint Validation API’s ValidityState interface to help render custom validation error messages.
 
 ## Notes
+
+Add somewhere:
+
+> Using the aria-describedby property to provide a descriptive label for user interface controls
+
+- https://www.w3.org/WAI/WCAG21/Techniques/aria/ARIA1
 
 ## Checkbox group validation without JavaScript
 
@@ -37,10 +46,6 @@ Seems like it can't be done.
 - [Support for Marking Radio Buttons Required, Invalid](https://adrianroselli.com/2022/02/support-for-marking-radio-buttons-required-invalid.html)
 - https://twitter.com/aardrian/status/1225185061668098048
 - https://twitter.com/aardrian/status/1253053177395625984
-
-## SVG
-
-- https://www.svgrepo.com/svg/12848/x-symbol
 
 ## Use `validity()` to write custom error messages!
 
@@ -65,12 +70,6 @@ https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/radio#required
 ## Use "Wrapping Up" section to close out
 
 Better (IMO) than "Conclusion" or "Summary".
-
-## Warning! Server-side validation is still required
-
-> Warning: Never trust data passed to your server from the client. Even if your form is validating correctly and preventing malformed input on the client-side, a malicious user can still alter the network request.
-
-From: https://developer.mozilla.org/en-US/docs/Learn/Forms/Form_validation#what_is_form_validation
 
 ## Examples of video ideas
 
