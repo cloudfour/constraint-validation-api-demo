@@ -116,11 +116,6 @@ import PurchaseDetailsFieldset from './fieldsets/PurchaseDetailsFieldset.astro';
    */
   const onSubmit = (event: SubmitEvent) => {
     const formEl = event.target as HTMLFormElement;
-    // Set the focus to the first invalid input.
-    const firstInvalidInputEl = formEl.querySelector(
-      'input:invalid'
-    ) as HTMLInputElement;
-    firstInvalidInputEl?.focus();
     // Update the validation UI state for all inputs that can be validated
     // with the Constraint Validation API.
     document
@@ -136,6 +131,11 @@ import PurchaseDetailsFieldset from './fieldsets/PurchaseDetailsFieldset.astro';
     if (!isFormValid || !isInterestsGroupValid) {
       event.preventDefault();
     }
+    // Set the focus to the first invalid input.
+    const firstInvalidInputEl = formEl.querySelector(
+      'input:invalid, fieldset.is-invalid input'
+    ) as HTMLInputElement;
+    firstInvalidInputEl?.focus();
   };
 
   /**
