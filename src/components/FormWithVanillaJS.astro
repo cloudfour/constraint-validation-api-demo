@@ -187,9 +187,9 @@ import PurchaseDetailsFieldset from './fieldsets/PurchaseDetailsFieldset.astro';
       });
 
     // On page load, if a checkbox is checked, update UI state
-    if (
-      document.querySelectorAll('input[name="interests"]:checked').length > 0
-    ) {
+    const isInterestsGroupChecked =
+      document.querySelectorAll('input[name="interests"]:checked').length > 0;
+    if (isInterestsGroupChecked) {
       validateInterestsCheckboxGroup(formEl);
     }
 
