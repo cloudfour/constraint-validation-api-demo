@@ -28,7 +28,7 @@ import PurchaseDetailsFieldset from './fieldsets/PurchaseDetailsFieldset.astro';
 
     // Update the `aria-invalid` state when validation occurs
     // https://www.w3.org/WAI/WCAG21/Techniques/aria/ARIA21
-    inputEl.setAttribute('aria-invalid', (!isInputValid).toString());
+    inputEl.setAttribute('aria-invalid', String(!isInputValid));
 
     // When JS is enabled, the default built-in error messages are not shown,
     // the code needs to set the error messages manually.
@@ -89,7 +89,7 @@ import PurchaseDetailsFieldset from './fieldsets/PurchaseDetailsFieldset.astro';
     checkboxFieldsetEl.classList.toggle('is-valid', isValid);
     checkboxFieldsetEl.classList.toggle('is-invalid', !isValid);
     // Also update aria-invalid on the fieldset.
-    checkboxFieldsetEl.setAttribute('aria-invalid', (!isValid).toString());
+    checkboxFieldsetEl.setAttribute('aria-invalid', String(!isValid));
     // Update the validation UI state for each checkbox.
     interestsCheckboxInputEls.forEach((checkboxInputEl: HTMLInputElement) => {
       checkboxInputEl.classList.toggle('is-valid', isValid);
