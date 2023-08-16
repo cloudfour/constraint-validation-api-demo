@@ -26,46 +26,9 @@ Add somewhere:
 
 - https://www.w3.org/WAI/WCAG21/Techniques/aria/ARIA1
 
-## Checkbox group validation without JavaScript
-
-Seems like it can't be done.
-
-- https://html.form.guide/checkbox/html-form-checkbox-required/
-- https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/checkbox#validation
-
-## MDN's examples
-
-> If so, we call the `setCustomValidity()` method with a custom message. This
-> renders the input invalid, so that when you try to submit the form, submission
-> fails and the custom error message is displayed.
-
-- [Validating forms without a built-in API](https://developer.mozilla.org/en-US/docs/Learn/Forms/Form_validation#validating_forms_without_a_built-in_api) (Use this for the checkbox group article)
-
-## Part 3 resources
-
-- [Support for Marking Radio Buttons Required, Invalid](https://adrianroselli.com/2022/02/support-for-marking-radio-buttons-required-invalid.html)
-- https://twitter.com/aardrian/status/1225185061668098048
-- https://twitter.com/aardrian/status/1253053177395625984
-
 ## Use `validity()` to write custom error messages!
 
 https://developer.mozilla.org/en-US/docs/Learn/Forms/Form_validation#the_constraint_validation_api
-
-## Radio group required attribute
-
-If you add a `required` attribute to any radio input in a radio group, then a
-radio group choice is required. This is not the case with a checkbox group.
-
-https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/radio#required
-
-## Accessibility
-
-### Checkbox group
-
-- https://www.w3.org/WAI/ARIA/apg/patterns/checkbox/
-- https://blog.tenon.io/accessible-validation-of-checkbox-and-radiobutton-groups/
-- https://dequeuniversity.com/rules/axe/3.5/checkboxgroup
-- https://design-system.service.gov.uk/components/checkboxes/#error-messages
 
 ## Use "Wrapping Up" section to close out
 
