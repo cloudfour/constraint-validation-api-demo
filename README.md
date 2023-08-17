@@ -1,8 +1,8 @@
 # Series: Progressively Enhancing the Form Validation Experience
 
-- Part 1: Use browser built-in form validation (no JS)
-- Part 2: Use JavaScript and the Constraint Validation API to enhance the experience
-- Part 3: How to validate a checkbox group (not supported by built-in features)
+- [Progressively Enhanced Form Validation, Part 1: HTML and CSS](https://cloudfour.com/thinks/progressively-enhanced-form-validation-part-1-html-and-css/)
+- [Progressively Enhanced Form Validation, Part 2: Layering in JavaScript](https://cloudfour.com/thinks/progressively-enhanced-form-validation-part-2-layering-in-javascript/)
+- [Progressively Enhanced Form Validation, Part 3: Validating a checkbox group](https://cloudfour.com/thinks/progressively-enhanced-form-validation-part-3-validating-a-checkbox-group/)
 - Part 4: Use the `ValidityState` object to write custom error messages, use Vest for validation abstraction
 
 ---
@@ -38,6 +38,8 @@ Better (IMO) than "Conclusion" or "Summary".
 
 - https://twitter.com/jlengstorf/status/1684624174889984000
 
-## Respond to tweet with my article?
+## Respond to tweet with my Part 3 article?
 
 - https://twitter.com/EvansKwofie5/status/1684876036343762945?s=20
+
+@EvansKwofie5 I might have an article that's of interest. I use the `FormData.getAll` method to validate a checkbox group in my most recent @CloudFour article. 🙂
