@@ -7,6 +7,10 @@
 
 ---
 
+## Part 4 resource links
+
+- https://caniuse.com/mdn-api_validitystate
+
 ## TODO Once all parts are published
 
 ### Part 2
@@ -14,8 +18,6 @@
 Add links:
 
 - Part 4 of this series will explore this very topic.
-- In Part 3 of this article series, we’ll look at one way of solving this challenge, so don’t go too far!
-- As mentioned above, Part 3 of this series will dive into writing custom JavaScript validation for a checkbox group.
 - Part 4 will explore using the Constraint Validation API’s ValidityState interface to help render custom validation error messages.
 
 ## Notes
@@ -37,9 +39,3 @@ Better (IMO) than "Conclusion" or "Summary".
 ## Examples of video ideas
 
 - https://twitter.com/jlengstorf/status/1684624174889984000
-
-## Respond to tweet with my Part 3 article?
-
-- https://twitter.com/EvansKwofie5/status/1684876036343762945?s=20
-
-@EvansKwofie5 I might have an article that's of interest. I use the `FormData.getAll` method to validate a checkbox group in my most recent @CloudFour article. 🙂
