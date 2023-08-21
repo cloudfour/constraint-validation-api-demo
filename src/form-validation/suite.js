@@ -1,4 +1,4 @@
-import { create, test, enforce, omitWhen } from 'vest';
+import { create, enforce, test } from 'vest';
 
 const suite = create(
   'demoValidationSuite',
@@ -23,7 +23,7 @@ const suite = create(
      * @see https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/checkValidity
      */
     for (const fieldName of ['customerEmail', 'purchaseDate']) {
-      /** @type {HTMLInputElement}*/
+      /** @type {HTMLInputElement} */
       const inputEl = document.querySelector(`[name="${fieldName}"]`);
       test(fieldName, inputEl.validationMessage, inputEl.checkValidity);
     }
