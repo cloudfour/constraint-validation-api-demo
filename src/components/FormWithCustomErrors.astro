@@ -1,0 +1,278 @@
+---
+import CustomerDetailsFieldset from './fieldsets/CustomerDetailsFieldset.astro';
+import InterestsFieldset from './fieldsets/InterestsFieldset.astro';
+import PurchaseDetailsFieldset from './fieldsets/PurchaseDetailsFieldset.astro';
+---
+
+<form id="demo-form" action="" method="post">
+  <CustomerDetailsFieldset />
+  <PurchaseDetailsFieldset />
+  <InterestsFieldset />
+
+  <button type="submit">Submit</button>
+</form>
+
+<script>
+  const getErrorMessage = (inputEl: HTMLInputElement): string => {
+    // If the input is valid, return an empty string.
+    if (inputEl.validity.valid) return '';
+
+    // If the input is invalid, return the appropriate error message.
+    if (inputEl.validity.valueMissing) {
+      if (inputEl.dataset.readableName) {
+        return `Please enter a value for the "${inputEl.dataset.readableName}" field.`;
+      }
+      return 'Please fill out this field.';
+    }
+    if (inputEl.validity.typeMismatch) {
+      if (inputEl.type === 'email') {
+        return 'Please enter a valid email address.';
+      }
+      if (inputEl.type === 'url') {
+        return 'Please enter a valid URL.';
+      }
+    }
+    if (inputEl.validity.tooShort) {
+      return `Please lengthen this text to ${inputEl.getAttribute(
+        'minLength'
+      )} characters or more. You are currently using ${
+        inputEl.value.length
+      } characters.`;
+    }
+    if (inputEl.validity.tooLong) {
+      return `Please shorten this text to no more than ${inputEl.getAttribute(
+        'maxLength'
+      )} characters. You are currently using ${
+        inputEl.value.length
+      } characters.`;
+    }
+    if (inputEl.validity.rangeUnderflow) {
+      return `Please select a value that is no less than ${inputEl.getAttribute(
+        'min'
+      )}.`;
+    }
+    if (inputEl.validity.rangeOverflow) {
+      return `Please select a value that is no more than ${inputEl.getAttribute(
+        'max'
+      )}.`;
+    }
+    if (inputEl.validity.stepMismatch) {
+      return 'Please select a valid value.';
+    }
+    if (inputEl.validity.badInput) {
+      return 'Please enter a valid value.';
+    }
+    if (inputEl.validity.patternMismatch) {
+      return 'Please match the requested format.';
+    }
+    if (inputEl.validity.customError) {
+      return inputEl.validationMessage;
+    }
+
+    // If all else fails, return a generic catchall error message.
+    return 'The value you entered for this field is invalid.';
+  };
+
+  /**
+   * Update the validation UI state for a given input element.
+   * @param {HTMLInputElement} inputEl The input element to update the UI state for.
+   */
+  const updateValidationStateForInput = (inputEl: HTMLInputElement) => {
+    console.log(
+      inputEl.dataset.readableName,
+      'is valid?',
+      inputEl.validity.valid
+    );
+    console.log('Error msg:', getErrorMessage(inputEl));
+
+    // Check if the input is valid using the Constraint Validation API.
+    // https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/checkValidity
+    const isInputValid = inputEl.checkValidity();
+
+    // Toggle valid/invalid state CSS class hooks.
+    inputEl.classList.toggle('is-valid', isInputValid);
+    inputEl.classList.toggle('is-invalid', !isInputValid);
+
+    // Update the `aria-invalid` state when validation occurs
+    // https://www.w3.org/WAI/WCAG21/Techniques/aria/ARIA21
+    inputEl.setAttribute('aria-invalid', String(!isInputValid));
+
+    // When JS is enabled, the default built-in error messages are not shown,
+    // the code needs to set the error messages manually.
+    // 1. Get the error message element for the current input element.
+    // 2. Use the browser built-in localized validation message. Will be
+    //    an empty string if input constraints are satisfied.
+    //    https://developer.mozilla.org/en-US/docs/Web/API/HTMLObjectElement/validationMessage
+    const errorEl = inputEl.nextElementSibling as HTMLElement;
+    errorEl.textContent = inputEl.validationMessage;
+    // Show/hide the error message depending on the input's validity.
+    errorEl.hidden = isInputValid;
+  };
+
+  /**
+   * Validates the "interests" checkbox group.
+   * Custom validation is required because checkbox group validation
+   * is not supported by the browser's built-in validation features.
+   * @param {HTMLFormElement} formEl The form element
+   * @return {boolean} Is the "interests" checkbox group valid?
+   */
+  const validateInterestsCheckboxGroup = (formEl: HTMLFormElement): boolean => {
+    // Bail if on "part-2" demo since the "interests" checkbox group
+    // validation logic hasn't been introduced yet.
+    // Return true so this doesn't block form submission.
+    if (window.location.pathname === '/part-2') return true;
+
+    // Get the fieldset element for the "interests" checkbox group.
+    const checkboxFieldsetEl = document.querySelector('.js-checkbox-fieldset');
+    // Bail if no checkbox fieldset element is found.
+    // Return true so this doesn't block form submission.
+    if (!checkboxFieldsetEl) return true;
+
+    console.log('Validate the "interests" checkbox group');
+
+    // Get all the "interests" checkboxes.
+    const interestsCheckboxInputEls = document.querySelectorAll(
+      'input[name="interests"]'
+    );
+    // The legend error element is used to provide an inclusive experience for
+    // users who use assistive technology. When a checkbox is in focus, the error
+    // message is read out loud since the error message is in the legend.
+    // The legend error element is hidden from sighted users.
+    // https://blog.tenon.io/accessible-validation-of-checkbox-and-radiobutton-groups/#dynamicallyinjectingtheerrortextintothelegendoursolution
+    const legendErrorEl = document.querySelector(
+      '.js-interests-legend-error'
+    ) as HTMLElement;
+    // The visual error message is for sighted users.
+    const visualErrorEl = document.querySelector(
+      '.js-interests-visual-error'
+    ) as HTMLElement;
+
+    // Are any of the "interests" checkboxes checked? At least one is required.
+    const formData = new FormData(formEl);
+    const isValid = formData.getAll('interests').length > 0;
+
+    // Need to place the `is-valid` class higher up in the DOM tree to
+    // show a validation state icon (one icon for the group of checkboxes).
+    checkboxFieldsetEl.classList.toggle('is-valid', isValid);
+    checkboxFieldsetEl.classList.toggle('is-invalid', !isValid);
+    // Also update aria-invalid on the fieldset.
+    checkboxFieldsetEl.setAttribute('aria-invalid', String(!isValid));
+    // Update the validation UI state for each checkbox.
+    interestsCheckboxInputEls.forEach((checkboxInputEl: HTMLInputElement) => {
+      checkboxInputEl.classList.toggle('is-valid', isValid);
+      checkboxInputEl.classList.toggle('is-invalid', !isValid);
+    });
+
+    // Update the validation error message.
+    const errorMsg = isValid ? '' : 'Select at least one interest.';
+
+    // The error message is the same for both the legend and the visual error.
+    legendErrorEl.textContent = errorMsg;
+    visualErrorEl.textContent = errorMsg;
+
+    // Show/hide the visual error message depending on the checkbox group's validity.
+    visualErrorEl.hidden = isValid;
+
+    // Return the validation state.
+    return isValid;
+  };
+
+  /**
+   * Handler for form `submit` event.
+   * @param {SubmitEvent} event
+   */
+  const onSubmit = (event: SubmitEvent) => {
+    const formEl = event.target as HTMLFormElement;
+    // Update the validation UI state for all inputs that can be validated
+    // with the Constraint Validation API.
+    document
+      .querySelectorAll('.js-validate')
+      .forEach(updateValidationStateForInput);
+    // The `isFormValid` boolean respresents all inputs that can be
+    // validated via the Constraint Validation API.
+    const isFormValid = formEl.checkValidity();
+    // Fields that cannot be validated with the Constraint Validation API need
+    // to be validated manually. This includes the "interests" checkbox group.
+    const isInterestsGroupValid = validateInterestsCheckboxGroup(formEl);
+    // If any of the validation checks fail, prevent the form from submitting.
+    if (!isFormValid || !isInterestsGroupValid) {
+      event.preventDefault();
+    }
+    // Set the focus to the first invalid input.
+    const firstInvalidInputEl = formEl.querySelector(
+      'input:invalid, fieldset.is-invalid input'
+    ) as HTMLInputElement;
+    firstInvalidInputEl?.focus();
+  };
+
+  /**
+   * Initialize validation setup
+   */
+  const init = () => {
+    // Update the JS enabled state.
+    document.body.dataset.jsEnabled = 'true';
+
+    // Get the form element.
+    const formEl: HTMLFormElement = document.querySelector('#demo-form');
+    // Turn off default form submit validation by adding `novalidate` attribute.
+    formEl.setAttribute('novalidate', '');
+    // Use form `submit` event to validate with Constraint Validation API instead.
+    formEl.addEventListener('submit', onSubmit);
+
+    document.querySelectorAll('.js-validate').forEach((inputEl) => {
+      // Set up `blur` and `input` validation for the inputs that can be validated
+      // with the Constraint Validation API.
+      inputEl.addEventListener('input', (event) =>
+        updateValidationStateForInput(event.target as HTMLInputElement)
+      );
+      inputEl.addEventListener('blur', (event) =>
+        updateValidationStateForInput(event.target as HTMLInputElement)
+      );
+      // Adding `aria-invalid` provides users who use assistive technology
+      // with a way to know if the input is invalid.
+      // Should initially be set to `false` before interaction/validity check.
+      inputEl.setAttribute('aria-invalid', 'false');
+    });
+
+    // Set up `blur` and `change` validation for the "interests" checkbox group.
+    document
+      .querySelectorAll('input[name="interests"]')
+      .forEach((checkboxInputEl) => {
+        // Updates the UI state for the checkbox group when checked/unchecked
+        checkboxInputEl.addEventListener('change', () =>
+          validateInterestsCheckboxGroup(formEl)
+        );
+        // Set up late validation for the checkbox group
+        checkboxInputEl.addEventListener('blur', (event: FocusEvent) => {
+          // FocusEvent.relatedTarget is the element receiving focus.
+          const activeEl = event.relatedTarget as HTMLElement;
+          // Validate only if the focus is not going to another checkbox.
+          if (activeEl?.getAttribute('name') !== 'interests') {
+            validateInterestsCheckboxGroup(formEl);
+          }
+        });
+      });
+
+    // On page load, if a checkbox is checked, update UI state
+    const isInterestsGroupChecked =
+      document.querySelectorAll('input[name="interests"]:checked').length > 0;
+    if (isInterestsGroupChecked) {
+      validateInterestsCheckboxGroup(formEl);
+    }
+
+    // This is wrapped in a try/catch so as not to throw an error in unsupported browsers.
+    try {
+      // The `:user-invalid` CSS pseudo-class state sticks around on a page
+      // refresh in Firefox (and maybe other browsers in the future). The code
+      // below ensures that the invalid inputs also get their error message
+      // displayed appropriately.
+      document
+        .querySelectorAll('input:user-invalid')
+        .forEach(updateValidationStateForInput);
+    } catch (error) {
+      console.warn('The `:user-invalid` CSS pseudo-class is not supported.');
+    }
+  };
+
+  init();
+</script>
