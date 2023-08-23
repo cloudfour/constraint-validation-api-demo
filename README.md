@@ -41,3 +41,13 @@ Better (IMO) than "Conclusion" or "Summary".
 ## Examples of video ideas
 
 - https://twitter.com/jlengstorf/status/1684624174889984000
+
+## Chrome
+
+### :user-valid/:user-invalid support bug
+
+https://bugs.chromium.org/p/chromium/issues/detail?id=1156069
+
+### Chrome wants to close out issue
+
+https://bugs.chromium.org/p/chromium/issues/detail?id=1322670
