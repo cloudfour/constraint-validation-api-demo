@@ -1,0 +1,26 @@
+---
+import DemoRangeEven from '../form-fields/DemoRangeEven.astro';
+import DemoRangeOdd from '../form-fields/DemoRangeOdd.astro';
+import DemoTooLong from '../form-fields/DemoTooLong.astro';
+import DemoTooShort from '../form-fields/DemoTooShort.astro';
+import DemoTypeMismatchUrl from '../form-fields/DemoTypeMismatchUrl.astro';
+---
+
+<fieldset>
+  <legend>More demo fields</legend>
+  <div class="field-wrapper">
+    <DemoTypeMismatchUrl />
+  </div>
+  <div class="field-wrapper">
+    <DemoTooShort />
+  </div>
+  <div class="field-wrapper">
+    <DemoTooLong />
+  </div>
+  <div class="field-wrapper">
+    <DemoRangeEven />
+  </div>
+  <div class="field-wrapper">
+    <DemoRangeOdd />
+  </div>
+</fieldset>
