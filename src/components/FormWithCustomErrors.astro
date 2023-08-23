@@ -89,9 +89,17 @@ import PurchaseDetailsFieldset from './fieldsets/PurchaseDetailsFieldset.astro';
     // https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/checkValidity
     const isInputValid = inputEl.checkValidity();
 
-    // Toggle valid/invalid state CSS class hooks.
-    inputEl.classList.toggle('is-valid', isInputValid);
-    inputEl.classList.toggle('is-invalid', !isInputValid);
+    // Handle optional empty fields
+    // For Firefox and Safari: Also check if valid because type="number" fields
+    // report an empty string value when they have a non-numeric values.
+    if (!inputEl.required && inputEl.value === '' && isInputValid) {
+      // Clear validation state
+      inputEl.classList.remove('is-valid', 'is-invalid');
+    } else {
+      // Required fields: Toggle valid/invalid state classes
+      inputEl.classList.toggle('is-valid', isInputValid);
+      inputEl.classList.toggle('is-invalid', !isInputValid);
+    }
 
     // Update the `aria-invalid` state when validation occurs
     // https://www.w3.org/WAI/WCAG21/Techniques/aria/ARIA21
@@ -219,20 +227,27 @@ import PurchaseDetailsFieldset from './fieldsets/PurchaseDetailsFieldset.astro';
     // Use form `submit` event to validate with Constraint Validation API instead.
     formEl.addEventListener('submit', onSubmit);
 
-    document.querySelectorAll('.js-validate').forEach((inputEl) => {
-      // Set up `blur` and `input` validation for the inputs that can be validated
-      // with the Constraint Validation API.
-      inputEl.addEventListener('input', (event) =>
-        updateValidationStateForInput(event.target as HTMLInputElement)
-      );
-      inputEl.addEventListener('blur', (event) =>
-        updateValidationStateForInput(event.target as HTMLInputElement)
-      );
-      // Adding `aria-invalid` provides users who use assistive technology
-      // with a way to know if the input is invalid.
-      // Should initially be set to `false` before interaction/validity check.
-      inputEl.setAttribute('aria-invalid', 'false');
-    });
+    document
+      .querySelectorAll('.js-validate')
+      .forEach((inputEl: HTMLInputElement) => {
+        // Set up `blur` and `input` validation for the inputs that can be validated
+        // with the Constraint Validation API.
+        inputEl.addEventListener('input', (event) =>
+          updateValidationStateForInput(event.target as HTMLInputElement)
+        );
+        inputEl.addEventListener('blur', (event) =>
+          updateValidationStateForInput(event.target as HTMLInputElement)
+        );
+        // Adding `aria-invalid` provides users who use assistive technology
+        // with a way to know if the input is invalid.
+        // Should initially be set to `false` before interaction/validity check.
+        inputEl.setAttribute('aria-invalid', 'false');
+
+        // Update the state for prefilled inputs.
+        if (inputEl.value !== '') {
+          updateValidationStateForInput(inputEl);
+        }
+      });
 
     // Set up `blur` and `change` validation for the "interests" checkbox group.
     document
@@ -258,19 +273,6 @@ import PurchaseDetailsFieldset from './fieldsets/PurchaseDetailsFieldset.astro';
       document.querySelectorAll('input[name="interests"]:checked').length > 0;
     if (isInterestsGroupChecked) {
       validateInterestsCheckboxGroup(formEl);
-    }
-
-    // This is wrapped in a try/catch so as not to throw an error in unsupported browsers.
-    try {
-      // The `:user-invalid` CSS pseudo-class state sticks around on a page
-      // refresh in Firefox (and maybe other browsers in the future). The code
-      // below ensures that the invalid inputs also get their error message
-      // displayed appropriately.
-      document
-        .querySelectorAll('input:user-invalid')
-        .forEach(updateValidationStateForInput);
-    } catch (error) {
-      console.warn('The `:user-invalid` CSS pseudo-class is not supported.');
     }
   };
 
