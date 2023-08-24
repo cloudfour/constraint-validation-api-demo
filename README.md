@@ -13,6 +13,10 @@
 - https://www.conf42.com/JavaScript_2020_Alush_Evyatar_form_validations_vest
 - https://guillaumepotier.github.io/gettext.js/
 
+## Part 4 notes
+
+- For `rangeUnderflow` or `rangeOverflow`, I can't mention even/odd number detail because the message needs to be more generic.
+
 ## TODO Once all parts are published
 
 ### Part 2
