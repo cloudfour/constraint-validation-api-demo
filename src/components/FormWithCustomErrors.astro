@@ -1,5 +1,6 @@
 ---
 import CustomerDetailsFieldset from './fieldsets/CustomerDetailsFieldset.astro';
+import DemoFieldset from './fieldsets/DemoFieldset.astro';
 import InterestsFieldset from './fieldsets/InterestsFieldset.astro';
 import PurchaseDetailsFieldset from './fieldsets/PurchaseDetailsFieldset.astro';
 ---
@@ -7,6 +8,7 @@ import PurchaseDetailsFieldset from './fieldsets/PurchaseDetailsFieldset.astro';
 <form id="demo-form" action="" method="post">
   <CustomerDetailsFieldset />
   <PurchaseDetailsFieldset />
+  <DemoFieldset />
   <InterestsFieldset />
 
   <button type="submit">Submit</button>
@@ -19,48 +21,49 @@ import PurchaseDetailsFieldset from './fieldsets/PurchaseDetailsFieldset.astro';
 
     // If the input is invalid, return the appropriate error message.
     if (inputEl.validity.valueMissing) {
-      if (inputEl.dataset.readableName) {
-        return `Please enter a value for the "${inputEl.dataset.readableName}" field.`;
-      }
-      return 'Please fill out this field.';
+      return `Please provide a value for the "${inputEl.labels[0].innerText}" field.`;
     }
     if (inputEl.validity.typeMismatch) {
       if (inputEl.type === 'email') {
-        return 'Please enter a valid email address.';
+        return 'Please provide a valid email address.';
       }
       if (inputEl.type === 'url') {
-        return 'Please enter a valid URL.';
+        return 'Please provide a valid URL.';
       }
     }
     if (inputEl.validity.tooShort) {
+      const currCharCount = inputEl.value.length;
       return `Please lengthen this text to ${inputEl.getAttribute(
         'minLength'
-      )} characters or more. You are currently using ${
-        inputEl.value.length
-      } characters.`;
+      )} characters or more. You are currently using ${currCharCount} ${
+        currCharCount === 1 ? 'character' : 'characters'
+      }.`;
     }
     if (inputEl.validity.tooLong) {
+      const currCharCount = inputEl.value.length;
       return `Please shorten this text to no more than ${inputEl.getAttribute(
         'maxLength'
-      )} characters. You are currently using ${
-        inputEl.value.length
-      } characters.`;
+      )} characters. You are currently using ${currCharCount} ${
+        currCharCount === 1 ? 'character' : 'characters'
+      }.`;
     }
     if (inputEl.validity.rangeUnderflow) {
-      return `Please select a value that is no less than ${inputEl.getAttribute(
+      return `Please select a number that is at least ${inputEl.getAttribute(
         'min'
-      )}.`;
+      )} or greater.`;
     }
     if (inputEl.validity.rangeOverflow) {
-      return `Please select a value that is no more than ${inputEl.getAttribute(
+      return `Please select a number that is ${inputEl.getAttribute(
         'max'
-      )}.`;
+      )} or less.`;
     }
     if (inputEl.validity.stepMismatch) {
-      return 'Please select a valid value.';
+      return `Please provide a valid value for the "${inputEl.labels[0].innerText}" field.`;
     }
     if (inputEl.validity.badInput) {
-      return 'Please enter a valid value.';
+      return `Please provide a valid value of type "${inputEl.getAttribute(
+        'type'
+      )}".`;
     }
     if (inputEl.validity.patternMismatch) {
       return 'Please match the requested format.';
@@ -70,7 +73,7 @@ import PurchaseDetailsFieldset from './fieldsets/PurchaseDetailsFieldset.astro';
     }
 
     // If all else fails, return a generic catchall error message.
-    return 'The value you entered for this field is invalid.';
+    return 'The value you provided for this field is invalid.';
   };
 
   /**
@@ -78,11 +81,6 @@ import PurchaseDetailsFieldset from './fieldsets/PurchaseDetailsFieldset.astro';
    * @param {HTMLInputElement} inputEl The input element to update the UI state for.
    */
   const updateValidationStateForInput = (inputEl: HTMLInputElement) => {
-    console.log(
-      inputEl.dataset.readableName,
-      'is valid?',
-      inputEl.validity.valid
-    );
     console.log('Error msg:', getErrorMessage(inputEl));
 
     // Check if the input is valid using the Constraint Validation API.
@@ -107,12 +105,8 @@ import PurchaseDetailsFieldset from './fieldsets/PurchaseDetailsFieldset.astro';
 
     // When JS is enabled, the default built-in error messages are not shown,
     // the code needs to set the error messages manually.
-    // 1. Get the error message element for the current input element.
-    // 2. Use the browser built-in localized validation message. Will be
-    //    an empty string if input constraints are satisfied.
-    //    https://developer.mozilla.org/en-US/docs/Web/API/HTMLObjectElement/validationMessage
     const errorEl = inputEl.nextElementSibling as HTMLElement;
-    errorEl.textContent = inputEl.validationMessage;
+    errorEl.textContent = getErrorMessage(inputEl);
     // Show/hide the error message depending on the input's validity.
     errorEl.hidden = isInputValid;
   };
