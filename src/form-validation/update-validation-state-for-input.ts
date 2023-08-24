@@ -33,10 +33,9 @@ export const updateValidationStateForInput = (inputEl: HTMLInputElement) => {
   //    https://developer.mozilla.org/en-US/docs/Web/API/HTMLObjectElement/validationMessage
   const errorEl = inputEl.nextElementSibling as HTMLElement;
   // For demo purposes, show the default error message for Part 3
-  const validityMessage =
-    window.location.pathname === '/part-2'
-      ? inputEl.validationMessage
-      : getValidityMessageForInput(inputEl);
+  const validityMessage = window.location.pathname.includes('part-2')
+    ? inputEl.validationMessage
+    : getValidityMessageForInput(inputEl);
   errorEl.textContent = validityMessage;
   // Show/hide the error message depending on the input's validity.
   errorEl.hidden = isInputValid;
