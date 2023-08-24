@@ -1,13 +1,8 @@
 import { initForm } from '../form-validation/init-form.js';
 import { initInterestsCheckboxGroup } from '../form-validation/init-interests-checkbox-group.js';
 import { initJsValidate } from '../form-validation/init-js-validate.js';
-import suite from '../form-validation/suite.js';
 
-const doVestValidation = ({ formEl, inputEl }) => {
-  const formData = new FormData(formEl);
-  const result = suite(formData, inputEl);
-  console.log(result.getErrors(inputEl.name));
-};
+import { updateValidationStateForInput } from './update-validation-state-for-input.js';
 
 const initVestValidation = (formEl: HTMLFormElement) => {
   // const jsValidateInputEls: NodeListOf<HTMLInputElement> =
@@ -20,17 +15,10 @@ const initVestValidation = (formEl: HTMLFormElement) => {
       // Set up `blur` and `input` validation for the inputs that can be validated
       // with the Constraint Validation API.
       inputEl.addEventListener('input', (event) => {
-        // updateValidationStateForInput(event.target as HTMLInputElement);
-        // const formData = new FormData(formEl);
-        // const result = suite(formData, inputEl.name);
-        // console.log(result);
-        // doVestValidation({ formEl, inputEl: event.target });
+        updateValidationStateForInput(event.target as HTMLInputElement);
       });
       inputEl.addEventListener('blur', (event) => {
-        // const formData = new FormData(formEl);
-        // const result = suite(formData, inputEl.name);
-        // console.log(result.getErrors(inputEl.name));
-        // doVestValidation({ formEl, inputEl: event.target });
+        updateValidationStateForInput(event.target as HTMLInputElement);
       });
       // Adding `aria-invalid` provides users who use assistive technology
       // with a way to know if the input is invalid.
@@ -39,7 +27,7 @@ const initVestValidation = (formEl: HTMLFormElement) => {
 
       // Update the state for prefilled inputs.
       if (inputEl.value !== '') {
-        // updateValidationStateForInput(inputEl);
+        updateValidationStateForInput(inputEl);
       }
     });
 };
@@ -53,8 +41,8 @@ export const init = () => {
 
   const formEl = initForm();
   // TODO Initialize the Vest version here
-  initJsValidate();
-  // initVestValidation(formEl);
+  initVestValidation(formEl);
+  // initJsValidate();
 
   initInterestsCheckboxGroup(formEl);
 };
