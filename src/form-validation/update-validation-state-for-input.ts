@@ -34,7 +34,7 @@ export const updateValidationStateForInput = (inputEl: HTMLInputElement) => {
   const errorEl = inputEl.nextElementSibling as HTMLElement;
   // For demo purposes, show the default error message for Part 3
   const validityMessage =
-    window.location.pathname === '/part-3'
+    window.location.pathname === '/part-2'
       ? inputEl.validationMessage
       : getValidityMessageForInput(inputEl);
   errorEl.textContent = validityMessage;
