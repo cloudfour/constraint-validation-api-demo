@@ -1,10 +1,14 @@
-<label for="demo-too-short">Minimum three-character value</label>
+<label for="demo-too-short">
+  Minimum three-character value
+  <span aria-hidden="true">(required)</span>
+</label>
 <input
   id="demo-too-short"
   name="demoTooShort"
   class="js-validate"
   type="text"
   minlength="3"
+  required
   aria-describedby="demo-too-short-error"
 />
 <p hidden id="demo-too-short-error" class="error">
