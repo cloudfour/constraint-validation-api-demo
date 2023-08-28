@@ -13,7 +13,8 @@
     "@astrojs/svelte": "^2.1.0",
     "astro": "^2.1.8",
     "sass": "^1.60.0",
-    "svelte": "^3.57.0"
+    "svelte": "^3.57.0",
+    "vest": "^4.6.11"
   },
   "devDependencies": {
     "@cloudfour/eslint-plugin": "^21.1.0",
