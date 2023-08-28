@@ -49,10 +49,10 @@ export const getValidityMessageForInput = (
    */
   if (inputEl.name === 'purchaseDate') {
     if (inputEl.validity.valueMissing) {
-      return 'Please enter a date. (This field is required.)';
+      return 'Please enter a purchase date. (This field is required.)';
     }
     if (inputEl.validity.typeMismatch) {
-      return 'Please enter a valid date.';
+      return 'Please enter a valid purchase date.';
     }
     if (inputEl.validity.rangeUnderflow) {
       return `The purchase date must be within the last calendar year.`;
