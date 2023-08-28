@@ -1,5 +1,4 @@
 import { getValidityMessageForInput } from './get-validity-message-for-input.js';
-import { validationSuite } from './validation-suite.js';
 
 /**
  * Update the validation UI state for a given input element.
@@ -34,15 +33,9 @@ export const updateValidationStateForInput = (inputEl: HTMLInputElement) => {
   //    https://developer.mozilla.org/en-US/docs/Web/API/HTMLObjectElement/validationMessage
   const errorEl = inputEl.nextElementSibling as HTMLElement;
 
-  // TODO Does it need to be a two step process?
-  const validationResult = validationSuite(inputEl);
-  const validationMessage = validationResult.getErrors(inputEl.name)[0];
-
-  // For demo purposes, show the default error message for Part 3
-  // TODO Toggle built into demo to show either custom or validation suite message?
+  // For demo purposes, show the custom validty messages for Part 4
   const validityMessage = window.location.pathname.includes('part-4')
-    ? // ? getValidityMessageForInput(inputEl)
-      validationMessage
+    ? getValidityMessageForInput(inputEl)
     : inputEl.validationMessage;
   errorEl.textContent = validityMessage;
   // Show/hide the error message depending on the input's validity.
