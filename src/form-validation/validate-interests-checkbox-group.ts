@@ -52,7 +52,7 @@ export const validateInterestsCheckboxGroup = (
   }
 
   // Update the validation error message.
-  const errorMsg = isValid ? '' : 'Select at least one interest.';
+  const errorMsg = isValid ? '' : 'Please select at least one interest.';
 
   // The error message is the same for both the legend and the visual error.
   legendErrorEl.textContent = errorMsg;
