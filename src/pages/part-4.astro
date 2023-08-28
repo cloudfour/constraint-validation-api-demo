@@ -4,27 +4,31 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout
-  title="Progressively Enhanced Form Validation, Part 4: Customized validation error messages"
+  title="Progressively Enhanced Form Validation, Part 4: Custom validation messages"
 >
   <h1>
-    Progressively Enhanced Form Validation, Part 4: Customized validation error
-    messages
+    Progressively Enhanced Form Validation, Part 4: Custom validation messages
   </h1>
-  <!-- <p>
+  <p>
     This form uses browser built-in form validation when JavaScript is not
     available.
   </p>
   <p>
     When JavaScript is available, the form is progressively enhanced using the
-    Constraint Validation API. Custom JavaScript logic was added to handle the
-    "interests" checkbox group.
+    Constraint Validation API.
   </p>
+  <ul>
+    <li>The ValidityState API was used to create custom validation messages</li>
+    <li>
+      Custom JavaScript logic was added to handle the "interests" checkbox group
+    </li>
+  </ul>
   <p>
     <a
-      href="https://cloudfour.com/thinks/progressively-enhanced-form-validation-part-3-validating-a-checkbox-group/"
+      href="https://cloudfour.com/thinks/progressively-enhanced-form-validation-part-4-custom-validation-messages/"
     >
       Read the accompanying Cloud Four article
     </a>
-  </p> -->
+  </p>
   <FormWithCustomErrors />
 </Layout>
