@@ -22,7 +22,7 @@ const { checked = false, name, value, label, id } = Astro.props;
     <span aria-hidden="true" class="Toggle-indicator u-spaceRight06"></span>
   </div>
   <label for={id} class="Toggle-label">
-    {label ? label : value}
+    {label || value}
   </label>
 </div>
 
