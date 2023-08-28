@@ -40,9 +40,7 @@ export const init = () => {
   document.body.dataset.jsEnabled = 'true';
 
   const formEl = initForm();
-  // TODO Initialize the Vest version here
-  initVestValidation(formEl);
-  // initJsValidate();
+  initJsValidate();
 
   initInterestsCheckboxGroup(formEl);
 };
