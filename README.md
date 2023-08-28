@@ -12,6 +12,7 @@
 - https://caniuse.com/mdn-api_validitystate
 - https://www.conf42.com/JavaScript_2020_Alush_Evyatar_form_validations_vest
 - https://guillaumepotier.github.io/gettext.js/
+- Chris Ferdinand's version: https://css-tricks.com/form-validation-part-2-constraint-validation-api-javascript/
 
 ## Part 4 notes
 
