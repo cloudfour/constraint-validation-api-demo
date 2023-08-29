@@ -1,10 +1,10 @@
 /**
- * Use the Constraint Validation ValidityState API to return a custom validity message
+ * Return custom validity messages referencing a given input's ValidityState object.
  * @param {HTMLInputElement} inputEl The input element
  * @returns {string} A custom validity message for the given input element
  */
 // eslint-disable-next-line complexity
-export const getValidityMessageForInput = (
+export const getValidationMessageForInput = (
   inputEl: HTMLInputElement
 ): string => {
   // If the input is valid, return an empty string.

@@ -1,4 +1,4 @@
-import { getValidityMessageForInput } from './get-validity-message-for-input.js';
+import { getValidationMessageForInput } from './get-validity-message-for-input.js';
 
 /**
  * Update the validation UI state for a given input element.
@@ -27,17 +27,18 @@ export const updateValidationStateForInput = (inputEl: HTMLInputElement) => {
 
   // When JS is enabled, the default built-in error messages are not shown,
   // the code needs to set the error messages manually.
-  // 1. Get the error message element for the current input element.
-  // 2. Use the browser built-in localized validation message. Will be
-  //    an empty string if input constraints are satisfied.
-  //    https://developer.mozilla.org/en-US/docs/Web/API/HTMLObjectElement/validationMessage
+  // IF PART 4:
+  // - Use custom validity messages.
+  // ELSE:
+  // - Use the browser built-in localized validation message. Will be
+  //   an empty string if input constraints are satisfied.
+  //   https://developer.mozilla.org/en-US/docs/Web/API/HTMLObjectElement/validationMessage
   const errorEl = inputEl.nextElementSibling as HTMLElement;
-
-  // For demo purposes, show the custom validty messages for Part 4
-  const validityMessage = window.location.pathname.includes('part-4')
-    ? getValidityMessageForInput(inputEl)
+  // For demo purposes, show the custom validation messages for Part 4
+  const validationMessage = window.location.pathname.includes('part-4')
+    ? getValidationMessageForInput(inputEl)
     : inputEl.validationMessage;
-  errorEl.textContent = validityMessage;
+  errorEl.textContent = validationMessage;
   // Show/hide the error message depending on the input's validity.
   errorEl.hidden = isInputValid;
 };
