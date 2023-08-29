@@ -18,6 +18,8 @@
 
 - For `rangeUnderflow` or `rangeOverflow`, I can't mention even/odd number detail because the message needs to be more generic.
 - String.prototype.includes is not supported in IE11: https://caniuse.com/es6-string-includes
+- If a more restrictive email, use `pattern` attribute instead of `type="email"`: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/email#pattern_validation
+- Basic email validation regex: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/email#basic_validation
 
 ## TODO Once all parts are published
 
