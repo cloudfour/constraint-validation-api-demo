@@ -3,23 +3,19 @@
 - [Progressively Enhanced Form Validation, Part 1: HTML and CSS](https://cloudfour.com/thinks/progressively-enhanced-form-validation-part-1-html-and-css/)
 - [Progressively Enhanced Form Validation, Part 2: Layering in JavaScript](https://cloudfour.com/thinks/progressively-enhanced-form-validation-part-2-layering-in-javascript/)
 - [Progressively Enhanced Form Validation, Part 3: Validating a checkbox group](https://cloudfour.com/thinks/progressively-enhanced-form-validation-part-3-validating-a-checkbox-group/)
-- Part 4: Use the `ValidityState` object to write custom error messages, use Vest for validation abstraction
+- [Progressively Enhanced Form Validation, Part 4: Custom validation messages](https://cloudfour.com/thinks/progressively-enhanced-form-validation-part-4-custom-validation-messages/)
 
 ---
 
 ## Part 4 resource links
 
-- https://caniuse.com/mdn-api_validitystate
 - https://www.conf42.com/JavaScript_2020_Alush_Evyatar_form_validations_vest
 - https://guillaumepotier.github.io/gettext.js/
-- Chris Ferdinand's version: https://css-tricks.com/form-validation-part-2-constraint-validation-api-javascript/
 
 ## Part 4 notes
 
 - For `rangeUnderflow` or `rangeOverflow`, I can't mention even/odd number detail because the message needs to be more generic.
 - String.prototype.includes is not supported in IE11: https://caniuse.com/es6-string-includes
-- If a more restrictive email, use `pattern` attribute instead of `type="email"`: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/email#pattern_validation
-- Basic email validation regex: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/email#basic_validation
 
 ## TODO Once all parts are published
 
@@ -37,10 +33,6 @@ Add somewhere:
 > Using the aria-describedby property to provide a descriptive label for user interface controls
 
 - https://www.w3.org/WAI/WCAG21/Techniques/aria/ARIA1
-
-## Use `validity()` to write custom error messages!
-
-https://developer.mozilla.org/en-US/docs/Learn/Forms/Form_validation#the_constraint_validation_api
 
 ## Use "Wrapping Up" section to close out
 
