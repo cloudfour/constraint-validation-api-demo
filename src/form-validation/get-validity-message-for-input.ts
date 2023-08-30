@@ -164,6 +164,6 @@ export const getValidationMessageForInput = (
     }
   }
 
-  // If all else fails, return a generic catchall error message.
-  return 'The value you provided for this field is invalid.';
+  // If all else fails, return the default built-in message.
+  return inputEl.validationMessage;
 };
