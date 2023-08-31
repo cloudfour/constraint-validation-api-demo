@@ -10,7 +10,6 @@
 ## Part 4 resource links
 
 - https://www.conf42.com/JavaScript_2020_Alush_Evyatar_form_validations_vest
-- https://guillaumepotier.github.io/gettext.js/
 
 ## Part 4 notes
 
