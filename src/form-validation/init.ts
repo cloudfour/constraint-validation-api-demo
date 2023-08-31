@@ -2,8 +2,6 @@ import { initForm } from '../form-validation/init-form.js';
 import { initInterestsCheckboxGroup } from '../form-validation/init-interests-checkbox-group.js';
 import { initJsValidate } from '../form-validation/init-js-validate.js';
 
-import { updateValidationStateForInput } from './update-validation-state-for-input.js';
-
 /**
  * Initialize validation setup
  */
