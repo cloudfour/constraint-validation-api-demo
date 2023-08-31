@@ -11,6 +11,5 @@ export const init = () => {
 
   const formEl = initForm();
   initJsValidate();
-
   initInterestsCheckboxGroup(formEl);
 };
