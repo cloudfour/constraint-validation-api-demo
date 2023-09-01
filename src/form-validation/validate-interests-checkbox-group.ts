@@ -11,7 +11,11 @@ export const validateInterestsCheckboxGroup = (
   // Bail if on "part-2" demo since the "interests" checkbox group
   // validation logic hasn't been introduced yet.
   // Return true so this doesn't block form submission.
-  if (window.location.pathname.includes('part-2')) return true;
+  if (window.location.pathname.includes('part-2')) {
+    console.log('Skipping "interests" checkbox group validation.');
+
+    return true;
+  }
 
   // Get the fieldset element for the "interests" checkbox group.
   const checkboxFieldsetEl = document.querySelector('.js-checkbox-fieldset');
