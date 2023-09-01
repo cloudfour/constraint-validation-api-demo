@@ -25,19 +25,19 @@ export const updateValidationStateForInput = (inputEl: HTMLInputElement) => {
   // https://www.w3.org/WAI/WCAG21/Techniques/aria/ARIA21
   inputEl.setAttribute('aria-invalid', String(!isInputValid));
 
-  // When JS is enabled, the default built-in error messages are not shown,
-  // the code needs to set the error messages manually.
+  // For demo purposes, show the custom validation messages for Part 4
   // IF PART 4:
   // - Use custom validity messages.
   // ELSE:
   // - Use the browser built-in localized validation message. Will be
   //   an empty string if input constraints are satisfied.
   //   https://developer.mozilla.org/en-US/docs/Web/API/HTMLObjectElement/validationMessage
-  const errorEl = inputEl.nextElementSibling as HTMLElement;
-  // For demo purposes, show the custom validation messages for Part 4
   const validationMessage = window.location.pathname.includes('part-4')
     ? getValidationMessageForInput(inputEl)
     : inputEl.validationMessage;
+  // When JS is enabled, the default built-in error messages are not shown,
+  // the code needs to set the error messages manually.
+  const errorEl = inputEl.nextElementSibling as HTMLElement;
   errorEl.textContent = validationMessage;
   // Show/hide the error message depending on the input's validity.
   errorEl.hidden = isInputValid;
