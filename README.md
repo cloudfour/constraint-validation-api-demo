@@ -7,15 +7,6 @@
 
 ---
 
-## Part 4 resource links
-
-- https://www.conf42.com/JavaScript_2020_Alush_Evyatar_form_validations_vest
-
-## Part 4 notes
-
-- For `rangeUnderflow` or `rangeOverflow`, I can't mention even/odd number detail because the message needs to be more generic.
-- String.prototype.includes is not supported in IE11: https://caniuse.com/es6-string-includes
-
 ## TODO Once all parts are published
 
 ### Part 2
@@ -25,14 +16,6 @@ Add links:
 - Part 4 of this series will explore this very topic.
 - Part 4 will explore using the Constraint Validation API’s ValidityState interface to help render custom validation error messages.
 
-## Notes
-
-Add somewhere:
-
-> Using the aria-describedby property to provide a descriptive label for user interface controls
-
-- https://www.w3.org/WAI/WCAG21/Techniques/aria/ARIA1
-
 ## Use "Wrapping Up" section to close out
 
 Better (IMO) than "Conclusion" or "Summary".
@@ -40,13 +23,3 @@ Better (IMO) than "Conclusion" or "Summary".
 ## Examples of video ideas
 
 - https://twitter.com/jlengstorf/status/1684624174889984000
-
-## Chrome
-
-### :user-valid/:user-invalid support bug
-
-https://bugs.chromium.org/p/chromium/issues/detail?id=1156069
-
-### Chrome wants to close out issue
-
-https://bugs.chromium.org/p/chromium/issues/detail?id=1322670
