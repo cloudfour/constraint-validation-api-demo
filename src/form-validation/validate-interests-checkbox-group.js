@@ -5,9 +5,7 @@
  * @param {HTMLFormElement} formEl The form element
  * @returns {boolean} Is the "interests" checkbox group valid?
  */
-export const validateInterestsCheckboxGroup = (
-  formEl: HTMLFormElement
-): boolean => {
+export const validateInterestsCheckboxGroup = (formEl) => {
   // Bail if on "part-2" demo since the "interests" checkbox group
   // validation logic hasn't been introduced yet.
   // Return true so this doesn't block form submission.
@@ -63,7 +61,7 @@ export const validateInterestsCheckboxGroup = (
   visualErrorEl.textContent = errorMsg;
 
   // Show/hide the visual error message depending on the checkbox group's validity.
-  (visualErrorEl as HTMLElement).hidden = isValid;
+  visualErrorEl.hidden = isValid;
 
   // Return the validation state.
   return isValid;

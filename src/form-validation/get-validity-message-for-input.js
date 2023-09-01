@@ -4,9 +4,7 @@
  * @returns {string} A custom validity message for the given input element
  */
 // eslint-disable-next-line complexity
-export const getValidationMessageForInput = (
-  inputEl: HTMLInputElement
-): string => {
+export const getValidationMessageForInput = (inputEl) => {
   // If the input is valid, return an empty string.
   if (inputEl.validity.valid) return '';
 

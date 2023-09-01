@@ -5,8 +5,9 @@ import { validateInterestsCheckboxGroup } from './validate-interests-checkbox-gr
  * Handler for form `submit` event.
  * @param {SubmitEvent} event The event object for the `submit` event
  */
-export const onSubmit = (event: SubmitEvent) => {
-  const formEl = event.target as HTMLFormElement;
+export const onSubmit = (event) => {
+  /** @type {HTMLFormElement} */
+  const formEl = event.target;
   // Update the validation UI state for all inputs that can be validated
   // with the Constraint Validation API.
   document
@@ -27,5 +28,5 @@ export const onSubmit = (event: SubmitEvent) => {
   const firstInvalidInputEl = formEl.querySelector(
     'input:invalid, fieldset.is-invalid input'
   );
-  (firstInvalidInputEl as HTMLInputElement | null)?.focus();
+  firstInvalidInputEl?.focus();
 };

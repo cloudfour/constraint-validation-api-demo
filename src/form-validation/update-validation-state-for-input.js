@@ -4,7 +4,7 @@ import { getValidationMessageForInput } from './get-validity-message-for-input.j
  * Update the validation UI state for a given input element.
  * @param {HTMLInputElement} inputEl The input element to update the UI state for.
  */
-export const updateValidationStateForInput = (inputEl: HTMLInputElement) => {
+export const updateValidationStateForInput = (inputEl) => {
   // Check if the input is valid using the Constraint Validation API.
   // https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/checkValidity
   const isInputValid = inputEl.checkValidity();
@@ -37,7 +37,7 @@ export const updateValidationStateForInput = (inputEl: HTMLInputElement) => {
     : inputEl.validationMessage;
   // When JS is enabled, the default built-in error messages are not shown,
   // the code needs to set the error messages manually.
-  const errorEl = inputEl.nextElementSibling as HTMLElement;
+  const errorEl = inputEl.nextElementSibling;
   errorEl.textContent = validationMessage;
   // Show/hide the error message depending on the input's validity.
   errorEl.hidden = isInputValid;

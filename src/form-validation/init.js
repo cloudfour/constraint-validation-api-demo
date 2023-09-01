@@ -1,6 +1,6 @@
-import { initForm } from '../form-validation/init-form.js';
-import { initInterestsCheckboxGroup } from '../form-validation/init-interests-checkbox-group.js';
-import { initJsValidate } from '../form-validation/init-js-validate.js';
+import { initForm } from './init-form.js';
+import { initInterestsCheckboxGroup } from './init-interests-checkbox-group.js';
+import { initJsValidate } from './init-js-validate.js';
 
 /**
  * Initialize validation setup

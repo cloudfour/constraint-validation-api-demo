@@ -2,9 +2,9 @@ import { validateInterestsCheckboxGroup } from './validate-interests-checkbox-gr
 
 /**
  * Initializes the set up for the "interests" checkbox group.
- * @param formEl The form element
+ * @param {HTMLFormElement}  formEl  The form element
  */
-export const initInterestsCheckboxGroup = (formEl: HTMLFormElement) => {
+export const initInterestsCheckboxGroup = (formEl) => {
   // Set up `blur` and `change` validation for the "interests" checkbox group.
   const interestsCheckboxInputEls = formEl.querySelectorAll(
     'input[name="interests"]'
@@ -15,9 +15,10 @@ export const initInterestsCheckboxGroup = (formEl: HTMLFormElement) => {
       validateInterestsCheckboxGroup(formEl)
     );
     // Set up late validation for the checkbox group
-    checkboxInputEl.addEventListener('blur', (event: FocusEvent) => {
+    checkboxInputEl.addEventListener('blur', (event) => {
       // FocusEvent.relatedTarget is the element receiving focus.
-      const activeEl = event.relatedTarget as HTMLElement | null;
+      /** @type {HTMLInputElement} */
+      const activeEl = event.relatedTarget;
       // Validate only if the focus is not going to another checkbox.
       if (activeEl?.getAttribute('name') !== 'interests') {
         validateInterestsCheckboxGroup(formEl);
