@@ -26,7 +26,7 @@ export const getISOFormattedDate = (date) => {
   const timezoneOffsetInMinutes = date.getTimezoneOffset();
   const timezoneOffsetInMilliseconds = timezoneOffsetInMinutes * 60 * 1000;
 
-  // Now, let's convert the date to milliseconds.
+  // Now, let's convert the given date to milliseconds.
   const dateInMilliseconds = Date.parse(date);
 
   // Calculate the date with the timezone offset and convert to ISO format
