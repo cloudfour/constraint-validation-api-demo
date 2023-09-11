@@ -1,16 +1,16 @@
 /**
  * Generates an ISO 8601 formatted date string (YYYY-MM-DD) from a Date object.
  *
- * The goal is to return the value of Date.prototype.toISOString() without the
+ * The goal is to return the value of Date.prototype.toISOString without the
  * time portion (e.g., '2023-03-21T04:15:47.000Z' becomes '2023-03-21').
  * This is useful for setting a date input's min/max values and also for
  * setting date values (e.g., for automated tests).
  *
- * The timezone returned by Date.prototype.toISOString() has a zero UTC offset.
+ * The timezone returned by Date.prototype.toISOString has a zero UTC offset.
  *
  * Used without calculating a timezone offset, the date returned was off by a day.
- * To fix that, the logic below uses Date.prototype.getTimezoneOffset() to ensure
- * the value returned by Date.prototype.toISOString() matches local time zone.
+ * To fix that, the logic below uses Date.prototype.getTimezoneOffset to ensure
+ * the value returned by Date.prototype.toISOString matches local time zone.
  *
  * @see https://en.wikipedia.org/wiki/ISO_8601
  * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString
@@ -34,6 +34,6 @@ export const getISOFormattedDate = (date) => {
   const dateWithOffset = dateInMilliseconds - timezoneOffsetInMilliseconds;
   const dateAsISOString = new Date(dateWithOffset).toISOString();
 
-  // Split to return ISO8601 format (YYYY-MM-DD).
+  // Split to return ISO 8601 format (YYYY-MM-DD).
   return dateAsISOString.split('T')[0];
 };
