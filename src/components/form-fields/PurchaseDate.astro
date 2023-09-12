@@ -1,9 +1,9 @@
 ---
 import { getISOFormattedDate } from '../../utils/get-iso-formatted-date.js';
+import { yearsAgoFromToday } from '../../utils/years-ago-from-today.js';
 
-// 1 year ago today.
-const oneYearAgoToday = new Date();
-oneYearAgoToday.setUTCFullYear(oneYearAgoToday.getUTCFullYear() - 1);
+// 1 year ago from today.
+const oneYearAgo = yearsAgoFromToday(1);
 ---
 
 <label for="purchase-date"> Purchase date (must be within the last year)</label>
@@ -12,7 +12,7 @@ oneYearAgoToday.setUTCFullYear(oneYearAgoToday.getUTCFullYear() - 1);
   name="purchaseDate"
   class="js-validate"
   type="date"
-  min={getISOFormattedDate(oneYearAgoToday)}
+  min={getISOFormattedDate(oneYearAgo)}
   max={getISOFormattedDate(new Date())}
   required
   aria-describedby="purchase-date-error"
