@@ -1,7 +1,7 @@
 /**
- * Returns a date object representing the number of years ago from today.
+ * Returns a Date object representing the number of years ago from today.
  * @param {number} years - The number of years ago from today.
- * @returns {Date} - A date object.
+ * @returns {Date} - A Date object.
  */
 export const yearsAgoFromToday = (years) => {
   const date = new Date();

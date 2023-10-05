@@ -53,7 +53,7 @@ export const getValidationMessageForInput = (inputEl) => {
       return 'Please enter a valid purchase date.';
     }
     if (inputEl.validity.rangeUnderflow) {
-      return 'The purchase date must be within the last calendar year.';
+      return 'The purchase date must be within the last 10 years.';
     }
     if (inputEl.validity.rangeOverflow) {
       return 'The purchase date cannot be a future date.';
